@@ -1,0 +1,37 @@
+import prisma from "@/prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(req: NextRequest) {
+  const url = req.nextUrl;
+  const postcode = url.searchParams.get("postcode");
+
+  if (postcode) {
+    const addressUsers = await prisma.customer.findMany({
+      where: {
+        address: {
+          state: {
+            contains: postcode,
+            mode: "insensitive",
+          },
+        },
+      },
+      include: {
+        address: true,
+      },
+    });
+
+    return NextResponse.json(addressUsers, {
+      status: 200,
+    });
+  }
+
+  const addressUsers = await prisma.customer.findMany({
+    include: {
+      address: true,
+    },
+  });
+
+  return NextResponse.json(addressUsers, {
+    status: 200,
+  });
+}
