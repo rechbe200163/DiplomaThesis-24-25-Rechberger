@@ -77,7 +77,8 @@ model Product {
   id          String                 @id @default(cuid())
   name        String                 @unique @db.VarChar(255)
   price       Int
-  description String                 @db.Text
+  description String                 @db.Text 
+  //? probably should additionaly have a short description with 40 characters or less
   stock       Int //amount in stock
   imagePath   String?                @db.VarChar(255)
   createdAt   DateTime               @default(now())
@@ -133,6 +134,8 @@ model Employees {
 model SiteConfig {
   id          String  @id @default(cuid())
   companyName String  @db.VarChar(255)
+  //? should probably also have a slogan or a short description field
+  //? should probalby also have a relation to a socialMedia model with links to social media
   logoPath    String  @db.VarChar(255)
   email       String  @unique
   phoneNumber String  @db.VarChar(15)
