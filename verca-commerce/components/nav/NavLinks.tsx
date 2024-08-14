@@ -15,7 +15,7 @@ function NavLinks() {
 
   return (
     <nav>
-      <ul className="flex flex-row space-x-5">
+      <ul className="flex flex-row space-x-5 text-lg font-medium">
         {links.map((link, index) => (
           <Link
             key={index}
