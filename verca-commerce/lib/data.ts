@@ -1,6 +1,7 @@
 import { Product } from "@prisma/client";
+import { ProductWithCategoryNames } from "./types";
 
-export async function getAllProducts(): Promise<Product[]> {
+export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
   try {
     const res = await fetch("http://localhost:3000/api/products", {
       cache: "no-store",

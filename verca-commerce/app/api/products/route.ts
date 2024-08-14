@@ -36,9 +36,21 @@ export async function GET(
     };
   }
 
-
   // Execute the query
-  const products = await prisma.product.findMany(query);
+  const products = await prisma.product.findMany({
+    ...query,
+    include: {
+      categories: {
+        select: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
 
   return NextResponse.json(products, { status: 200 });
 }
