@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import { getProductById } from "@/lib/data";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { formatPrice } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface ProductDetailsPageProps {
   params: {
@@ -18,26 +19,47 @@ async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
   const product = await getProductById(params.productId);
 
   return (
-    <div className="p-20">
-      <div className="card card-side w-full shadow-xl">
-        <figure className="flex-none ">
+    <div className="p-4 md:p-20">
+      <div className="card flex flex-col xl:flex-row w-full shadow-xl">
+        <figure className="flex-none w-full xl:w-1/3">
           <Image
             src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="Shoes"
-            width={400}
-            height={400}
+            alt={product.name}
+            width={500}
+            height={500}
+            className="rounded-xl xl:rounded-none object-cover w-full"
           />
+          <figcaption className="sr-only">{product.name}</figcaption>
         </figure>
-        <div className="card-body ">
-          <h1 className="card-title">{product.name}</h1>
-          <p>{product.description.slice(0, 500)}</p>
-
-          <div className="card-actions justify-between">
-            <span className="stat-value">{formatPrice(product.price)}</span>
-            <button className="btn btn-primary ">Add to Cart</button>
+        <div className="card-body flex-1 p-4 md:p-6">
+          <h2 className="card-title text-2xl md:text-4xl">{product.name}</h2>
+          <p className="hidden md:block mt-4 text-sm md:text-base">
+            {product.description.slice(0, 400)}
+          </p>
+          <div className="card-actions justify-between mt-4 md:mt-8">
+            <span className="stat-value text-xl md:text-2xl">
+              {formatPrice(product.price)}
+            </span>
+            <button
+              className="btn btn-primary w-full md:w-auto"
+              aria-label={`Add ${product.name} to Cart`}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>
+      {/* Mobile Accordion for Description */}
+      <Accordion
+        className=" mt-4 shadow-xl card card-body bg-gray-200 md:hidden"
+        type="single"
+        collapsible
+      >
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Description</AccordionTrigger>
+          <AccordionContent>{product.description} </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
