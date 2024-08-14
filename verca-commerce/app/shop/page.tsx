@@ -1,3 +1,4 @@
+import ProductCard from "@/components/cards/ProductCard";
 import { getAllProducts } from "@/lib/data";
 import React from "react";
 
@@ -6,15 +7,11 @@ const dynamic = "force-dynamic";
 async function ShopPage() {
   const products = await getAllProducts();
   return (
-    <>
+    <div className="flex p-10 space-x-10">
       {products.map((product) => (
-        <div key={product.id}>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-        </div>
+        <ProductCard key={product.id} product={product} />
       ))}
-    </>
+    </div>
   );
 }
 
