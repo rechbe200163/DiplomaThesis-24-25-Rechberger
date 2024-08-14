@@ -6,6 +6,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function formatPrice(price: number) {
+  const formattedPrice = (price / 100).toLocaleString("de-at", {
+    style: "currency",
+    currency: "EUR",
+  });
+
+  return formattedPrice;
+}
+
 export async function checkUserRole() {
   const session = await auth();
 
