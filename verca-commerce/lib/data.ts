@@ -13,3 +13,18 @@ export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
     throw new Error("Failed to fetch products");
   }
 }
+
+export async function getProductById(
+  productId: string
+): Promise<ProductWithCategoryNames> {
+  try {
+    const res = await fetch(`http://localhost:3000/api/products/${productId}`, {
+      cache: "no-store",
+    });
+
+    const product = await res.json();
+    return product;
+  } catch (error) {
+    throw new Error("Failed to fetch product");
+  }
+}
