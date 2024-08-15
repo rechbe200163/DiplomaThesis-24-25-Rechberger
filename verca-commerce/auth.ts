@@ -81,6 +81,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      return baseUrl + "/shop";
+    },
     async session({ session, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
