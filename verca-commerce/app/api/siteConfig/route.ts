@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const search = req.nextUrl.searchParams.get("q");
 
-  const products = await prisma.siteConfig.findMany({});
+  const products = await prisma.siteConfig.findFirst();
 
   return NextResponse.json(products, { status: 200 });
 }
