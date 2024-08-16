@@ -1,15 +1,11 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
 import NavLinks from "./NavLinks";
-import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoCartOutline, IoHomeOutline } from "react-icons/io5";
 import HomeIcon from "./HomeIcon";
-import { VscLoading } from "react-icons/vsc";
-import { AiOutlineLoading } from "react-icons/ai";
 import { Skeleton } from "../ui/skeleton";
 import SearchComponent from "../search/SearchComponent";
-import { getServerSession } from "next-auth";
-import { signIn, auth } from "@/auth";
+import {  auth } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 async function NavBar() {
@@ -36,13 +32,17 @@ async function NavBar() {
         {session ? (
           <Link href="/profile">
             <Avatar>
+              <AvatarImage
+                src={session.user.image || "/images/default-profile.png"}
+                alt={session.user.name?.split(" ")[0]}
+              />
               <AvatarFallback className="bg-emerald-400">
-                {session.user.lastName[0] + session.user.firstName[0]}
+                {session.user.lastName[0] + session.user.firstName![0]}
               </AvatarFallback>
             </Avatar>
           </Link>
         ) : (
-          <Link href="/api/auth/signin">logIn</Link>
+          <Link href="/auth/signin">logIn</Link>
         )}
 
         <Link href="cart">
