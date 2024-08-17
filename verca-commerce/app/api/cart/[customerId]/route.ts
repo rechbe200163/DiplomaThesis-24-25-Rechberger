@@ -1,16 +1,23 @@
+import { CartWithProducts } from "@/lib/types";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(
   req: NextRequest,
   { params }: { params: { customerId: string } }
 ) {
-  const userId = params.customerId;
-  const cart = await prisma.cart.findUnique({
+  const customerId = params.customerId;
+
+  const cartProducts = await prisma.cart.findUnique({
     where: {
-      customerId: userId,
+      customerId: customerId,
     },
     include: {
       products: {
+        orderBy: {
+          product: {
+            price: "desc",
+          },
+        },
         select: {
           product: {
             select: {
@@ -30,9 +37,9 @@ export async function GET(
     },
   });
 
-  if (!cart) {
-    return NextResponse.json({ error: "Cart not found" }, { status: 404 });
+  if (!cartProducts) {
+    return NextResponse.json({ message: "Cart not found" }, { status: 404 });
   }
 
-  return NextResponse.json(cart, { status: 200 });
+  return NextResponse.json(cartProducts, { status: 200 });
 }
