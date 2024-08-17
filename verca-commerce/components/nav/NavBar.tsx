@@ -5,7 +5,7 @@ import { IoCartOutline, IoHomeOutline } from "react-icons/io5";
 import HomeIcon from "./HomeIcon";
 import { Skeleton } from "../ui/skeleton";
 import SearchComponent from "../search/SearchComponent";
-import {  auth } from "@/auth";
+import { auth } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 async function NavBar() {
@@ -29,6 +29,9 @@ async function NavBar() {
       </nav>
       <div className="flex items-center space-x-6 pr-5 w-fit">
         <SearchComponent placeholder="Search for products..." />
+        <Link href={`/shop/${session?.user.id}/cart`}>
+          <IoCartOutline size={30} />
+        </Link>
         {session ? (
           <Link href="/profile">
             <Avatar>
@@ -44,10 +47,6 @@ async function NavBar() {
         ) : (
           <Link href="/auth/signin">logIn</Link>
         )}
-
-        <Link href="cart">
-          <IoCartOutline size={30} />
-        </Link>
       </div>
     </div>
   );
