@@ -65,6 +65,7 @@ export async function addToCart(
     });
 
     revalidateTag("cartCount");
+    revalidateTag("cart");
 
     return {
       success: true,
@@ -75,6 +76,78 @@ export async function addToCart(
       success: false,
       errors: {
         title: ["Could not add product to cart"],
+      },
+    };
+  }
+}
+
+export async function removeFromCart(
+  productId: string,
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const session = await auth();
+    if (!session || !session.user) {
+      throw new Error("User not authenticated");
+    }
+
+    const customerId = session.user.id;
+
+    // Find the customer's cart
+    const cart = await prisma.cart.findUnique({
+      where: { customerId },
+      include: { products: true },
+    });
+
+    if (!cart) {
+      return {
+        success: false,
+        errors: {
+          title: ["Cart not found"],
+        },
+      };
+    }
+
+    // Check if the product is in the cart
+    const existingProductCart = await prisma.cartOnProducts.findFirst({
+      where: {
+        cartId: cart.cartId,
+        productId,
+      },
+    });
+
+    if (!existingProductCart) {
+      return {
+        success: false,
+        errors: {
+          title: ["Product not in cart"],
+        },
+      };
+    }
+
+    // Remove the product from the cart
+    await prisma.cartOnProducts.delete({
+      where: {
+        cartId_productId: {
+          cartId: cart.cartId,
+          productId,
+        },
+      },
+    });
+
+    revalidateTag("cartCount");
+    revalidateTag("cart");
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      errors: {
+        title: ["Could not remove product from cart"],
       },
     };
   }
