@@ -75,3 +75,18 @@ export async function getCartByUserId(
   }
 }
 
+export async function fetchProductsInCart(customerId: string) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/cart/${customerId}?q=count`,
+      {
+        next: { tags: ["cartCount"] },
+      }
+    );
+
+    const productsCount = await res.json();
+    return productsCount;
+  } catch (error) {
+    throw new Error("Failed to fetch products count in cart");
+  }
+}
