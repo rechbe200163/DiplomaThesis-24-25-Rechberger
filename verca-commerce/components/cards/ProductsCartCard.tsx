@@ -1,11 +1,10 @@
 import { getCartByUserId } from "@/lib/data";
 import Image from "next/image";
 import React from "react";
+import RemoveFromCart from "../forms/removeFromCart";
 
 async function ProductsCartCard({ customerId }: { customerId: string }) {
   const products = await getCartByUserId(customerId);
-
-  console.log(products);
 
   return (
     <div className="flex flex-col gap-6 p-4 md:p-0 w-full md:w-2/3 overflow-auto">
@@ -44,9 +43,7 @@ async function ProductsCartCard({ customerId }: { customerId: string }) {
                     </option>
                   ))}
               </select>
-              <button className="badge badge-ghost badge-lg border-error text-error hover:bg-error hover:text-white transition">
-                Remove
-              </button>
+              <RemoveFromCart productId={product.product.id} />
             </div>
           </div>
         </div>
