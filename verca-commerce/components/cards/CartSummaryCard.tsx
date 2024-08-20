@@ -1,6 +1,7 @@
 import { getCartByUserId } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 import React from "react";
+import { Button } from "../ui/button";
 
 async function CartSummaryCard({ customerId }: { customerId: string }) {
   const prices = await getCartByUserId(customerId);
@@ -43,9 +44,12 @@ async function CartSummaryCard({ customerId }: { customerId: string }) {
         <div className="text-xl font-bold text-gray-800 mt-4 border-t pt-4">
           Total: {formatPrice(subtotal + tax + shipping)}
         </div>
-        <button className="w-full bg-green-500 text-white py-2 mt-6 rounded-lg hover:bg-green-600 transition">
+        <Button
+          className="w-full bg-green-500 text-white py-2 mt-6 rounded-lg hover:bg-green-600 transition"
+          disabled={prices.products.length === 0}
+        >
           Proceed to Checkout
-        </button>
+        </Button>
       </div>
     </div>
   );
