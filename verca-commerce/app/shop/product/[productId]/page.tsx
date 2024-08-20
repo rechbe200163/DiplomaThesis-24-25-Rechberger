@@ -8,6 +8,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BiAddToQueue } from "react-icons/bi";
+import AddToCartForm from "@/components/forms/addToCard";
 
 interface ProductDetailsPageProps {
   params: {
@@ -40,12 +42,7 @@ async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
             <span className="stat-value text-xl md:text-2xl">
               {formatPrice(product.price)}
             </span>
-            <button
-              className="btn btn-primary w-full md:w-auto"
-              aria-label={`Add ${product.name} to Cart`}
-            >
-              Add to Cart
-            </button>
+            <AddToCartForm productId={product.id} />
           </div>
         </div>
       </div>

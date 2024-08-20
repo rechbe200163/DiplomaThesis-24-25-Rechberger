@@ -1,5 +1,5 @@
 import CartSummaryCard from "@/components/cards/CartSummaryCard";
-import ProcutsCartCard from "@/components/cards/ProcutsCartCard";
+import ProductsCartCard from "@/components/cards/ProductsCartCard";
 import { getCartByUserId } from "@/lib/data";
 import { get } from "http";
 import React from "react";
@@ -19,7 +19,7 @@ async function CartPage({ params }: { params: { customerId: string } }) {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between gap-10">
-        <ProcutsCartCard customerId={params.customerId} />
+        <ProductsCartCard customerId={params.customerId} />
         <CartSummaryCard customerId={params.customerId} />
       </div>
     </div>
