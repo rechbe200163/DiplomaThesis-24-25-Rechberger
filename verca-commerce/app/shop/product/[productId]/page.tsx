@@ -47,16 +47,13 @@ async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
         </div>
       </div>
       {/* Mobile Accordion for Description */}
-      <Accordion
-        className=" mt-4 shadow-xl card card-body bg-gray-200 md:hidden"
-        type="single"
-        collapsible
-      >
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Description</AccordionTrigger>
-          <AccordionContent>{product.description} </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="collapse mt-4 shadow-xl from from-gray-200 bg-gradient-to-t hover:bg-gray-300 transition-colors ease-in-out duration-500">
+        <input type="checkbox" />
+        <div className="collapse-title text-xl font-medium">Description</div>
+        <div className="collapse-content">
+          <p>{product.description}</p>
+        </div>
+      </div>
     </div>
   );
 }
