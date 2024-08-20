@@ -1,5 +1,5 @@
 import { Product, SiteConfig } from "@prisma/client";
-import { CartWithProducts, ProductWithCategoryNames } from "./types";
+import { CartCount, CartWithProducts, ProductWithCategoryNames } from "./types";
 
 export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
   try {
@@ -63,7 +63,7 @@ export async function getCartByUserId(
 ): Promise<CartWithProducts> {
   try {
     const res = await fetch(`http://localhost:3000/api/cart/${customerId}`, {
-      cache: "no-store",
+      next: { tags: ["cart"] },
     });
 
     const cart = await res.json();
@@ -75,7 +75,9 @@ export async function getCartByUserId(
   }
 }
 
-export async function fetchProductsInCart(customerId: string) {
+export async function fetchProductsInCart(
+  customerId: string
+): Promise<CartCount> {
   try {
     const res = await fetch(
       `http://localhost:3000/api/cart/${customerId}?q=count`,
