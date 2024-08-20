@@ -27,7 +27,7 @@ function AddToCartForm({ productId }: { productId: string }) {
   const [formState, action] = useFormState(addToCartAction, {
     success: false,
     errors: {
-      title: ["Product not added to cart"],
+      title: [""],
     },
   });
   return (
