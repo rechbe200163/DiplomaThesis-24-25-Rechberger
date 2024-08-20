@@ -1,4 +1,3 @@
-import { Accumulation } from "./../../../../../node_modules/@opentelemetry/sdk-metrics/build/esm/aggregator/types.d";
 import { CartWithProducts } from "@/lib/types";
 import prisma from "@/prisma/client";
 import { PrismaClient } from "@prisma/client";
