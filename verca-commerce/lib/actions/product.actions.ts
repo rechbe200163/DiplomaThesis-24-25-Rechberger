@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import prisma from "@/prisma/client";
+import { revalidateTag } from "next/cache";
 
 type FormState = {
   success: boolean;
@@ -62,6 +63,8 @@ export async function addToCart(
         productId,
       },
     });
+
+    revalidateTag("cartCount");
 
     return {
       success: true,
