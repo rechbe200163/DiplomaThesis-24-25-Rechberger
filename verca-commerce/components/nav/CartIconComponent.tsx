@@ -15,7 +15,7 @@ async function CartIconComponent() {
       <Link href={`/shop/${session?.user.id}/cart`}>
         <div className="flex relative">
           <IoCartOutline size={35} />
-          {productsCount?._count.products > 0 && (
+          {productsCount._count.products > 0 && (
             <div className="badge badge-primary badge-md absolute -top-2  -right-4">
               {productsCount?._count.products}
             </div>
