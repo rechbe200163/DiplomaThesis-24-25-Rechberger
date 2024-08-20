@@ -8,14 +8,14 @@ import { IoCartOutline } from "react-icons/io5";
 async function CartIconComponent() {
   const session = await auth();
 
-  const productsCount = await fetchProductsInCart(session?.user.id || "");
+  const productsCount = await fetchProductsInCart(session?.user.id!);
 
   return (
     <div>
       <Link href={`/shop/${session?.user.id}/cart`}>
         <div className="flex relative">
           <IoCartOutline size={35} />
-          {productsCount._count.products > 0 && (
+          {session && productsCount?._count.products > 0 && (
             <div className="badge badge-primary badge-md absolute -top-2  -right-4">
               {productsCount?._count.products}
             </div>
