@@ -1,5 +1,7 @@
+import { Accumulation } from "./../../../../../node_modules/@opentelemetry/sdk-metrics/build/esm/aggregator/types.d";
 import { CartWithProducts } from "@/lib/types";
 import prisma from "@/prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(
   req: NextRequest,
@@ -21,18 +23,10 @@ export async function GET(
         select: {
           product: {
             select: {
-              id: true,
               name: true,
               price: true,
-              imagePath: true,
-              stock: true,
             },
           },
-        },
-      },
-      _count: {
-        select: {
-          products: true,
         },
       },
     },
