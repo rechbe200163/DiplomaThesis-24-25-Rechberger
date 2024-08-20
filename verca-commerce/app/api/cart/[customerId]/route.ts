@@ -6,6 +6,28 @@ export async function GET(
   { params }: { params: { customerId: string } }
 ) {
   const customerId = params.customerId;
+  const query = req.nextUrl.searchParams.get("q");
+
+  if (query === "count") {
+    const productsCount = await prisma.cart.findUnique({
+      where: {
+        customerId: customerId,
+      },
+      include: {
+        _count: {
+          select: {
+            products: true,
+          },
+        },
+      },
+    });
+
+    if (!productsCount) {
+      return NextResponse.json({ message: "Cart not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(productsCount, { status: 200 });
+  }
 
   const cartProducts = await prisma.cart.findUnique({
     where: {
