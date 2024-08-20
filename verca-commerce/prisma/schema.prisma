@@ -120,7 +120,7 @@ model Route {
   order RoutesOnProducts[]
 }
 
-//? Emplyee model
+//* Emplyee model
 model Employees {
   id        String @id @default(cuid())
   email     String @unique
@@ -130,7 +130,7 @@ model Employees {
   role      Role   @default(EMPLOYEE)
 }
 
-//? model for the site configuration
+//* model for the site configuration
 model SiteConfig {
   id          String  @id @default(cuid())
   companyName String  @db.VarChar(255)
