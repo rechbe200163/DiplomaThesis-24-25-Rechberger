@@ -52,3 +52,15 @@ const cartWithProducts = Prisma.validator<Prisma.CartDefaultArgs>()({
 });
 
 export type CartWithProducts = Prisma.CartGetPayload<typeof cartWithProducts>;
+
+const cartCount = Prisma.validator<Prisma.CartDefaultArgs>()({
+  include: {
+    _count: {
+      select: {
+        products: true,
+      },
+    },
+  },
+});
+
+export type CartCount = Prisma.CartGetPayload<typeof cartCount>;
