@@ -1,14 +1,19 @@
-import AuthForm from "@/components/AuthForm";
-import React from "react";
+import SignInForm from "@/components/forms/auth/SigInForm";
+import Link from "next/link";
 
-const SignIn = () => {
+export default function SignIn() {
   return (
-    <div className="container p-16 max-w-screen-md">
-      <div className="card card-body shadow-2xl">
-        <AuthForm type="sign-in" />
+    <div className="h-screen w-screen flex justify-center items-center bg-slate-100">
+      <div className="sm:shadow-xl px-8 pb-8 pt-12 sm:bg-white rounded-xl space-y-12">
+        <h1 className="font-semibold text-2xl">Login</h1>
+        <SignInForm />
+        <p className="text-center">
+          Need to create an account?{" "}
+          <Link className="text-indigo-500 hover:underline" href="/register">
+            Create Account
+          </Link>{" "}
+        </p>
       </div>
     </div>
   );
-};
-
-export default SignIn;
+}
