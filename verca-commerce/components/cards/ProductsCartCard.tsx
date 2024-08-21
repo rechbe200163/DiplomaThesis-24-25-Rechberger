@@ -19,7 +19,7 @@ async function ProductsCartCard({ customerId }: { customerId: string }) {
                 product.product.imagePath ||
                 "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
               }
-              alt="Movie"
+              alt={product.product.name + " image"}
               className="object-cover w-full h-full"
               width={400}
               height={400}
