@@ -31,7 +31,6 @@ enum BusinessSector {
   HOSPITALITY
   RETAIL
   TECHNOLOGY
-  OTHER
 }
 
 model Customer {
@@ -47,14 +46,13 @@ model Customer {
   businessSector BusinessSector?
 
   addressId String
-  address   Address @relation(fields: [addressId], references: [addressId]) // not in the database model
-
+ address   Address @relation(fields: [addressId], references: [addressId]) // Corrected reference  
   cart   Cart?
   orders Order[]
 }
 
 model Address {
-  addressId    String @id @default(cuid())
+  addressId    String @id @default(cuid()) // Unique ID for easier referencing
   city         String @db.VarChar(100)
   country      String @db.VarChar(40)
   postcode     String @db.VarChar(10)
@@ -64,7 +62,10 @@ model Address {
 
   customers  Customer[]
   siteConfig SiteConfig[]
+
+  @@unique([city, country, postcode, state, streetName, streetNumber]) // Maintain uniqueness across all fields
 }
+
 
 model Cart {
   cartId     String           @id @default(cuid())
