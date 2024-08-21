@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const addressUsers = await prisma.customer.findMany({
       where: {
         address: {
-          state: {
+          postcode: {
             contains: postcode,
             mode: "insensitive",
           },
