@@ -2,7 +2,6 @@
 
 import { addToCart, removeFromCart } from "@/lib/actions/product.actions";
 import { useFormState, useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -14,10 +13,11 @@ function SubmitButton() {
     >
       {pending ? (
         <>
-          <span className="animate-spin" /> &nbsp; Removing to Cart...
+          <span className="loading loading-spinner loading-xs" />
+          &nbsp; Removing
         </>
       ) : (
-        "Remove from Cart"
+        "Remove"
       )}
     </button>
   );
