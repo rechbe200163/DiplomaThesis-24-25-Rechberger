@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { BusinessSector } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { count } from "console";
 import { twMerge } from "tailwind-merge";
@@ -29,24 +30,47 @@ export async function checkUserRole() {
   return session.user.role;
 }
 
-export const authFormSchema = (type: string) =>
-  z.object({
-    // sign up
-    email: z.string().email(),
-    phoneNumber: type === "sign-in" ? z.string().optional() : z.string().min(3),
-    password: z.string().min(8),
-    firstName: type === "sign-in" ? z.string().optional() : z.string().min(3),
-    lastName: type === "sign-in" ? z.string().optional() : z.string().min(3),
-    companyNumber:
-      type === "sign-in" ? z.string().optional() : z.string().min(3),
+export const authSignUpFormSchema = () =>
+  z
+    .object({
+      firstName: z.string().min(1, "First name is required"),
+      lastName: z.string().min(1, "Last name is required"),
+      email: z.string().email("Invalid email address"),
+      phoneNumber: z.string().min(1, "Phone number is required"),
 
-    city: type === "sign-in" ? z.string().optional() : z.string().max(50),
-    country: type === "sign-in" ? z.string().optional() : z.string().max(50),
-    postCode:
-      type === "sign-in" ? z.string().optional() : z.string().min(3).max(6),
-    state:
-      type === "sign-in" ? z.string().optional() : z.string().min(2).max(2),
-    streetName: type === "sign-in" ? z.string().optional() : z.string().min(3),
-    streetNumber:
-      type === "sign-in" ? z.string().optional() : z.string().min(1),
+      companyNumber: z.string().min(1, "Company number is required"),
+      businessSector: z.enum([
+        BusinessSector.AGRICULTURE,
+        BusinessSector.CONSTRUCTION,
+        BusinessSector.EDUCATION,
+        BusinessSector.FINANCE,
+        BusinessSector.HEALTH,
+        BusinessSector.HOSPITALITY,
+        BusinessSector.MANUFACTURING,
+        BusinessSector.RETAIL,
+        BusinessSector.TECHNOLOGY,
+        BusinessSector.TRANSPORTATION,
+      ]),
+      city: z.string().min(1, "City is required"),
+      country: z.string().min(1, "Country is required"),
+      postCode: z.string().min(1, "Postal code is required"),
+      state: z.string().min(1, "State is required"),
+      streetNumber: z.string().min(1, "Street number is required"),
+      streetName: z.string().min(1, "Street name is required"),
+
+      password: z.string().min(6, "Password must be at least 6 characters"),
+      confirmPassword: z
+        .string()
+        .min(6, "Confirm password must be at least 6 characters"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    });
+
+export const authSignInFormSchema = () =>
+  z.object({
+    // sign
+    email: z.string().email(),
+    password: z.string().min(8),
   });
