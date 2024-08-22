@@ -1,4 +1,4 @@
-import { Product, SiteConfig } from "@prisma/client";
+import { Customer, Product, SiteConfig } from "@prisma/client";
 import { CartCount, CartWithProducts, ProductWithCategoryNames } from "./types";
 
 export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
@@ -90,5 +90,21 @@ export async function fetchProductsInCart(
     return productsCount;
   } catch (error) {
     throw new Error("Failed to fetch products count in cart");
+  }
+}
+
+export async function fetchUser(customerId: string): Promise<Customer> {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/customers/${customerId}`,
+      {
+        next: { tags: ["user"] },
+      }
+    );
+
+    const user = await res.json();
+    return user;
+  } catch (error) {
+    throw new Error("Failed to fetch user");
   }
 }
