@@ -6,7 +6,6 @@ import React from "react";
 async function UserDetailsCard() {
   const session = await auth();
   const user = await fetchUser(session!.user.id);
-  console.log(user);
   return (
     <div className="card card-body">
       <h3 className="card-title">User Details</h3>
