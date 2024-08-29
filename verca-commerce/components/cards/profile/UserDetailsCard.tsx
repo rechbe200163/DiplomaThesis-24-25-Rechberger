@@ -8,7 +8,7 @@ async function UserDetailsCard() {
   const user = await fetchUser(session!.user.id);
   return (
     <div className="card card-body">
-      <h3 className="card-title">User Details</h3>
+      <h1 className="card-title">User Details</h1>
       <Input
         className="card-text"
         defaultValue={user.firstName || "First Name"}
