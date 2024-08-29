@@ -8,24 +8,18 @@ async function CompanyIconComponent() {
   const siteConfig = await getSiteConfig();
   console.log("SiteConfig", siteConfig);
   return (
-    <div>
-      <Link
-        className="items-center gap-2 mb-2 flex h-10 justify-between rounded-md bg-blue-600 p-4 md:h-20"
-        href="/shop"
-      >
-        <div className="flex items-center justify-between w-32 text-white md:w-40">
-          <Image
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="Verca"
-            width={100}
-            height={100}
-          />
-        </div>
-        <span className=" font-semibold">
-          {siteConfig?.companyName || "asd"}
-        </span>
+    <nav>
+      <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2">
+        <Image
+          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+          width={34}
+          height={34}
+          alt="Horizon logo"
+          className="size-[24px] max-xl:size-14"
+        />
+        <h1 className="sidebar-logo">{siteConfig?.companyName || "Horizon"}</h1>
       </Link>
-    </div>
+    </nav>
   );
 }
 
