@@ -5,7 +5,6 @@ import React from "react";
 const UserProfile = () => {
   return (
     <div>
-      <SignOutPage />
       <UserDetailsCard />
     </div>
   );
