@@ -1,6 +1,6 @@
+import SignOutPage from "@/app/auth/signout/page";
 import { auth } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
 import React from "react";
 
 async function ProfileIconComponent() {
@@ -24,6 +24,7 @@ async function ProfileIconComponent() {
         <span>{userName}</span>
         <span className="text-sm text-gray-600">{userEmail}</span>
       </div>
+      <SignOutPage />
     </div>
   );
 }
