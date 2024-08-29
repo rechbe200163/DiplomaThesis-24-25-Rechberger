@@ -1,6 +1,7 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 enum Error {
   Configuration = "Configuration",
@@ -16,7 +17,7 @@ const errorMap = {
   ),
 };
 
-export default function AuthErrorPage() {
+function ErrorContent() {
   const search = useSearchParams();
   const error = search.get("error") as Error;
 
@@ -33,7 +34,14 @@ export default function AuthErrorPage() {
           {errorMap[error] || "Please contact us if this error persists."}
         </div>
       </a>
-      <div></div>
     </div>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ErrorContent />
+    </Suspense>
   );
 }
