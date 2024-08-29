@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -81,8 +82,15 @@ const SignInForm = () => {
           />
         </div>
         <div className="w-full">
-          <Button className="w-full" size="lg">
-            {isLoading ? "Loading..." : "Sign In"}
+          <Button className="w-full" size="lg" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Loader2 size={20} className="animate-spin" /> &nbsp; Loging you
+                in...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </div>
       </form>
