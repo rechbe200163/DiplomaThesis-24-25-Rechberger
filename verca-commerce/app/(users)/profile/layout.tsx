@@ -1,11 +1,10 @@
 import { auth } from "@/auth";
 import HeaderBox from "@/components/header/HeaderBox";
 import InteractiviyComponent from "@/components/nav/dashboard/InteractiviyComponent";
-import ProfileIconComponent from "@/components/nav/dashboard/ProfileIconComponent";
+import DashboardFooter from "@/components/nav/dashboard/ProfileIconComponent";
 import SideNav from "@/components/nav/dashboard/SideNav";
-import Search from "@/components/search/SearchComponent";
-import { Header } from "@radix-ui/react-accordion";
-import { Inter } from "next/font/google";
+import DashbaordFooterSkeleton from "@/components/skeletons/DashboardFooterSkeleton";
+import SideNavSkeleton from "@/components/skeletons/SideNavSkeleton";
 import { Suspense } from "react";
 
 export default async function Layout({
@@ -30,13 +29,13 @@ export default async function Layout({
       {/* Sidebar */}
       <aside className="flex-none w-full md:w-64 border-r-2 bg-white shadow-md flex flex-col justify-between">
         <div>
-          <Suspense fallback={<div>Loading SideNav...</div>}>
+          <Suspense fallback={<SideNavSkeleton />}>
             <SideNav />
           </Suspense>
         </div>
         <div className="p-4">
-          <Suspense fallback={<div>Loading ProfileIcon...</div>}>
-            <ProfileIconComponent />
+          <Suspense fallback={<DashbaordFooterSkeleton />}>
+            <DashboardFooter />
           </Suspense>
         </div>
       </aside>
@@ -51,9 +50,7 @@ export default async function Layout({
             name={session.user.lastName}
             type="greeting"
           />
-          <Suspense fallback={<div>Loading InteractiviyComponent...</div>}>
-            <InteractiviyComponent />
-          </Suspense>
+          <InteractiviyComponent />
         </div>
 
         {/* Conditional content based on role */}
