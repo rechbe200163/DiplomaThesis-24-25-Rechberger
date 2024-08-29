@@ -17,18 +17,21 @@ function NavLinks() {
     <nav>
       <ul className="flex flex-row space-x-5 text-lg font-medium">
         {links.map((link, index) => (
-          <Link
-            key={index}
-            href={link.href}
-            className={cn(
-              "text-zinc-500 hover:underline transition-transform ",
-              {
-                "font-medium text-zinc-950 underline ": pathname === link.href,
-              }
-            )}
-          >
-            {link.label}
-          </Link>
+          <li>
+            <Link
+              key={index}
+              href={link.href}
+              className={cn(
+                "text-zinc-500 hover:underline transition-transform ",
+                {
+                  "font-medium text-zinc-950 underline ":
+                    pathname === link.href,
+                }
+              )}
+            >
+              {link.label}
+            </Link>
+          </li>
         ))}
       </ul>
     </nav>
