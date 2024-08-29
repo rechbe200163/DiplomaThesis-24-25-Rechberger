@@ -17,7 +17,7 @@ export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
     const res = await fetch("http://localhost:3000/api/siteConfig", {
-      cache: "no-store",
+      next: { tags: ["siteConfig"] },
     });
 
     const siteConfig = await res.json();
