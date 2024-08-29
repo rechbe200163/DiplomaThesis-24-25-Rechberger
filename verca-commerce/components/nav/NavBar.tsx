@@ -22,12 +22,6 @@ async function NavBar() {
         </Link>
         <NavLinks />
       </div>
-      <nav className="flex items-center space-x-5">
-        <Link
-          href="/shop"
-          className="flex flex-row items-center space-x-2 p-2 rounded-full"
-        ></Link>
-      </nav>
       <div className="flex items-center space-x-6 pr-5 w-fit">
         <SearchComponent placeholder="Search for products..." />
         <CartIconComponent />
