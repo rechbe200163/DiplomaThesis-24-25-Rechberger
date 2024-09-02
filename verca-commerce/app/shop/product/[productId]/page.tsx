@@ -2,13 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { getProductById } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { BiAddToQueue } from "react-icons/bi";
 import AddToCartForm from "@/components/forms/addToCard";
 
 interface ProductDetailsPageProps {
