@@ -13,10 +13,9 @@ async function CompanyIconComponent() {
       >
         <Image
           src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          width={34}
-          height={34}
+          width={100}
+          height={100}
           alt="logo"
-          className="size-[24px] max-xl:size-14"
         />
         <h1 className="sidebar-logo">{siteConfig?.companyName || "Horizon"}</h1>
       </Link>
