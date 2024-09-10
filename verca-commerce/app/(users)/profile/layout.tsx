@@ -5,6 +5,7 @@ import DashboardFooter from "@/components/nav/dashboard/ProfileIconComponent";
 import SideNav from "@/components/nav/dashboard/SideNav";
 import DashbaordFooterSkeleton from "@/components/skeletons/DashboardFooterSkeleton";
 import SideNavSkeleton from "@/components/skeletons/SideNavSkeleton";
+import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function Layout({
@@ -19,7 +20,9 @@ export default async function Layout({
   if (!session?.user.role) {
     return (
       <div className="flex h-screen items-center justify-center">
-        Please Log in
+        <Link href={"/auth/signin"} className="btn btn-primary">
+          Login
+        </Link>
       </div>
     );
   }
