@@ -18,6 +18,7 @@ async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
       <div className="card flex flex-col xl:flex-row w-full shadow-xl">
         <figure className="flex-none w-full xl:w-1/3">
           <Image
+            loading="lazy"
             src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
             alt={product.name}
             width={500}
