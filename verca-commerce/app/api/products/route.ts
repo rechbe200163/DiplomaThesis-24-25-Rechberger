@@ -1,9 +1,10 @@
+
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { categoryId: string } }
+  
 ) {
   const search = req.nextUrl.searchParams.get("q");
   const sort = req.nextUrl.searchParams.get("sort");
