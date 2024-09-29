@@ -84,6 +84,10 @@ const config = {
           700: "#344054",
           900: "#101828",
         },
+        skeletonBg: {
+          DEFAULT: "#F3F4F6",
+          2: "#E5E7EB",
+        },
       },
       fontFamily: {
         inter: "var(--font-inter)",
