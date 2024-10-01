@@ -1,19 +1,30 @@
-import prisma from "@/prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 export async function GET(
   req: NextRequest,
   { params }: { params: { customerId: string } }
 ) {
-  const customerId = params.customerId;
+  try {
+    const customerId = params.customerId;
 
-  const user = await prisma.customer.findUnique({
-    where: {
-      customerId: customerId,
-    },
-    include: {
-      address: true,
-    },
-  });
+    const user = await prisma.customer.findUnique({
+      where: {
+        customerId: customerId,
+      },
+      include: {
+        address: true,
+      },
+    });
 
-  return NextResponse.json(user, { status: 200 });
+    if (!user) {
+      return NextResponse.json({ message: 'Cart not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
 }
