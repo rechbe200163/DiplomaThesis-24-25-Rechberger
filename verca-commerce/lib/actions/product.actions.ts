@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import prisma from "@/prisma/client";
-import { revalidateTag } from "next/cache";
+import { auth } from '@/auth';
+import prisma from '@/prisma/client';
+import { revalidateTag } from 'next/cache';
 
 type FormState = {
   success: boolean;
@@ -19,7 +19,12 @@ export async function addToCart(
   try {
     const session = await auth();
     if (!session || !session.user) {
-      throw new Error("User not authenticated");
+      return {
+        success: false,
+        errors: {
+          title: ['Please sign in to add products to your cart'],
+        },
+      };
     }
 
     const customerId = session.user.id;
@@ -34,7 +39,7 @@ export async function addToCart(
       return {
         success: false,
         errors: {
-          title: ["Cart not found"],
+          title: ['Cart not found'],
         },
       };
     }
@@ -51,7 +56,7 @@ export async function addToCart(
       return {
         success: false,
         errors: {
-          title: ["Product already in cart"],
+          title: ['Product already in cart'],
         },
       };
     }
@@ -64,8 +69,8 @@ export async function addToCart(
       },
     });
 
-    revalidateTag("cartCount");
-    revalidateTag("cart");
+    revalidateTag('cartCount');
+    revalidateTag('cart');
 
     return {
       success: true,
@@ -75,7 +80,7 @@ export async function addToCart(
     return {
       success: false,
       errors: {
-        title: ["Could not add product to cart"],
+        title: ['Could not add product to cart'],
       },
     };
   }
@@ -89,7 +94,7 @@ export async function removeFromCart(
   try {
     const session = await auth();
     if (!session || !session.user) {
-      throw new Error("User not authenticated");
+      throw new Error('User not authenticated');
     }
 
     const customerId = session.user.id;
@@ -104,7 +109,7 @@ export async function removeFromCart(
       return {
         success: false,
         errors: {
-          title: ["Cart not found"],
+          title: ['Cart not found'],
         },
       };
     }
@@ -121,7 +126,7 @@ export async function removeFromCart(
       return {
         success: false,
         errors: {
-          title: ["Product not in cart"],
+          title: ['Product not in cart'],
         },
       };
     }
@@ -136,8 +141,8 @@ export async function removeFromCart(
       },
     });
 
-    revalidateTag("cartCount");
-    revalidateTag("cart");
+    revalidateTag('cartCount');
+    revalidateTag('cart');
 
     return {
       success: true,
@@ -147,7 +152,7 @@ export async function removeFromCart(
     return {
       success: false,
       errors: {
-        title: ["Could not remove product from cart"],
+        title: ['Could not remove product from cart'],
       },
     };
   }
