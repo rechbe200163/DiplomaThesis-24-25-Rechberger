@@ -90,4 +90,21 @@ describe('GET /products/:productId', () => {
     expect(responseData).toBeNull();
     expect(response.status).toBe(200); // Still return 200 status even if no product found
   });
+  it('should handle errors from the Prisma client', async () => {
+    // Mock the findUnique method to throw an error
+    (prisma.product.findUnique as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    // Mock the NextRequest and params
+    const mockRequest = {} as unknown as NextRequest;
+    const mockParams = { params: { productId: 'prod3' } };
+
+    const response = await GET(mockRequest, mockParams);
+    const responseData = await response.json();
+
+    // Expect the response data to contain an error message
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+    expect(response.status).toBe(500);
+  });
 });

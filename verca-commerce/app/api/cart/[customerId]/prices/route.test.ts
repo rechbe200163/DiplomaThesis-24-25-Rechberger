@@ -103,4 +103,25 @@ describe('GET /carts/:customerId', () => {
     expect(responseData).toEqual({ message: 'Cart not found' });
     expect(response.status).toBe(404);
   });
+  it('should handle errors from the Prisma client', async () => {
+    // Mock the findUnique method to throw an error
+    (prisma.cart.findUnique as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    const mockRequest = {
+      nextUrl: {
+        searchParams: new URLSearchParams({}),
+      },
+    } as unknown as NextRequest;
+
+    // Mock params object
+    const params = { customerId };
+
+    const response = await GET(mockRequest, { params });
+    const responseData = await response.json();
+
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+    expect(response.status).toBe(500);
+  });
 });

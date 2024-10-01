@@ -84,4 +84,18 @@ describe('GET /orders', () => {
     expect(responseData).toEqual([]); // Expect an empty array
     expect(response.status).toBe(200);
   });
+  it('should handle errors from the Prisma client', async () => {
+    // Mock the findMany method to throw an error
+    (prisma.order.findMany as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    const mockRequest = {} as unknown as NextRequest;
+
+    const response = await GET(mockRequest);
+    const responseData = await response.json();
+
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+    expect(response.status).toBe(500);
+  });
 });

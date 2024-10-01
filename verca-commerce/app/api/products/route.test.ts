@@ -241,4 +241,24 @@ describe('GET /products', () => {
 
     expect(response.status).toBe(200);
   });
+  it('should handle errors from the Prisma client', async () => {
+    // Mock the findMany method to throw an error
+    (prisma.product.findMany as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    // Mock the NextRequest
+    const mockRequest = {
+      nextUrl: {
+        searchParams: new URLSearchParams({ q: 'test' }), // Example query parameter
+      },
+    } as unknown as NextRequest;
+
+    const response = await GET(mockRequest);
+    const responseData = await response.json();
+
+    // Expect the response data to contain an error message
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+    expect(response.status).toBe(500);
+  });
 });

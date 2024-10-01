@@ -132,4 +132,21 @@ describe('GET /customers', () => {
     // Check if the response status is correct
     expect(response.status).toBe(200);
   });
+  it('should handle errors when the Prisma client throws an error', async () => {
+    // Mock the findMany method to throw an error
+    (prisma.customer.findMany as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    const mockRequest = {
+      nextUrl: {
+        searchParams: new URLSearchParams({}),
+      },
+    } as unknown as NextRequest;
+
+    const response = await GET(mockRequest);
+
+    // Check if the response status is correct
+    expect(response.status).toBe(500);
+  });
 });

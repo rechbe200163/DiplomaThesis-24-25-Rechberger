@@ -87,4 +87,22 @@ describe('GET /orders/:customerId', () => {
     expect(responseData).toEqual([]); // Expect an empty array
     expect(response.status).toBe(200);
   });
+  it('should handle errors from the Prisma client', async () => {
+    const customerId = 'cust3'; // Mock customer ID
+    // Mock the findMany method to throw an error
+    (prisma.order.findMany as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    // Mock the NextRequest and params
+    const mockRequest = {} as unknown as NextRequest;
+    const mockParams = { params: { customerId } };
+
+    const response = await GET(mockRequest, mockParams);
+    const responseData = await response.json();
+
+    // Expect the response data to contain an error message
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+    expect(response.status).toBe(500);
+  });
 });

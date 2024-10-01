@@ -78,4 +78,24 @@ describe('GET /site-config', () => {
     expect(responseData).toBeNull();
     expect(response.status).toBe(200); // Still return 200 status even if no configuration found
   });
+  it('should handle errors from the Prisma client', async () => {
+    // Mock the findFirst method to throw an error
+    (prisma.siteConfig.findFirst as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    // Mock the NextRequest
+    const mockRequest = {
+      nextUrl: {
+        searchParams: new URLSearchParams({ q: 'test' }), // Example query parameter
+      },
+    } as unknown as NextRequest;
+
+    const response = await GET(mockRequest);
+    const responseData = await response.json();
+
+    // Expect the response data to contain an error message
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+    expect(response.status).toBe(500); // Return 500 status for internal server error
+  });
 });
