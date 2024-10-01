@@ -1,7 +1,7 @@
-import { GET } from './route'; // Adjust this import based on the actual path to your route file
 import { NextRequest } from 'next/server';
 import { matchers } from 'jest-json-schema';
 import prisma from '@/prisma/client'; // Import the Prisma client
+import { GET } from './route';
 
 expect.extend(matchers);
 
@@ -69,5 +69,35 @@ describe('GET /customers/:customerId', () => {
     });
 
     expect(response.status).toBe(200);
+  });
+  it('should handle errors from the Prisma client', async () => {
+    // Mock the findMany method to throw an error
+    (prisma.customer.findUnique as jest.Mock).mockRejectedValue(
+      new Error('Database error')
+    );
+
+    const mockRequest = {} as NextRequest; // Create a mock request object
+    const params = { customerId: '123' };
+
+    const response = await GET(mockRequest, { params });
+    const responseData = await response.json();
+
+    // Expecting the response to return an error status
+    expect(response.status).toBe(500);
+    expect(responseData).toEqual({ error: 'Internal Server Error' });
+  });
+  it('should return a 404 status if the customer is not found', async () => {
+    // Mock the findUnique method to return null
+    (prisma.customer.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const mockRequest = {} as NextRequest; // Create a mock request object
+    const params = { customerId: '123' };
+
+    const response = await GET(mockRequest, { params });
+    const responseData = await response.json();
+
+    // Expecting the response to return a 404 status
+    expect(response.status).toBe(404);
+    expect(responseData).toEqual({ message: 'Cart not found' });
   });
 });

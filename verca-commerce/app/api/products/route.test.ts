@@ -17,8 +17,22 @@ describe('GET /products', () => {
   it('should return a list of products sorted by price in ascending order', async () => {
     // Mock the response from the Prisma client
     const mockProducts = [
-      { id: '1', name: 'Product 1', price: 100, imagePath: null, stock: 5, categories: [{ category: { name: 'Category 1' } }] },
-      { id: '2', name: 'Product 2', price: 200, imagePath: null, stock: 3, categories: [{ category: { name: 'Category 2' } }] },
+      {
+        id: '1',
+        name: 'Product 1',
+        price: 100,
+        imagePath: null,
+        stock: 5,
+        categories: [{ category: { name: 'Category 1' } }],
+      },
+      {
+        id: '2',
+        name: 'Product 2',
+        price: 200,
+        imagePath: null,
+        stock: 3,
+        categories: [{ category: { name: 'Category 2' } }],
+      },
     ];
 
     // Mock the findMany method to return the mock products
@@ -81,11 +95,104 @@ describe('GET /products', () => {
     expect(prices).toEqual(sortedPrices);
   });
 
+  it('should return a list of products sorted by createdAt in descending order', async () => {
+    // Mock products sorted by createdAt descending
+    const mockProducts = [
+      {
+        id: 'adfadasdas',
+        name: 'Product 1',
+        price: 100,
+        createdAt: '2024-09-29T11:59:44.273Z' as String, // Ensure this is a string
+        imagePath: null,
+        stock: 5,
+        categories: [{ category: { name: 'Category 1' } }],
+      },
+      {
+        id: 'asdasdasd',
+        name: 'Product 2',
+        price: 200,
+        createdAt: '2023-01-02T00:00:00.000Z' as String, // Ensure this is a string
+        imagePath: null,
+        stock: 3,
+        categories: [{ category: { name: 'Category 2' } }],
+      },
+    ];
+
+    // Mock the Prisma client's findMany method
+    (prisma.product.findMany as jest.Mock).mockResolvedValue(mockProducts);
+
+    // Create a mock request with sorting parameter
+    const mockRequest = {
+      nextUrl: {
+        searchParams: new URLSearchParams({ sort: 'latest' }),
+      },
+    } as unknown as NextRequest;
+
+    // Call the GET function with the mock request
+    const response = await GET(mockRequest);
+    const responseData = await response.json();
+
+    expect(response.status).toBe(200);
+    // Check the response matches mockProducts
+    expect(responseData).toEqual(mockProducts);
+  });
+
+  it('should return a list of products sorted by createdAt in descending order', async () => {
+    const mockProducts = [
+      {
+        id: '2',
+        name: 'Product 2',
+        price: 200,
+        createdAt: '2023-01-01T23:00:00.000Z', // Adjusted to string
+        imagePath: null,
+        stock: 3,
+        categories: [{ category: { name: 'Category 2' } }],
+      },
+      {
+        id: '1',
+        name: 'Product 1',
+        price: 100,
+        createdAt: '2022-12-31T23:00:00.000Z', // Adjusted to string
+        imagePath: null,
+        stock: 5,
+        categories: [{ category: { name: 'Category 1' } }],
+      },
+    ];
+
+    (prisma.product.findMany as jest.Mock).mockResolvedValue(mockProducts);
+
+    const mockRequest = {
+      nextUrl: {
+        searchParams: new URLSearchParams({ sort: 'latest' }),
+      },
+    } as unknown as NextRequest;
+
+    const response = await GET(mockRequest);
+    const responseData = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(responseData).toEqual(mockProducts); // Check the response matches mockProducts
+  });
+
   // Existing test for getting a list of products
   it('should return a list of products', async () => {
     const mockProducts = [
-      { id: '1', name: 'Test Product', price: 999, imagePath: null, stock: 10, categories: [{ category: { name: 'Test Category' } }] },
-      { id: '2', name: 'Test Product1', price: 500, imagePath: null, stock: 20, categories: [{ category: { name: 'Test Category' } }] },
+      {
+        id: '1',
+        name: 'Test Product',
+        price: 999,
+        imagePath: null,
+        stock: 10,
+        categories: [{ category: { name: 'Test Category' } }],
+      },
+      {
+        id: '2',
+        name: 'Test Product1',
+        price: 500,
+        imagePath: null,
+        stock: 20,
+        categories: [{ category: { name: 'Test Category' } }],
+      },
     ];
 
     (prisma.product.findMany as jest.Mock).mockResolvedValue(mockProducts);
