@@ -1,9 +1,16 @@
-import prisma from "@/prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
-  const search = req.nextUrl.searchParams.get("q");
+  try {
+    const search = req.nextUrl.searchParams.get('q');
 
-  const products = await prisma.siteConfig.findFirst();
+    const products = await prisma.siteConfig.findFirst();
 
-  return NextResponse.json(products, { status: 200 });
+    return NextResponse.json(products, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
 }

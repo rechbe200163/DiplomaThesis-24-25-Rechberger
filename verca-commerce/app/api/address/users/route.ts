@@ -1,20 +1,32 @@
-import prisma from "@/prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  const url = req.nextUrl;
-  const postcode = url.searchParams.get("postcode");
+  try {
+    const url = req.nextUrl;
+    const postcode = url.searchParams.get('postcode');
 
-  if (postcode) {
-    const addressUsers = await prisma.customer.findMany({
-      where: {
-        address: {
-          postcode: {
-            contains: postcode,
-            mode: "insensitive",
+    if (postcode) {
+      const addressUsers = await prisma.customer.findMany({
+        where: {
+          address: {
+            postcode: {
+              contains: postcode,
+              mode: 'insensitive',
+            },
           },
         },
-      },
+        include: {
+          address: true,
+        },
+      });
+
+      return NextResponse.json(addressUsers, {
+        status: 200,
+      });
+    }
+
+    const addressUsers = await prisma.customer.findMany({
       include: {
         address: true,
       },
@@ -23,15 +35,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(addressUsers, {
       status: 200,
     });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
-
-  const addressUsers = await prisma.customer.findMany({
-    include: {
-      address: true,
-    },
-  });
-
-  return NextResponse.json(addressUsers, {
-    status: 200,
-  });
 }
