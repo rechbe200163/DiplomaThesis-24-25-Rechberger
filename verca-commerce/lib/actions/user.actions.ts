@@ -107,6 +107,7 @@ export async function signUp(
 
     return {
       success: true,
+      message: `Welcome ${customer.firstName} ${customer.lastName} you can now login`,
     };
   } catch (error) {
     console.error('error from signUp', error);
