@@ -1,95 +1,106 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormState } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { authSignUpFormSchema } from "@/lib/utils";
-import { BusinessSector } from "@prisma/client";
-import { countries } from "@/lib/objects";
-import { sign } from "crypto";
-import { signUp } from "@/lib/actions/user.actions";
-import { title } from "process";
+} from '@/components/ui/select';
+import { authSignUpFormSchema } from '@/lib/utils';
+import { BusinessSector } from '@prisma/client';
+import { countries } from '@/lib/objects';
+import { signUp } from '@/lib/actions/user.actions';
+import { useState } from 'react';
+import { FormState } from '@/lib/form.types';
+import { useToast } from '@/hooks/use-toast';
 
 // Enhancements
-const formSectionStyles = "border rounded-lg p-4 mb-6 shadow-md bg-white";
-const formFieldStyles = "flex flex-col md:flex-row gap-5";
-
 export function SignUpForm() {
   const FormSchema = authSignUpFormSchema();
+  const [message, setMessage] = useState<FormState | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      phoneNumber: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      confirmPassword: "",
-      companyNumber: "",
-      businessSector: BusinessSector["TECHNOLOGY"],
-      city: "",
-      country: "",
-      postCode: "",
-      state: "",
-      streetNumber: "",
-      streetName: "",
+      email: '',
+      phoneNumber: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      confirmPassword: '',
+      companyNumber: '',
+      businessSector: BusinessSector['TECHNOLOGY'],
+      city: '',
+      country: '',
+      postCode: '',
+      state: '',
+      streetNumber: '',
+      streetName: '',
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    try {
-      signUp(
-        data.email,
-        data.password,
-        data.firstName,
-        data.lastName,
-        data.companyNumber,
-        data.phoneNumber,
-        data.city,
-        data.country,
-        data.postCode,
-        data.state,
-        data.streetName,
-        data.streetNumber
-      );
-    } catch (error) {}
+    const response = signUp(
+      data.email,
+      data.password,
+      data.confirmPassword,
+      data.firstName,
+      data.lastName,
+      data.companyNumber,
+      data.businessSector,
+      data.phoneNumber,
+      data.city,
+      data.country,
+      data.postCode,
+      data.state,
+      data.streetName,
+      data.streetNumber
+    );
+    if (response) {
+      response.then((res) => {
+        setMessage(res);
+      });
+    }
+    toast({
+      title: message?.success ? 'Success' : 'Error',
+      description: message?.success
+        ? message?.message
+        : message?.errors?.title || 'An error occurred',
+      variant: message?.success ? 'success' : 'destructive',
+    });
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         {/* Personal Information Section */}
-        <div className={formSectionStyles}>
-          <h2 className="text-xl font-bold mb-4">Personal Information</h2>
-          <div className={formFieldStyles}>
+        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+          <h2 className='text-xl font-bold mb-4'>Personal Information</h2>
+          <div className={'flex flex-col md:flex-row gap-5'}>
             <FormField
               control={form.control}
-              name="firstName"
+              name='firstName'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John" {...field} />
+                    <Input placeholder='John' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,12 +108,12 @@ export function SignUpForm() {
             />
             <FormField
               control={form.control}
-              name="lastName"
+              name='lastName'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Doe" {...field} />
+                    <Input placeholder='Doe' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,16 +123,16 @@ export function SignUpForm() {
         </div>
 
         {/* Contact Information Section */}
-        <div className={formSectionStyles}>
-          <h2 className="text-xl font-bold mb-4">Contact Information</h2>
+        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+          <h2 className='text-xl font-bold mb-4'>Contact Information</h2>
           <FormField
             control={form.control}
-            name="phoneNumber"
+            name='phoneNumber'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="+42 664 2160519" {...field} />
+                  <Input placeholder='+42 664 2160519' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -129,16 +140,16 @@ export function SignUpForm() {
           />
           <FormField
             control={form.control}
-            name="email"
+            name='email'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="example@test.com"
+                    placeholder='example@test.com'
                     {...field}
-                    type="email"
-                    autoComplete="email"
+                    type='email'
+                    autoComplete='email'
                   />
                 </FormControl>
                 <FormMessage />
@@ -148,11 +159,11 @@ export function SignUpForm() {
         </div>
 
         {/* Business Information Section */}
-        <div className={formSectionStyles}>
-          <h2 className="text-xl font-bold mb-4">Business Information</h2>
+        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+          <h2 className='text-xl font-bold mb-4'>Business Information</h2>
           <FormField
             control={form.control}
-            name="businessSector"
+            name='businessSector'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Business Sector</FormLabel>
@@ -162,7 +173,7 @@ export function SignUpForm() {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Business Sector" />
+                      <SelectValue placeholder='Business Sector' />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -179,12 +190,12 @@ export function SignUpForm() {
           />
           <FormField
             control={form.control}
-            name="companyNumber"
+            name='companyNumber'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Company Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ex.: 12312312312" {...field} />
+                  <Input placeholder='Ex.: 12312312312' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,12 +204,12 @@ export function SignUpForm() {
         </div>
 
         {/* Address Section */}
-        <div className={formSectionStyles}>
-          <h2 className="text-xl font-bold mb-4">Address</h2>
-          <div className={formFieldStyles}>
+        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+          <h2 className='text-xl font-bold mb-4'>Address</h2>
+          <div className={'flex flex-col md:flex-row gap-5'}>
             <FormField
               control={form.control}
-              name="country"
+              name='country'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Country</FormLabel>
@@ -208,7 +219,7 @@ export function SignUpForm() {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select your Country" />
+                        <SelectValue placeholder='Select your Country' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -225,27 +236,27 @@ export function SignUpForm() {
             />
             <FormField
               control={form.control}
-              name="state"
+              name='state'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>State</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Your State" {...field} />
+                    <Input placeholder='Enter Your State' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <div className={formFieldStyles}>
+          <div className={'flex flex-col md:flex-row gap-5'}>
             <FormField
               control={form.control}
-              name="city"
+              name='city'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Your City" {...field} />
+                    <Input placeholder='Enter Your City' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -253,28 +264,28 @@ export function SignUpForm() {
             />
             <FormField
               control={form.control}
-              name="postCode"
+              name='postCode'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Postal Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="E.g. 8235" {...field} />
+                    <Input placeholder='E.g. 8235' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <div className={formFieldStyles}>
+          <div className={'flex flex-col md:flex-row gap-5'}>
             <FormField
               control={form.control}
-              name="streetName"
+              name='streetName'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Street Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter the name of your street"
+                      placeholder='Enter the name of your street'
                       {...field}
                     />
                   </FormControl>
@@ -284,13 +295,13 @@ export function SignUpForm() {
             />
             <FormField
               control={form.control}
-              name="streetNumber"
+              name='streetNumber'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Street Number</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter the number of your street"
+                      placeholder='Enter the number of your street'
                       {...field}
                     />
                   </FormControl>
@@ -302,21 +313,21 @@ export function SignUpForm() {
         </div>
 
         {/* Account Details Section */}
-        <div className={formSectionStyles}>
-          <h2 className="text-xl font-bold mb-4">Account Details</h2>
-          <div className={formFieldStyles}>
+        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+          <h2 className='text-xl font-bold mb-4'>Account Details</h2>
+          <div className={'flex flex-col md:flex-row gap-5'}>
             <FormField
               control={form.control}
-              name="password"
+              name='password'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter your password"
+                      placeholder='Enter your password'
                       {...field}
-                      type="password"
-                      autoComplete="new-password"
+                      type='password'
+                      autoComplete='new-password'
                     />
                   </FormControl>
                   <FormMessage />
@@ -325,16 +336,16 @@ export function SignUpForm() {
             />
             <FormField
               control={form.control}
-              name="confirmPassword"
+              name='confirmPassword'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Confirm Your Password</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Confirm Your Password"
+                      placeholder='Confirm Your Password'
                       {...field}
-                      type="password"
-                      autoComplete="new-password"
+                      type='password'
+                      autoComplete='new-password'
                     />
                   </FormControl>
                   <FormMessage />
@@ -346,8 +357,8 @@ export function SignUpForm() {
 
         {/* Submit Button */}
         <Button
-          className="w-full mt-6 py-3 text-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
-          type="submit"
+          className='w-full mt-6 py-3 text-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg'
+          type='submit'
         >
           Submit
         </Button>
