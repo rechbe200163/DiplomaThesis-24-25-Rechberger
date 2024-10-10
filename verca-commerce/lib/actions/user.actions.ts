@@ -1,22 +1,18 @@
-"use server";
+'use server';
 
-import prisma from "@/prisma/client";
-import { authSignUpFormSchema } from "../utils";
-import { hash } from "bcryptjs";
-
-type FormState = {
-  success: boolean;
-  errors?: {
-    title: string[];
-  };
-};
+import prisma from '@/prisma/client';
+import { authSignUpFormSchema } from '../utils';
+import { hash } from 'bcryptjs';
+import { FormState } from '../form.types';
 
 export async function signUp(
   email: string,
   password: string,
+  confirmPassword: string,
   firstName: string,
   lastName: string,
   companyNumber: string,
+  businessSector: string,
   phoneNumber: string,
   city: string,
   country: string,
@@ -26,29 +22,61 @@ export async function signUp(
   streetNumber: string
 ): Promise<FormState> {
   try {
-    // console.log(formData);
+    const validData = authSignUpFormSchema().safeParse({
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      companyNumber,
+      businessSector,
+      phoneNumber,
+      city,
+      country,
+      postCode,
+      state,
+      streetName,
+      streetNumber,
+    });
 
-    // const validData = authSignUpFormSchema().safeParse(formData);
+    if (!validData.success) {
+      console.log(validData.error.flatten().fieldErrors);
+      console.log();
+      return {
+        success: false,
+        errors: {
+          title: ['Invalid form data'],
+        },
+      };
+    }
 
-    // if (!validData.success) {
-    //   return {
-    //     success: false,
-    //     errors: {
-    //       title: ["Invalid form data"],
-    //     },
-    //   };
-    // }
+    const chekForExitingEmail = await prisma.customer.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (chekForExitingEmail) {
+      console.log('Email already exists');
+      return {
+        errors: {
+          title: ['Email already exists'],
+        },
+        success: false,
+      };
+    }
 
     const pwHash = await hash(password, 12);
 
-    await prisma.customer.create({
+    // Create Customer and Cart in a single transaction
+    const customer = await prisma.customer.create({
       data: {
         email: email,
         password: pwHash,
         firstName: firstName,
-        lastName: lastName!,
+        lastName: lastName,
         companyNumber: companyNumber,
-        phoneNumber: phoneNumber!,
+        phoneNumber: phoneNumber,
         address: {
           connectOrCreate: {
             where: {
@@ -71,16 +99,20 @@ export async function signUp(
             },
           },
         },
+        cart: {
+          create: {}, // Create an empty cart
+        },
       },
     });
+
     return {
       success: true,
     };
   } catch (error) {
-    console.error("error form signUp", error);
+    console.error('error from signUp', error);
     return {
       errors: {
-        title: ["Something went wrong"],
+        title: ['Something went wrong'],
       },
       success: false,
     };
