@@ -4,7 +4,11 @@ export async function GET(req: NextRequest) {
   try {
     const search = req.nextUrl.searchParams.get('q');
 
-    const products = await prisma.siteConfig.findFirst();
+    const products = await prisma.siteConfig.findFirst({
+      where: {
+        deleted: false,
+      },
+    });
 
     return NextResponse.json(products, { status: 200 });
   } catch (error) {

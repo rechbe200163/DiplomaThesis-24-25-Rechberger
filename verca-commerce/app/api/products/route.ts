@@ -36,6 +36,9 @@ export async function GET(req: NextRequest) {
 
     // Execute the query
     const products = await prisma.product.findMany({
+      where: {
+        deleted: false,
+      },
       ...query,
       include: {
         categories: {

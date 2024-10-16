@@ -14,6 +14,9 @@ export async function GET(req: NextRequest) {
             },
           },
         },
+        where: {
+          deleted: false,
+        },
       });
       return NextResponse.json(customerInvoices, {
         status: 200,

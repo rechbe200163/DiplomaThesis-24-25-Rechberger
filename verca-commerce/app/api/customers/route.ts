@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
           contains: search,
           mode: 'insensitive',
         },
+        deleted: false,
       },
       include: {
         address: true,

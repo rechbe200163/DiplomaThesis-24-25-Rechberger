@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
               mode: 'insensitive',
             },
           },
+          deleted: false,
         },
         include: {
           address: true,
@@ -27,6 +28,9 @@ export async function GET(req: NextRequest) {
     }
 
     const addressUsers = await prisma.customer.findMany({
+      where: {
+        deleted: false,
+      },
       include: {
         address: true,
       },

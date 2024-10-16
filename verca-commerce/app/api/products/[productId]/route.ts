@@ -9,6 +9,7 @@ export async function GET(
     // Execute the query
     const products = await prisma.product.findUnique({
       where: {
+        deleted: false,
         id: params.productId,
       },
     });

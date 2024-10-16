@@ -6,6 +6,9 @@ export async function GET(req: NextRequest) {
       include: {
         customer: true,
       },
+      where: {
+        deleted: false,
+      },
     });
     return NextResponse.json(orders, { status: 200 });
   } catch (error) {

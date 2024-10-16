@@ -46,6 +46,7 @@ export async function GET(
               categoryId: categoryId,
             },
           },
+          deleted: false,
         },
         ...query, // Include the sort condition in the query
       });

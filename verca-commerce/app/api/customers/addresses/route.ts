@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
             contains: city,
             mode: 'insensitive',
           },
+          deleted: false,
         },
         include: {
           customers: true,
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
             contains: postcode,
             mode: 'insensitive',
           },
+          deleted: false,
         },
         include: {
           customers: true,
@@ -44,6 +46,7 @@ export async function GET(req: NextRequest) {
             contains: state,
             mode: 'insensitive',
           },
+          deleted: false,
         },
         include: {
           customers: true,
@@ -58,6 +61,7 @@ export async function GET(req: NextRequest) {
             contains: country,
             mode: 'insensitive',
           },
+          deleted: false,
         },
         include: {
           customers: true,
