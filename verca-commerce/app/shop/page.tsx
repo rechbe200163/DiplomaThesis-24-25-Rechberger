@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import ProductCard from '@/components/cards/ProductCard';
 import { getAllProducts } from '@/lib/data';
 import React from 'react';
