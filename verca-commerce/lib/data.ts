@@ -1,29 +1,29 @@
-import { Customer, Product, SiteConfig } from "@prisma/client";
-import { CartCount, CartWithProducts, ProductWithCategoryNames } from "./types";
+import { Customer, Product, SiteConfig } from '@prisma/client';
+import { CartCount, CartWithProducts, ProductWithCategoryNames } from './types';
 
 export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
   try {
-    const res = await fetch("http://localhost:3000/api/products", {
-      cache: "no-store",
+    const res = await fetch('http://localhost:3000/api/products', {
+      cache: 'no-store',
     });
 
     const products = await res.json();
     return products;
   } catch (error) {
-    throw new Error("Failed to fetch products");
+    throw new Error('Failed to fetch products');
   }
 }
 
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
-    const res = await fetch("http://localhost:3000/api/siteConfig", {
-      next: { tags: ["siteConfig"] },
+    const res = await fetch('http://localhost:3000/api/siteConfig', {
+      next: { tags: ['siteConfig'] },
     });
 
     const siteConfig = await res.json();
     return siteConfig;
   } catch (error) {
-    throw new Error("Failed to fetch site config");
+    throw new Error('Failed to fetch site config');
   }
 }
 
@@ -32,13 +32,13 @@ export async function getProductById(
 ): Promise<ProductWithCategoryNames> {
   try {
     const res = await fetch(`http://localhost:3000/api/products/${productId}`, {
-      cache: "no-store",
+      cache: 'no-store',
     });
 
     const product = await res.json();
     return product;
   } catch (error) {
-    throw new Error("Failed to fetch product");
+    throw new Error('Failed to fetch product');
   }
 }
 
@@ -47,14 +47,14 @@ export async function getOrdersByUserId(customerId: string) {
     const res = await fetch(
       `http://localhost:3000/api/orders?customerId=${customerId}`,
       {
-        cache: "no-store",
+        cache: 'no-store',
       }
     );
 
     const orders = await res.json();
     return orders;
   } catch (error) {
-    throw new Error("Failed to fetch orders");
+    throw new Error('Failed to fetch orders');
   }
 }
 
@@ -63,7 +63,7 @@ export async function getCartByUserId(
 ): Promise<CartWithProducts> {
   try {
     const res = await fetch(`http://localhost:3000/api/cart/${customerId}`, {
-      next: { tags: ["cart"] },
+      next: { tags: ['cart'] },
     });
 
     const cart = await res.json();
@@ -71,7 +71,7 @@ export async function getCartByUserId(
 
     return cart;
   } catch (error) {
-    throw new Error("Failed to fetch cart");
+    throw new Error('Failed to fetch cart');
   }
 }
 
@@ -82,14 +82,14 @@ export async function fetchProductsInCart(
     const res = await fetch(
       `http://localhost:3000/api/cart/${customerId}?q=count`,
       {
-        next: { tags: ["cartCount"] },
+        next: { tags: ['cartCount'] },
       }
     );
 
     const productsCount = await res.json();
     return productsCount;
   } catch (error) {
-    throw new Error("Failed to fetch products count in cart");
+    throw new Error('Failed to fetch products count in cart');
   }
 }
 
@@ -98,13 +98,13 @@ export async function fetchUser(customerId: string): Promise<Customer> {
     const res = await fetch(
       `http://localhost:3000/api/customers/${customerId}`,
       {
-        next: { tags: ["user"] },
+        next: { tags: ['user'] },
       }
     );
 
     const user = await res.json();
     return user;
   } catch (error) {
-    throw new Error("Failed to fetch user");
+    throw new Error('Failed to fetch user');
   }
 }

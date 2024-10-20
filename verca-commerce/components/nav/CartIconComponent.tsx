@@ -1,9 +1,9 @@
-import { auth } from "@/auth";
-import { fetchProductsInCart } from "@/lib/data";
-import prisma from "@/prisma/client";
-import Link from "next/link";
-import React from "react";
-import { IoCartOutline } from "react-icons/io5";
+import { auth } from '@/auth';
+import { fetchProductsInCart } from '@/lib/data';
+import prisma from '@/prisma/client';
+import Link from 'next/link';
+import React from 'react';
+import { IoCartOutline } from 'react-icons/io5';
 
 async function CartIconComponent() {
   const session = await auth();
@@ -13,10 +13,10 @@ async function CartIconComponent() {
   return (
     <div>
       <Link href={`/shop/${session?.user.id}/cart`}>
-        <div className="flex relative">
+        <div className='flex relative'>
           <IoCartOutline size={35} />
           {session && productsCount?._count.products > 0 && (
-            <div className="badge badge-primary badge-md absolute -top-2  -right-4">
+            <div className='badge badge-primary badge-md absolute -top-2  -right-4'>
               {productsCount?._count.products}
             </div>
           )}
