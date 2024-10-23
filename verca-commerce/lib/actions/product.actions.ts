@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth';
 import prisma from '@/prisma/client';
+import { Product } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
 
 type FormState = {
@@ -28,6 +29,32 @@ export async function addToCart(
     }
 
     const customerId = session.user.id;
+
+    // get product by id to check if it is out of stock
+
+    const product = await prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!product) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product not found'],
+        },
+      };
+    }
+
+    if (product?.stock < 1) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product out of Stock'],
+        },
+      };
+    }
 
     // Find the customer's cart or create one if it doesn't exist
     const cart = await prisma.cart.findUnique({
@@ -156,4 +183,57 @@ export async function removeFromCart(
       },
     };
   }
+}
+
+export async function reduceStockofPurchasedProducts(
+  products: Product[]
+): Promise<FormState> {
+  for (const product of products) {
+    const productId = product.id;
+    console.log('Log From reduceStockofPurchasedProducts', products);
+
+    if (!productId) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product ID is missing'],
+        },
+      };
+    }
+
+    // Find the existing product in the database
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!existingProduct) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product not found'],
+        },
+      };
+    }
+
+    if (existingProduct.stock < 1) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product out of stock'],
+        },
+      };
+    }
+
+    // Update the product stock
+    await prisma.product.update({
+      where: { id: productId },
+      data: {
+        stock: existingProduct.stock - 1,
+      },
+    });
+  }
+
+  return {
+    success: true,
+  };
 }
