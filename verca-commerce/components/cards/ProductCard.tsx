@@ -34,11 +34,13 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
             : product.description}
         </p>
         <div className='card-actions justify-between items-center'>
-          {product.stock <= 5 && (
+          {product.stock > 0 && product.stock <= 5 ? (
             <div className='badge badge-error font-bold'>
               only {product.stock} left
             </div>
-          )}
+          ) : product.stock === 0 ? (
+            <div className='badge badge-error font-bold'>Sold out</div>
+          ) : null}
           <div>
             {product.categories.map((category) => (
               <div key={category.category.name} className='badge badge-outline'>

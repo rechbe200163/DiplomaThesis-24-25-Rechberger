@@ -13,6 +13,8 @@ export default async function PurchasePage({
   console.log(customerId);
   const cart = await getCartByUserId(customerId);
 
+  const cartId = cart.cartId;
+
   const products = cart.products.map((product) => ({
     id: product.product.id,
     name: product.product.name,
@@ -32,6 +34,7 @@ export default async function PurchasePage({
   return (
     <CheckOutForm
       products={products as Product[]}
+      cartId={cartId}
       clientSecret={paymentIntent.client_secret}
     />
   );

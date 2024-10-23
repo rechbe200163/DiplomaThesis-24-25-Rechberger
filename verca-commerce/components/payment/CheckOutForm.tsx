@@ -26,6 +26,7 @@ import { reduceStockofPurchasedProducts } from '@/lib/actions/product.actions';
 
 type CheckoutFromProps = {
   products: Product[];
+  cartId: string;
   clientSecret: string;
 };
 
@@ -33,7 +34,11 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY! as string
 );
 
-const CheckOutForm = ({ products, clientSecret }: CheckoutFromProps) => {
+const CheckOutForm = ({
+  products,
+  clientSecret,
+  cartId,
+}: CheckoutFromProps) => {
   const total = products.reduce((acc, product) => acc + product.price, 0);
 
   return (
@@ -62,14 +67,22 @@ const CheckOutForm = ({ products, clientSecret }: CheckoutFromProps) => {
         }}
         stripe={stripePromise}
       >
-        <Form amount={total} products={products} />
+        <Form amount={total} products={products} cartId={cartId} />
       </Elements>
     </div>
   );
 };
 export default CheckOutForm;
 
-function Form({ amount, products }: { amount: number; products: Product[] }) {
+function Form({
+  amount,
+  products,
+  cartId,
+}: {
+  amount: number;
+  products: Product[];
+  cartId: string;
+}) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +95,7 @@ function Form({ amount, products }: { amount: number; products: Product[] }) {
     }
 
     setIsLoading(true);
-    reduceStockofPurchasedProducts(products).then((response) => {
+    reduceStockofPurchasedProducts(products, cartId).then((response) => {
       if (!response.success) {
         setErrorMessage(response.errors?.title[0]);
         setIsLoading(false);
