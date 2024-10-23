@@ -13,12 +13,16 @@ export default async function PurchasePage({
   console.log(customerId);
   const cart = await getCartByUserId(customerId);
 
+  const products = cart.products.map((product) => ({
+    id: product.product.id,
+    name: product.product.name,
+    price: product.product.price,
+    imagePath: product.product.imagePath,
+  }));
+
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: cart.products.reduce(
-      (acc, product) => acc + product.product.price,
-      0
-    ),
-    currency: 'usd',
+    amount: products.reduce((acc, product) => acc + product.price, 0),
+    currency: 'eur',
   });
 
   if (paymentIntent.client_secret == null) {
@@ -27,7 +31,7 @@ export default async function PurchasePage({
 
   return (
     <CheckOutForm
-      products={cart.products as unknown as Product[]}
+      products={products as Product[]}
       clientSecret={paymentIntent.client_secret}
     />
   );
