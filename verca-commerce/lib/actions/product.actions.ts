@@ -163,6 +163,8 @@ export async function updateQuantity(
       };
     }
 
+    const value = formData.get('update');
+
     // Update the product quantity
     await prisma.cartOnProducts.update({
       where: {
@@ -172,7 +174,7 @@ export async function updateQuantity(
         },
       },
       data: {
-        quantity: Number(formData.get('quantity')),
+        quantity: existingProductCart.quantity + parseInt(value as string),
       },
     });
 
