@@ -1,7 +1,10 @@
 import { CartWithProducts } from '@/lib/types';
 import prisma from '@/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
-export async function GET(req: NextRequest, props: { params: Promise<{ customerId: string }> }) {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ customerId: string }> }
+) {
   const params = await props.params;
   try {
     const customerId = params.customerId;
@@ -18,6 +21,12 @@ export async function GET(req: NextRequest, props: { params: Promise<{ customerI
               products: true,
             },
           },
+          products: {
+            select: {
+              quantity: true,
+              productId: true,
+            },
+          },
         },
       });
 
@@ -30,7 +39,6 @@ export async function GET(req: NextRequest, props: { params: Promise<{ customerI
 
       return NextResponse.json(productsCount, { status: 200 });
     }
-
     const cartProducts = await prisma.cart.findUnique({
       where: {
         customerId: customerId,
@@ -42,7 +50,9 @@ export async function GET(req: NextRequest, props: { params: Promise<{ customerI
               price: 'desc',
             },
           },
+
           select: {
+            quantity: true,
             product: {
               select: {
                 id: true,
