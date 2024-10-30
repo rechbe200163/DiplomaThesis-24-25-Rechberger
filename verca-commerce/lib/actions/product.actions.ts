@@ -113,6 +113,86 @@ export async function addToCart(
   }
 }
 
+export async function updateQuantity(
+  productId: string,
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const session = await auth();
+    if (!session || !session.user) {
+      return {
+        success: false,
+        errors: {
+          title: ['Please sign in to update product quantity'],
+        },
+      };
+    }
+
+    const customerId = session.user.id;
+
+    // Find the customer's cart
+    const cart = await prisma.cart.findUnique({
+      where: { customerId },
+      include: { products: true },
+    });
+
+    if (!cart) {
+      return {
+        success: false,
+        errors: {
+          title: ['Cart not found'],
+        },
+      };
+    }
+
+    // Check if the product is in the cart
+    const existingProductCart = await prisma.cartOnProducts.findFirst({
+      where: {
+        cartId: cart.cartId,
+        productId,
+      },
+    });
+
+    if (!existingProductCart) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product not in cart'],
+        },
+      };
+    }
+
+    // Update the product quantity
+    await prisma.cartOnProducts.update({
+      where: {
+        cartId_productId: {
+          cartId: cart.cartId,
+          productId,
+        },
+      },
+      data: {
+        quantity: Number(formData.get('quantity')),
+      },
+    });
+
+    revalidateTag('cartCount');
+    revalidateTag('cart');
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      errors: {
+        title: ['Could not update product quantity'],
+      },
+    };
+  }
+}
+
 export async function removeFromCart(
   productId: string,
   prevState: FormState,
@@ -186,11 +266,11 @@ export async function removeFromCart(
 }
 
 export async function reduceStockofPurchasedProducts(
-  products: Product[]
+  products: Product[],
+  cartId: string
 ): Promise<FormState> {
   for (const product of products) {
     const productId = product.id;
-    console.log('Log From reduceStockofPurchasedProducts', products);
 
     if (!productId) {
       return {
@@ -233,7 +313,40 @@ export async function reduceStockofPurchasedProducts(
     });
   }
 
+  clearCart(cartId);
+
   return {
     success: true,
   };
+}
+
+async function clearCart(cartId: string): Promise<FormState> {
+  try {
+    const session = await auth();
+    if (!session || !session.user) {
+      throw new Error('User not authenticated');
+    }
+
+    // Remove all products from the cart
+    await prisma.cartOnProducts.deleteMany({
+      where: {
+        cartId: cartId,
+      },
+    });
+
+    revalidateTag('cartCount');
+    revalidateTag('cart');
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      errors: {
+        title: ['Could not clear cart'],
+      },
+    };
+  }
 }
