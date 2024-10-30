@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@prisma/client';
 
 const productWithCategoryNames = Prisma.validator<Prisma.ProductDefaultArgs>()({
   include: {
@@ -32,6 +32,7 @@ const cartWithProducts = Prisma.validator<Prisma.CartDefaultArgs>()({
   include: {
     products: {
       select: {
+        quantity: true,
         product: {
           select: {
             id: true,
@@ -58,6 +59,12 @@ const cartCount = Prisma.validator<Prisma.CartDefaultArgs>()({
     _count: {
       select: {
         products: true,
+      },
+    },
+    products: {
+      select: {
+        quantity: true,
+        productId: true,
       },
     },
   },
