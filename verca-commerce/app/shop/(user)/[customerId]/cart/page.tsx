@@ -2,7 +2,8 @@ import CartSummaryCard from '@/components/cards/CartSummaryCard';
 import ProductsCartCard from '@/components/cards/ProductsCartCard';
 import React from 'react';
 
-function CartPage({ params }: { params: { customerId: string } }) {
+async function CartPage(props: { params: Promise<{ customerId: string }> }) {
+  const params = await props.params;
   return (
     <div className='p-5 md:p-10 space-y-10 bg-gray-50 min-h-screen'>
       <div className='text-center md:text-left'>

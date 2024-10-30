@@ -5,11 +5,17 @@ import CheckOutForm from '@/components/payment/CheckOutForm';
 import { Product } from '@prisma/client';
 import { stripe } from '@/lib/stripeClient';
 
-export default async function PurchasePage({
-  params: { customerId },
-}: {
-  params: { customerId: string };
-}) {
+export default async function PurchasePage(
+  props: {
+    params: Promise<{ customerId: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    customerId
+  } = params;
+
   console.log(customerId);
   const cart = await getCartByUserId(customerId);
 

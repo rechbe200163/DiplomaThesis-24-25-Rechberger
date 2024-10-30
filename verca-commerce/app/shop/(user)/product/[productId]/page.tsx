@@ -12,12 +12,13 @@ import { BiAddToQueue } from 'react-icons/bi';
 import AddToCartForm from '@/components/forms/addToCard';
 
 interface ProductDetailsPageProps {
-  params: {
+  params: Promise<{
     productId: string;
-  };
+  }>;
 }
 
-async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
+async function ProductDetailsPage(props: ProductDetailsPageProps) {
+  const params = await props.params;
   const product = await getProductById(params.productId);
 
   return (
