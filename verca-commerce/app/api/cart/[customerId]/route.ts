@@ -1,10 +1,8 @@
 import { CartWithProducts } from '@/lib/types';
 import prisma from '@/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { customerId: string } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ customerId: string }> }) {
+  const params = await props.params;
   try {
     const customerId = params.customerId;
     const query = req.nextUrl.searchParams.get('q');

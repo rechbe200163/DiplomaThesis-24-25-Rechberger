@@ -1,10 +1,8 @@
 import prisma from '@/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { categoryId: string } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ categoryId: string }> }) {
+  const params = await props.params;
   try {
     const search = req.nextUrl.searchParams.get('q');
     const sort = req.nextUrl.searchParams.get('sort');
