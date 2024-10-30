@@ -1,14 +1,17 @@
 import { getCartByUserId } from '@/lib/data';
 import Image from 'next/image';
 import React from 'react';
-import RemoveFromCart from '../forms/removeFromCart';
-import UpadateProductQuantity from '../forms/updateProductQuantity';
+import RemoveFromCart from '../forms/cart/removeFromCart';
+
+import { formatPrice } from '@/lib/utils';
+import IncreaseProductQuantity from '../forms/cart/increaseProductQuantity';
+import DecreaseProductQuantity from '../forms/cart/decreaseProductQuantity';
 
 async function ProductsCartCard({ customerId }: { customerId: string }) {
   const products = await getCartByUserId(customerId);
 
   return (
-    <div className='flex flex-col gap-6 p-4 md:p-0 w-full md:w-2/3 overflow-auto'>
+    <div className='flex flex-col gap-6 p-4 md:p-0 w-full md:w-2/3 overflow-auto max-h-96'>
       {products.products.map((product) => (
         <div
           key={product.product.name}
@@ -33,9 +36,21 @@ async function ProductsCartCard({ customerId }: { customerId: string }) {
             <div className='badge badge-outline text-gray-600'>
               {product.product.stock}
             </div>
-            <div className='text-gray-600'>Quantity: 1</div>
+            <div className='text-gray-600'>
+              {formatPrice(product.product.price)} x {product.quantity}
+            </div>
             <div className='flex items-center justify-between mt-auto'>
-              <UpadateProductQuantity productId={product.product.id} />
+              <div className='flex items-center justify-evenly space-x-10'>
+                <DecreaseProductQuantity
+                  productId={product.product.id}
+                  quantity={product.quantity}
+                />
+                {product.quantity}
+                <IncreaseProductQuantity
+                  productId={product.product.id}
+                  quantity={product.quantity}
+                />
+              </div>
               <RemoveFromCart productId={product.product.id} />
             </div>
           </div>
