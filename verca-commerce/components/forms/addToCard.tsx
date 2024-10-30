@@ -1,8 +1,9 @@
 'use client';
 
+import { useActionState } from 'react';
 import { addToCart } from '@/lib/actions/product.actions';
 import { Loader2 } from 'lucide-react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { Button } from '../ui/button';
 
 function SubmitButton() {
@@ -24,7 +25,7 @@ function SubmitButton() {
 function AddToCartForm({ productId }: { productId: string }) {
   console.log('ProductId form addToCart Form', productId);
   const addToCartAction = addToCart.bind(null, productId); // Adjusted binding here
-  const [formState, action] = useFormState(addToCartAction, {
+  const [formState, action] = useActionState(addToCartAction, {
     success: false,
     errors: {
       title: [''],
