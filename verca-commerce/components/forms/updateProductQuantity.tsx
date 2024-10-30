@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { updateQuantity } from '@/lib/actions/product.actions';
 import {
   Select,
   SelectContent,
@@ -10,18 +10,20 @@ import {
   SelectValue,
 } from '../ui/select';
 import { SelectTrigger } from '@radix-ui/react-select';
-import { updateQuantity } from '@/lib/actions/product.actions';
-import { useRef } from 'react';
+import { useActionState } from 'react';
 
 function UpadateProductQuantity({ productId }: { productId: string }) {
   console.log('ProductId from removeFromCart Form', productId);
   const upadateProductQuantity = updateQuantity.bind(null, productId);
-  const [formState, action] = useFormState(upadateProductQuantity, {
-    success: false,
-    errors: {
-      title: [''],
-    },
-  });
+  const [formState, action, isPending] = useActionState(
+    upadateProductQuantity,
+    {
+      success: false,
+      errors: {
+        title: [''],
+      },
+    }
+  );
 
   function handleSubmit(value: string) {}
 
@@ -29,7 +31,12 @@ function UpadateProductQuantity({ productId }: { productId: string }) {
 
   return (
     <form action={action} className='flex items-center'>
-      <Select name='quantity' defaultValue='1' onValueChange={handleSubmit}>
+      <Select
+        name='quantity'
+        defaultValue='1'
+        onValueChange={handleSubmit}
+        disabled={isPending}
+      >
         <SelectTrigger className='w-[180px]'>
           <SelectValue placeholder='Product Quantity' />
         </SelectTrigger>
