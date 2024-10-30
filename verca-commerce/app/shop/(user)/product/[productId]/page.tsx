@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { BiAddToQueue } from 'react-icons/bi';
-import AddToCartForm from '@/components/forms/addToCard';
+import AddToCartForm from '@/components/forms/cart/addToCard';
 
 interface ProductDetailsPageProps {
   params: Promise<{
