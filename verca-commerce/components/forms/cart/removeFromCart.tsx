@@ -4,7 +4,6 @@ import { removeFromCart } from '@/lib/actions/product.actions';
 import { useActionState } from 'react';
 
 function RemoveFromCart({ productId }: { productId: string }) {
-  console.log('ProductId form addToCart Form', productId);
   const removeFromCartId = removeFromCart.bind(null, productId); // Adjusted binding here
   const [formState, action, isPending] = useActionState(removeFromCartId, {
     success: false,

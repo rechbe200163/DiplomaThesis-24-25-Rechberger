@@ -6,7 +6,6 @@ import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 function AddToCartForm({ productId }: { productId: string }) {
-  console.log('ProductId form addToCart Form', productId);
   const addToCartAction = addToCart.bind(null, productId); // Adjusted binding here
   const [formState, action, isPending] = useActionState(addToCartAction, {
     success: false,

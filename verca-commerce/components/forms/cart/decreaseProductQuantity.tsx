@@ -21,8 +21,6 @@ function DecreaseProductQuantity({
   productId: string;
   quantity: number;
 }) {
-  console.log('ProductId from UpdateProductQuantity', productId);
-
   // Bind updateQuantity to productId
   const decreaseProductQuantity = updateQuantity.bind(null, productId);
   const [formState, action, isPending] = useActionState(
