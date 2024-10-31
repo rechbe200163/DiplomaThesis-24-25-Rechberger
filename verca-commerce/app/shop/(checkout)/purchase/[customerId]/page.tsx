@@ -4,19 +4,15 @@ import React from 'react';
 import CheckOutForm from '@/components/payment/CheckOutForm';
 import { Product } from '@prisma/client';
 import { stripe } from '@/lib/stripeClient';
+import { ExtendedProduct } from '@/lib/interfaces';
 
-export default async function PurchasePage(
-  props: {
-    params: Promise<{ customerId: string }>;
-  }
-) {
+export default async function PurchasePage(props: {
+  params: Promise<{ customerId: string }>;
+}) {
   const params = await props.params;
 
-  const {
-    customerId
-  } = params;
+  const { customerId } = params;
 
-  console.log(customerId);
   const cart = await getCartByUserId(customerId);
 
   const cartId = cart.cartId;
@@ -26,10 +22,14 @@ export default async function PurchasePage(
     name: product.product.name,
     price: product.product.price,
     imagePath: product.product.imagePath,
+    quantity: product.quantity,
   }));
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: products.reduce((acc, product) => acc + product.price, 0),
+    amount: products.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    ),
     currency: 'eur',
   });
 
@@ -39,9 +39,10 @@ export default async function PurchasePage(
 
   return (
     <CheckOutForm
-      products={products as Product[]}
+      products={products as ExtendedProduct[]}
       cartId={cartId}
       clientSecret={paymentIntent.client_secret}
+      paymentIntentAmount={paymentIntent.amount}
     />
   );
 }
