@@ -4,6 +4,7 @@ import { auth } from '@/auth';
 import prisma from '@/prisma/client';
 import { Product } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
+import { ExtendedProduct } from '../interfaces';
 
 type FormState = {
   success: boolean;
@@ -165,6 +166,40 @@ export async function updateQuantity(
 
     const value = formData.get('update');
 
+    if (!value || isNaN(parseInt(value as string))) {
+      return {
+        success: false,
+        errors: {
+          title: ['Quantity not provided'],
+        },
+      };
+    }
+
+    const product = await prisma.product.findUnique({
+      where: { id: productId, deleted: false },
+    });
+
+    if (!product) {
+      return {
+        success: false,
+        errors: {
+          title: ['Product not found'],
+        },
+      };
+    }
+
+    if (
+      parseInt(value as string) + existingProductCart.quantity >
+      product?.stock
+    ) {
+      return {
+        success: false,
+        errors: {
+          title: ['Quantity exceeds stock'],
+        },
+      };
+    }
+
     // Update the product quantity
     await prisma.cartOnProducts.update({
       where: {
@@ -268,7 +303,7 @@ export async function removeFromCart(
 }
 
 export async function reduceStockofPurchasedProducts(
-  products: Product[],
+  products: ExtendedProduct[],
   cartId: string
 ): Promise<FormState> {
   for (const product of products) {
@@ -335,9 +370,6 @@ async function clearCart(cartId: string): Promise<FormState> {
         cartId: cartId,
       },
     });
-
-    revalidateTag('cartCount');
-    revalidateTag('cart');
 
     return {
       success: true,

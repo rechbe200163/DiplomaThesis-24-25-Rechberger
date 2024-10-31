@@ -21,8 +21,6 @@ export function formatPrice(price: number) {
 export async function checkUserRole() {
   const session = await auth();
 
-  console.log(session);
-
   if (!session) {
     return null;
   }

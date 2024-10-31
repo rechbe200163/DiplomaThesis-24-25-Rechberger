@@ -70,7 +70,6 @@ export async function getCartByUserId(
     });
 
     const cart = await res.json();
-    console.log(cart);
 
     return cart;
   } catch (error) {

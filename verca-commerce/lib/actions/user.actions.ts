@@ -40,8 +40,6 @@ export async function signUp(
     });
 
     if (!validData.success) {
-      console.log(validData.error.flatten().fieldErrors);
-      console.log();
       return {
         success: false,
         errors: {
@@ -57,7 +55,6 @@ export async function signUp(
     });
 
     if (chekForExitingEmail) {
-      console.log('Email already exists');
       return {
         errors: {
           title: ['Email already exists'],
