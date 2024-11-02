@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     const search = req.nextUrl.searchParams.get('q');
+    const category = req.nextUrl.searchParams.get('category');
     const sort = req.nextUrl.searchParams.get('sort');
 
     // Construct the base query
@@ -13,10 +14,34 @@ export async function GET(req: NextRequest) {
 
     // Add name search condition if present
     if (search) {
-      query.where.name = {
-        contains: search,
-        mode: 'insensitive',
-      };
+      const filterdPoducts = await prisma.product.findMany({
+        where: {
+          deleted: false,
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        include: {
+          categories: {
+            select: {
+              category: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      if (filterdPoducts.length === 0) {
+        return NextResponse.json(
+          { error: 'No products found' },
+          { status: 404 }
+        );
+      }
+      console.log(filterdPoducts);
+      return NextResponse.json(filterdPoducts, { status: 200 });
     }
 
     // Add sort condition based on the value of 'sort'
@@ -34,8 +59,7 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    // Execute the query
-    const products = await prisma.product.findMany({
+    const sortedProducts = await prisma.product.findMany({
       where: {
         deleted: false,
       },
@@ -53,7 +77,9 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(products, { status: 200 });
+    // Execute the query
+
+    return NextResponse.json(sortedProducts, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal Server Error' },
