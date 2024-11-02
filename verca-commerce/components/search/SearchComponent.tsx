@@ -12,19 +12,27 @@ export default function SearchComponent({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+
   function handleSearch(term: string) {
     const params = new URLSearchParams(searchParams);
+
     if (term) {
       params.set('query', term);
     } else {
       params.delete('query');
     }
-    replace(`${pathname}/search/?${params.toString()}`);
+
+    // Check if the current pathname already contains '/search'
+    const newPath = pathname.includes('/search')
+      ? pathname
+      : `${pathname}/search`;
+
+    replace(`${newPath}?${params.toString()}`);
     console.log(term);
   }
 
   return (
-    <div className='relative flex flex-1 flex-shrink-0'>
+    <div className='relative flex flex-1 flex-shrink-0 max-w-xs'>
       <label htmlFor='search' className='sr-only'>
         Search
       </label>
