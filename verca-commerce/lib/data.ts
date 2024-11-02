@@ -15,6 +15,21 @@ export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
   }
 }
 
+export async function getFilterdProducts(
+  query: string
+): Promise<ProductWithCategoryNames[]> {
+  try {
+    const res = await fetch(`${baseApiUrl}/products?q=${query}`, {
+      cache: 'no-store',
+    });
+
+    const products = await res.json();
+    return products;
+  } catch (error) {
+    throw new Error('Failed to fetch products');
+  }
+}
+
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
     const res = await fetch(`${baseApiUrl}/siteConfig`, {
