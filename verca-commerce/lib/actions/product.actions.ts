@@ -341,11 +341,20 @@ export async function reduceStockofPurchasedProducts(
       };
     }
 
+    if (product.quantity > existingProduct.stock) {
+      return {
+        success: false,
+        errors: {
+          title: ['Quantity exceeds stock'],
+        },
+      };
+    }
+
     // Update the product stock
     await prisma.product.update({
       where: { id: productId },
       data: {
-        stock: existingProduct.stock - 1,
+        stock: existingProduct.stock - product.quantity,
       },
     });
   }
