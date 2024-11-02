@@ -1,3 +1,6 @@
+import ProductCard from '@/components/cards/ProductCard';
+import { getFilterdProducts } from '@/lib/data';
+
 export default async function SearchPage(props: {
   searchParams?: Promise<{
     query?: string;
@@ -6,12 +9,24 @@ export default async function SearchPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
+
+  const products = await getFilterdProducts(query);
 
   return (
-    <div className='flex flex-col items-center space-y-4'>
-      <h1 className='text-2xl font-semibold'>Search Results</h1>
-      <p>Search query: {query}</p>
+    <div className='p-4'>
+      {products.length > 0 ? (
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4'>
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <div className='text-center my-10'>
+          <p className='text-gray-600 text-lg font-medium'>
+            Sorry! it seems we don't have what you're looking for.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
