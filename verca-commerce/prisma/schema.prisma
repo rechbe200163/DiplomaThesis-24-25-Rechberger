@@ -25,25 +25,29 @@ enum BusinessSector {
   MANUFACTURING
   CONSTRUCTION
   TRANSPORTATION
+  TOURISM
   FINANCE
   EDUCATION
   HEALTH
   HOSPITALITY
   RETAIL
   TECHNOLOGY
+  IT
+  OTHER
 }
 
 model Customer {
-  customerId    String   @id @default(cuid())
-  email         String   @unique
-  phoneNumber   String   @db.VarChar(15)
-  password      String   @db.VarChar(255)
-  firstName     String?  @db.VarChar(255)
-  lastName      String   @db.VarChar(255)
-  companyNumber String?  @db.VarChar(255)
-  modifiedAt DateTime @updatedAt @default(now()) 
-  deleted       Boolean  @default(false)
-  signedUp      DateTime @default(now())
+  customerId    String    @id @default(cuid())
+  customerReference String    @unique
+  email         String    @unique
+  phoneNumber   String    @db.VarChar(15)
+  password      String    @db.VarChar(255)
+  firstName     String?   @db.VarChar(255)
+  lastName      String    @db.VarChar(255)
+  companyNumber String?   @db.VarChar(255)
+  modifiedAt    DateTime? @updatedAt
+  deleted       Boolean   @default(false)
+  signedUp      DateTime  @default(now())
   addressId     String
 
   role           Role            @default(USER)
@@ -51,151 +55,174 @@ model Customer {
   address        Address         @relation(fields: [addressId], references: [addressId]) // Corrected reference  
   cart           Cart?
   orders         Order[]
+
+  @@map("customers")
 }
 
 model Address {
-  addressId    String @id @default(cuid()) // Unique ID for easier referencing
-  city         String @db.VarChar(100)
-  country      String @db.VarChar(40)
-  postcode     String @db.VarChar(10)
-  state        String @db.VarChar(40)
-  streetName   String @db.VarChar(100)
-  streetNumber String @db.VarChar(30)
-  modifiedAt DateTime @updatedAt @default(now())
-  deleted    Boolean  @default(false)
+  addressId    String    @id @default(cuid()) // Unique ID for easier referencing
+  city         String    @db.VarChar(100)
+  country      String    @db.VarChar(40)
+  postcode     String    @db.VarChar(10)
+  state        String    @db.VarChar(40)
+  streetName   String    @db.VarChar(100)
+  streetNumber String    @db.VarChar(30)
+  modifiedAt   DateTime? @updatedAt
+  deleted      Boolean   @default(false)
 
   customers  Customer[]
   siteConfig SiteConfig[]
 
   @@unique([city, country, postcode, state, streetName, streetNumber]) // used for checking address should be createdt or user should be linked to existing address
+  @@map("addresses")
 }
 
 model Cart {
   cartId     String           @id @default(cuid())
-  customerId String           @unique
-  customer   Customer         @relation(fields: [customerId], references: [customerId]) // not in the database model
+  customerReference String           @unique
+  customer   Customer         @relation(fields: [customerReference], references: [customerReference]) // not in the database model
   products   CartOnProducts[]
+
+  @@map("carts")
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String   @unique @db.VarChar(255)
+  productId          String    @id @default(cuid())
+  name        String    @unique @db.VarChar(255)
   price       Int
-  description String   @db.Text
+  description String    @db.Text
   //? probably should additionaly have a short description with 40 characters or less
-  stock       Int //amount in stock
-  imagePath   String?  @db.VarChar(255)
-  createdAt   DateTime @default(now())
-  modifiedAt DateTime @updatedAt @default(now())
-  deleted    Boolean  @default(false)
+  stock       Int //amount in stock 
+  imagePath   String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime? @updatedAt
+  deleted     Boolean   @default(false)
 
   categories CategoriesOnProducts[]
   carts      CartOnProducts[]
   orders     OrderOnProducts[]
+
+  @@map("products")
 }
 
 model Category {
-  id        String  @id @default(cuid())
-  name      String  @unique @db.VarChar(255)
-  imagePath String? @db.VarChar(255) // probably should be paths for multiple images
-  modifiedAt DateTime @updatedAt @default(now())
-  deleted    Boolean  @default(false)
+  categoryId         String    @id @default(cuid())
+  name       String    @unique @db.VarChar(255)
+  imagePath  String?   @db.VarChar(255) // probably should be paths for multiple images
+  modifiedAt DateTime? @updatedAt
+  deleted    Boolean   @default(false)
 
   products CategoriesOnProducts[]
+
+  @@map("categories")
 }
 
 model Order {
-  id           String   @id @default(cuid())
-  customerId   String
-  date         DateTime @default(now())
-  deliveryDate DateTime @default(now())
-  modifiedAt DateTime @updatedAt @default(now())
-  deleted    Boolean  @default(false)
+  orderId           String    @id @default(cuid())
+  customerReference  String
+  date         DateTime  @default(now())
+  deliveryDate DateTime  @default(now())
+  deleted      Boolean   @default(false)
 
-  customer Customer           @relation(fields: [customerId], references: [customerId])
+  customer Customer           @relation(fields: [customerReference], references: [customerReference])
   products OrderOnProducts[]
   invoice  Invoice?
-  route    RoutesOnProducts[]
+  route    RoutesOnOrders[]
+
+  @@map("orders")
 }
 
 model Invoice {
-  id            String   @id @default(cuid())
+  invoiceId            String   @id @default(cuid())
   orderId       String   @unique
   invoiceAmount Int //price in cents
   dateOfPayment DateTime @default(now())
-  modifiedAt DateTime @updatedAt @default(now())
   deleted       Boolean  @default(false)
-  order         Order    @relation(fields: [orderId], references: [id])
+  order         Order    @relation(fields: [orderId], references: [orderId])
+
+  @@map("invoices")
 }
 
 model Route {
-  id         String             @id @default(cuid())
+  routeId         String             @id @default(cuid())
   name       String             @db.VarChar(255)
-  modifiedAt DateTime @updatedAt @default(now())
   deleted    Boolean            @default(false)
-  order      RoutesOnProducts[]
+  order      RoutesOnOrders[]
+
+  @@map("routes")
 }
 
 //* Emplyee model
 model Employees {
-  id         String   @id @default(cuid())
-  email      String   @unique
-  password   String   @db.VarChar(255)
-  firstName  String   @db.VarChar(255)
-  lastname   String   @db.VarChar(255)
-  modifiedAt DateTime @updatedAt @default(now())
-  deleted    Boolean  @default(false)
-  role       Role     @default(EMPLOYEE)
+  employeeId         String    @id @default(cuid())
+  email      String    @unique
+  password   String    @db.VarChar(255)
+  firstName  String    @db.VarChar(255)
+  lastname   String    @db.VarChar(255)
+  deleted    Boolean   @default(false)
+  role       Role      @default(EMPLOYEE)
+
+  @@map("employees")
 }
 
 //* model for the site configuration
 model SiteConfig {
-  id          String   @id @default(cuid())
-  companyName String   @db.VarChar(255)
+  siteConfigId          String    @id @default(cuid())
+  companyName String    @db.VarChar(255)
   //? should probably also have a slogan or a short description field
   //? should probalby also have a relation to a socialMedia model with links to social media
-  logoPath    String   @db.VarChar(255)
-  email       String   @unique
-  phoneNumber String   @db.VarChar(15)
+
+  logoPath    String    @db.VarChar(255)
+  email       String    @unique
+  phoneNumber String    @db.VarChar(15)
+  iban       String    @db.VarChar(30)
+  companyNumber String    @db.VarChar(30)
   addressId   String
-  modifiedAt DateTime @updatedAt @default(now())
-  deleted     Boolean  @default(false)
-  address     Address  @relation(fields: [addressId], references: [addressId])
+  modifiedAt  DateTime? @updatedAt
+  deleted     Boolean   @default(false)
+  address     Address   @relation(fields: [addressId], references: [addressId])
+
+  @@map("siteConfig")
 }
 
 // realtion models
 model CategoriesOnProducts {
   productId  String
-  product    Product  @relation(fields: [productId], references: [id])
+  product    Product  @relation(fields: [productId], references: [productId])
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [categoryId])
 
   @@id([productId, categoryId])
+  @@map("categoriesOnProducts")
 }
 
 model CartOnProducts {
   cartId    String
   cart      Cart    @relation(fields: [cartId], references: [cartId])
   productId String
-  product   Product @relation(fields: [productId], references: [id])
-  quantity   Int     @default(1)
+  product   Product @relation(fields: [productId], references: [productId])
+  quantity  Int     @default(1) @map("productAmount")
 
   @@id([cartId, productId])
+  @@map("cartOnProducts")
 }
 
 model OrderOnProducts {
   orderId       String
-  order         Order   @relation(fields: [orderId], references: [id])
+  order         Order   @relation(fields: [orderId], references: [orderId])
   productId     String
-  product       Product @relation(fields: [productId], references: [id])
-  productAmount Int
+  product       Product @relation(fields: [productId], references: [productId])
+  productAmount Int     @default(1)
 
   @@id([orderId, productId])
+  @@map("orderOnProducts")
 }
 
-model RoutesOnProducts {
+model RoutesOnOrders {
   routeId String @id
-  route   Route  @relation(fields: [routeId], references: [id])
+  route   Route  @relation(fields: [routeId], references: [routeId])
   orderId String
-  order   Order  @relation(fields: [orderId], references: [id])
+  order   Order  @relation(fields: [orderId], references: [orderId])
+
+  @@map("routesOnOrders")
 }
