@@ -1,11 +1,15 @@
-import { getCartByUserId } from '@/lib/data';
+import { getCartByCustomerReference } from '@/lib/data';
 import { formatPrice } from '@/lib/utils';
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 
-async function CartSummaryCard({ customerId }: { customerId: string }) {
-  const request = await getCartByUserId(customerId);
+async function CartSummaryCard({
+  customerReference,
+}: {
+  customerReference: number;
+}) {
+  const request = await getCartByCustomerReference(customerReference);
 
   const subtotal = request.products.reduce(
     (acc, product) => acc + product.product.price,
@@ -45,7 +49,7 @@ async function CartSummaryCard({ customerId }: { customerId: string }) {
         </div>
         <div className='pt-4'>
           <Button disabled={subtotal === 0}>
-            <Link href={`/shop/purchase/${customerId}`}>
+            <Link href={`/shop/purchase/${customerReference}`}>
               Proceed to Checkout
             </Link>
           </Button>
