@@ -35,7 +35,7 @@ const cartWithProducts = Prisma.validator<Prisma.CartDefaultArgs>()({
         quantity: true,
         product: {
           select: {
-            id: true,
+            productId: true,
             name: true,
             price: true,
             imagePath: true,
