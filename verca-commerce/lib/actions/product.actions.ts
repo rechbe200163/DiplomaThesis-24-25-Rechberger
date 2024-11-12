@@ -28,13 +28,13 @@ export async function addToCart(
       };
     }
 
-    const customerId = session.user.id;
+    const customerReference = session.user.customerReference;
 
     // get product by id to check if it is out of stock
 
     const product = await prisma.product.findUnique({
       where: {
-        id: productId,
+        productId: productId,
       },
     });
 
@@ -58,7 +58,7 @@ export async function addToCart(
 
     // Find the customer's cart or create one if it doesn't exist
     const cart = await prisma.cart.findUnique({
-      where: { customerId },
+      where: { customerReference },
       include: { products: true },
     });
 
@@ -129,11 +129,11 @@ export async function updateQuantity(
       };
     }
 
-    const customerId = session.user.id;
+    const customerReference = session.user.customerReference;
 
     // Find the customer's cart
     const cart = await prisma.cart.findUnique({
-      where: { customerId },
+      where: { customerReference },
       include: { products: true },
     });
 
@@ -206,11 +206,13 @@ export async function removeFromCart(
       throw new Error('User not authenticated');
     }
 
-    const customerId = session.user.id;
+    const customerReference = session.user.customerReference;
 
     // Find the customer's cart
     const cart = await prisma.cart.findUnique({
-      where: { customerId },
+      where: {
+        customerReference,
+      },
       include: { products: true },
     });
 
@@ -272,7 +274,7 @@ export async function reduceStockofPurchasedProducts(
   cartId: string
 ): Promise<FormState> {
   for (const product of products) {
-    const productId = product.id;
+    const productId = product.productId;
 
     if (!productId) {
       return {
@@ -285,7 +287,7 @@ export async function reduceStockofPurchasedProducts(
 
     // Find the existing product in the database
     const existingProduct = await prisma.product.findUnique({
-      where: { id: productId },
+      where: { productId: productId },
     });
 
     if (!existingProduct) {
@@ -308,7 +310,7 @@ export async function reduceStockofPurchasedProducts(
 
     // Update the product stock
     await prisma.product.update({
-      where: { id: productId },
+      where: { productId: productId },
       data: {
         stock: existingProduct.stock - 1,
       },
