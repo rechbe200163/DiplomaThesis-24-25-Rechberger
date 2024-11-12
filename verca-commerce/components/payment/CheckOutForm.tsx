@@ -41,9 +41,9 @@ export const CheckOutForm = ({
   products,
   clientSecret,
   cartId,
-  paymentIntentAmount,
+  paymentAmount,
 }: CheckoutFromProps) => {
-  const total = paymentIntentAmount;
+  const total = paymentAmount;
 
   return (
     <div className='max-w-5xl w-full mx-auto space-y-8 p-10'>
