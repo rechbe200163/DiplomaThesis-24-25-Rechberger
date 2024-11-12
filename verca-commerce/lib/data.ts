@@ -45,10 +45,10 @@ export async function getProductById(
   }
 }
 
-export async function getOrdersByUserId(customerId: string) {
+export async function getOrdersByUserId(customerReference: string) {
   try {
     const res = await fetch(
-      `https://localhost:3000/api/orders?customerId=${customerId}`,
+      `https://localhost:3000/api/orders?customerReference=${customerReference}`,
       {
         cache: 'no-store',
       }
@@ -61,13 +61,16 @@ export async function getOrdersByUserId(customerId: string) {
   }
 }
 
-export async function getCartByUserId(
-  customerId: string
+export async function getCartByCustomerReference(
+  customerReference: number
 ): Promise<CartWithProducts> {
   try {
-    const res = await fetch(`https://localhost:3000/api/cart/${customerId}`, {
-      next: { tags: ['cart'] },
-    });
+    const res = await fetch(
+      `https://localhost:3000/api/cart/${customerReference}`,
+      {
+        next: { tags: ['cart'] },
+      }
+    );
 
     const cart = await res.json();
     console.log(cart);
@@ -79,11 +82,11 @@ export async function getCartByUserId(
 }
 
 export async function fetchProductsInCart(
-  customerId: string
+  customerReference: number
 ): Promise<CartCount> {
   try {
     const res = await fetch(
-      `https://localhost:3000/api/cart/${customerId}?q=count`,
+      `https://localhost:3000/api/cart/${customerReference}?q=count`,
       {
         next: { tags: ['cartCount'] },
       }
@@ -96,10 +99,10 @@ export async function fetchProductsInCart(
   }
 }
 
-export async function fetchUser(customerId: string): Promise<Customer> {
+export async function fetchUser(customerReference: string): Promise<Customer> {
   try {
     const res = await fetch(
-      `https://localhost:3000/api/customers/${customerId}`,
+      `https://localhost:3000/api/customers/${customerReference}`,
       {
         next: { tags: ['user'] },
       }
