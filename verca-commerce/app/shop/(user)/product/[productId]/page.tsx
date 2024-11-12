@@ -43,7 +43,7 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
             <span className='stat-value text-xl md:text-2xl'>
               {formatPrice(product.price)}
             </span>
-            <AddToCartForm productId={product.id} />
+            <AddToCartForm productId={product.productId} />
           </div>
         </div>
       </div>

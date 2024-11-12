@@ -3,17 +3,17 @@ import prisma from '@/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 export async function GET(
   req: NextRequest,
-  props: { params: Promise<{ customerId: string }> }
+  props: { params: Promise<{ customerReference: string }> }
 ) {
   const params = await props.params;
   try {
-    const customerId = params.customerId;
+    const customerReference = Number(params.customerReference);
     const query = req.nextUrl.searchParams.get('q');
 
     if (query === 'count') {
       const productsCount = await prisma.cart.findUnique({
         where: {
-          customerId: customerId,
+          customerReference: customerReference,
         },
         include: {
           _count: {
@@ -41,7 +41,7 @@ export async function GET(
     }
     const cartProducts = await prisma.cart.findUnique({
       where: {
-        customerId: customerId,
+        customerReference: customerReference,
       },
       include: {
         products: {
@@ -55,7 +55,7 @@ export async function GET(
             quantity: true,
             product: {
               select: {
-                id: true,
+                productId: true,
                 name: true,
                 price: true,
                 imagePath: true,

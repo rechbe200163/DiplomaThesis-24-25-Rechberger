@@ -4,6 +4,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { count } from 'console';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
+import { customAlphabet, nanoid } from 'nanoid';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,6 +17,11 @@ export function formatPrice(price: number) {
   });
 
   return formattedPrice;
+}
+
+export function generateCustomerRefercenceNumber(): number {
+  const nanoid = customAlphabet('1234567890', 9);
+  return Number(nanoid());
 }
 
 export async function checkUserRole() {

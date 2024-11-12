@@ -12,8 +12,8 @@ jest.mock('@/prisma/client', () => ({
   },
 }));
 
-describe('GET /carts/:customerId', () => {
-  const customerId = 'customer-123';
+describe('GET /carts/:customerReference', () => {
+  const customerReference = 'customer-123';
 
   it('should return the count of products in the cart', async () => {
     const mockCartCount = {
@@ -32,7 +32,7 @@ describe('GET /carts/:customerId', () => {
     } as unknown as NextRequest;
 
     // Mock params object
-    const params = { customerId };
+    const params = { customerReference };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();
@@ -92,7 +92,7 @@ describe('GET /carts/:customerId', () => {
     } as unknown as NextRequest;
 
     // Mock params object
-    const params = { customerId };
+    const params = { customerReference };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();
@@ -146,7 +146,7 @@ describe('GET /carts/:customerId', () => {
     } as unknown as NextRequest;
 
     // Mock params object
-    const params = { customerId };
+    const params = { customerReference };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();
@@ -167,7 +167,7 @@ describe('GET /carts/:customerId', () => {
     } as unknown as NextRequest;
 
     // Mock params object
-    const params = { customerId };
+    const params = { customerReference };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();

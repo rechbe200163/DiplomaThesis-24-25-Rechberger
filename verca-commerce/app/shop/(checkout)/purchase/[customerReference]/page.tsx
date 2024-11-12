@@ -1,24 +1,24 @@
-import { getCartByUserId } from '@/lib/data';
+import { getCartByCustomerReference } from '@/lib/data';
 import React from 'react';
-
-import CheckOutForm from '@/components/payment/CheckOutForm';
 import { Product } from '@prisma/client';
 import { stripe } from '@/lib/stripeClient';
+import CheckOutForm from '@/components/payment/CheckOutForm';
 import { ExtendedProduct } from '@/lib/interfaces';
 
 export default async function PurchasePage(props: {
-  params: Promise<{ customerId: string }>;
+  params: Promise<{ customerReference: number }>;
 }) {
   const params = await props.params;
 
-  const { customerId } = params;
+  const { customerReference } = params;
 
-  const cart = await getCartByUserId(customerId);
+  console.log(customerReference);
+  const cart = await getCartByCustomerReference(customerReference);
 
   const cartId = cart.cartId;
 
   const products = cart.products.map((product) => ({
-    id: product.product.id,
+    productId: product.product.productId,
     name: product.product.name,
     price: product.product.price,
     imagePath: product.product.imagePath,
@@ -26,8 +26,8 @@ export default async function PurchasePage(props: {
   }));
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: products.reduce(
-      (acc, product) => acc + product.price * product.quantity,
+    amount: cart.products.reduce(
+      (acc, product) => acc + product.product.price * product.quantity,
       0
     ),
     currency: 'eur',
@@ -42,7 +42,7 @@ export default async function PurchasePage(props: {
       products={products as ExtendedProduct[]}
       cartId={cartId}
       clientSecret={paymentIntent.client_secret}
-      paymentIntentAmount={paymentIntent.amount}
+      paymentAmount={paymentIntent.amount}
     />
   );
 }

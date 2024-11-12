@@ -1,4 +1,4 @@
-import { getCartByUserId } from '@/lib/data';
+import { getCartByCustomerReference } from '@/lib/data';
 import Image from 'next/image';
 import React from 'react';
 import RemoveFromCart from '../forms/cart/removeFromCart';
@@ -7,8 +7,12 @@ import { formatPrice } from '@/lib/utils';
 import IncreaseProductQuantity from '../forms/cart/increaseProductQuantity';
 import DecreaseProductQuantity from '../forms/cart/decreaseProductQuantity';
 
-async function ProductsCartCard({ customerId }: { customerId: string }) {
-  const products = await getCartByUserId(customerId);
+async function ProductsCartCard({
+  customerReference,
+}: {
+  customerReference: number;
+}) {
+  const products = await getCartByCustomerReference(customerReference);
 
   return (
     <div className='flex flex-col gap-6 p-4 md:p-0 w-full md:w-2/3 overflow-auto max-h-96'>
@@ -42,16 +46,16 @@ async function ProductsCartCard({ customerId }: { customerId: string }) {
             <div className='flex items-center justify-between mt-auto'>
               <div className='flex items-center justify-evenly space-x-10'>
                 <DecreaseProductQuantity
-                  productId={product.product.id}
+                  productId={product.product.productId}
                   quantity={product.quantity}
                 />
                 {product.quantity}
                 <IncreaseProductQuantity
-                  productId={product.product.id}
+                  productId={product.product.productId}
                   quantity={product.quantity}
                 />
               </div>
-              <RemoveFromCart productId={product.product.id} />
+              <RemoveFromCart productId={product.product.productId} />
             </div>
           </div>
         </div>

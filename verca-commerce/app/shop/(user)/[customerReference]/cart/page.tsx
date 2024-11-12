@@ -2,7 +2,9 @@ import CartSummaryCard from '@/components/cards/CartSummaryCard';
 import ProductsCartCard from '@/components/cards/ProductsCartCard';
 import React from 'react';
 
-async function CartPage(props: { params: Promise<{ customerId: string }> }) {
+async function CartPage(props: {
+  params: Promise<{ customerReference: number }>;
+}) {
   const params = await props.params;
   return (
     <div className='p-5 md:p-10 space-y-10 bg-gray-50 min-h-screen'>
@@ -17,8 +19,8 @@ async function CartPage(props: { params: Promise<{ customerId: string }> }) {
         </div>
       </div>
       <div className='flex flex-col md:flex-row justify-between gap-10'>
-        <ProductsCartCard customerId={params.customerId} />
-        <CartSummaryCard customerId={params.customerId} />
+        <ProductsCartCard customerReference={params.customerReference} />
+        <CartSummaryCard customerReference={params.customerReference} />
       </div>
     </div>
   );

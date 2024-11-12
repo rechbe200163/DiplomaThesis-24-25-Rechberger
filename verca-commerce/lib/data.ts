@@ -58,11 +58,14 @@ export async function getProductById(
   }
 }
 
-export async function getOrdersByUserId(customerId: string) {
+export async function getOrdersByUserId(customerReference: string) {
   try {
-    const res = await fetch(`${baseApiUrl}/orders?customerId=${customerId}`, {
-      cache: 'no-store',
-    });
+    const res = await fetch(
+      `https://localhost:3000/api/orders?customerReference=${customerReference}`,
+      {
+        cache: 'no-store',
+      }
+    );
 
     const orders = await res.json();
     return orders;
@@ -71,13 +74,16 @@ export async function getOrdersByUserId(customerId: string) {
   }
 }
 
-export async function getCartByUserId(
-  customerId: string
+export async function getCartByCustomerReference(
+  customerReference: number
 ): Promise<CartWithProducts> {
   try {
-    const res = await fetch(`${baseApiUrl}/cart/${customerId}`, {
-      next: { tags: ['cart'] },
-    });
+    const res = await fetch(
+      `https://localhost:3000/api/cart/${customerReference}`,
+      {
+        next: { tags: ['cart'] },
+      }
+    );
 
     const cart = await res.json();
 
@@ -88,12 +94,15 @@ export async function getCartByUserId(
 }
 
 export async function fetchProductsInCart(
-  customerId: string
+  customerReference: number
 ): Promise<CartCount> {
   try {
-    const res = await fetch(`${baseApiUrl}/cart/${customerId}?q=count`, {
-      next: { tags: ['cartCount'] },
-    });
+    const res = await fetch(
+      `https://localhost:3000/api/cart/${customerReference}?q=count`,
+      {
+        next: { tags: ['cartCount'] },
+      }
+    );
 
     const productsCount = await res.json();
     return productsCount;
@@ -102,11 +111,14 @@ export async function fetchProductsInCart(
   }
 }
 
-export async function fetchUser(customerId: string): Promise<Customer> {
+export async function fetchUser(customerReference: string): Promise<Customer> {
   try {
-    const res = await fetch(`${baseApiUrl}/customers/${customerId}`, {
-      next: { tags: ['user'] },
-    });
+    const res = await fetch(
+      `https://localhost:3000/api/customers/${customerReference}`,
+      {
+        next: { tags: ['user'] },
+      }
+    );
 
     const user = await res.json();
     return user;

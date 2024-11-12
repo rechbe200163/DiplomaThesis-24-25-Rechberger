@@ -10,7 +10,7 @@ async function ShopPage() {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4 p-4'>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.productId} product={product} />
       ))}
     </div>
   );
