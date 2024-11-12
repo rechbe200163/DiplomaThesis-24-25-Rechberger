@@ -1,9 +1,8 @@
 import { getCartByCustomerReference } from '@/lib/data';
 import React from 'react';
-
-import CheckOutForm from '@/components/payment/CheckOutForm';
 import { Product } from '@prisma/client';
 import { stripe } from '@/lib/stripeClient';
+import CheckOutForm from '@/components/payment/CheckOutForm';
 
 export default async function PurchasePage(props: {
   params: Promise<{ customerReference: number }>;
@@ -25,7 +24,10 @@ export default async function PurchasePage(props: {
   }));
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: products.reduce((acc, product) => acc + product.price, 0),
+    amount: cart.products.reduce(
+      (acc, product) => acc + product.product.price * product.quantity,
+      0
+    ),
     currency: 'eur',
   });
 
@@ -38,6 +40,7 @@ export default async function PurchasePage(props: {
       products={products as Product[]}
       cartId={cartId}
       clientSecret={paymentIntent.client_secret}
+      paymentAmount={paymentIntent.amount}
     />
   );
 }

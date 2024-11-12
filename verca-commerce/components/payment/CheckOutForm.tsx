@@ -28,19 +28,19 @@ type CheckoutFromProps = {
   products: Product[];
   cartId: string;
   clientSecret: string;
+  paymentAmount: number;
 };
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY! as string
 );
 
-const CheckOutForm = ({
+export const CheckOutForm = ({
   products,
   clientSecret,
   cartId,
+  paymentAmount,
 }: CheckoutFromProps) => {
-  const total = products.reduce((acc, product) => acc + product.price, 0);
-
   return (
     <div className='max-w-5xl w-full mx-auto space-y-8 p-10'>
       {products.map((product) => (
@@ -70,7 +70,7 @@ const CheckOutForm = ({
         }}
         stripe={stripePromise}
       >
-        <Form amount={total} products={products} cartId={cartId} />
+        <Form amount={paymentAmount} products={products} cartId={cartId} />
       </Elements>
     </div>
   );
