@@ -1,13 +1,16 @@
 import prisma from '@/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
-export async function GET(req: NextRequest, props: { params: Promise<{ customerId: string }> }) {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ customerReference: string }> }
+) {
   const params = await props.params;
   try {
-    const customerId = params.customerId;
+    const customerReference = params.customerReference;
 
     const user = await prisma.customer.findUnique({
       where: {
-        customerId: customerId,
+        customerReference: customerReference,
         deleted: false,
       },
       include: {

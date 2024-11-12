@@ -2,14 +2,17 @@ import { CartWithProducts } from '@/lib/types';
 import prisma from '@/prisma/client';
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
-export async function GET(req: NextRequest, props: { params: Promise<{ customerId: string }> }) {
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ customerReference: string }> }
+) {
   const params = await props.params;
   try {
-    const customerId = params.customerId;
+    const customerReference = params.customerReference;
 
     const cartProducts = await prisma.cart.findUnique({
       where: {
-        customerId: customerId,
+        customerReference: customerReference,
       },
       include: {
         products: {

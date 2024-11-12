@@ -12,10 +12,10 @@ jest.mock('@/prisma/client', () => ({
   },
 }));
 
-describe('GET /customers/:customerId', () => {
+describe('GET /customers/:customerReference', () => {
   it('should return customer details with address', async () => {
     const mockCustomer = {
-      customerId: '123',
+      customerReference: '123',
       firstName: 'John',
       lastName: 'Doe',
       email: 'john.doe@example.com',
@@ -39,7 +39,7 @@ describe('GET /customers/:customerId', () => {
     } as unknown as NextRequest;
 
     // Mock params object
-    const params = { customerId: '123' };
+    const params = { customerReference: '123' };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();
@@ -48,7 +48,7 @@ describe('GET /customers/:customerId', () => {
     expect(responseData).toMatchSchema({
       type: 'object',
       properties: {
-        customerId: { type: 'string' },
+        customerReference: { type: 'string' },
         firstName: { type: 'string' },
         lastName: { type: 'string' },
         email: { type: 'string' },
@@ -65,7 +65,13 @@ describe('GET /customers/:customerId', () => {
           required: ['id', 'street', 'city', 'state', 'postcode', 'country'],
         },
       },
-      required: ['customerId', 'firstName', 'lastName', 'email', 'address'],
+      required: [
+        'customerReference',
+        'firstName',
+        'lastName',
+        'email',
+        'address',
+      ],
     });
 
     expect(response.status).toBe(200);
@@ -77,7 +83,7 @@ describe('GET /customers/:customerId', () => {
     );
 
     const mockRequest = {} as NextRequest; // Create a mock request object
-    const params = { customerId: '123' };
+    const params = { customerReference: '123' };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();
@@ -91,7 +97,7 @@ describe('GET /customers/:customerId', () => {
     (prisma.customer.findUnique as jest.Mock).mockResolvedValue(null);
 
     const mockRequest = {} as NextRequest; // Create a mock request object
-    const params = { customerId: '123' };
+    const params = { customerReference: '123' };
 
     const response = await GET(mockRequest, { params });
     const responseData = await response.json();

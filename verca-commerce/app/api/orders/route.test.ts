@@ -20,13 +20,13 @@ describe('GET /orders', () => {
       {
         id: '1',
         total: 150.0,
-        customerId: 'cust1',
+        customerReference: 'cust1',
         customer: { id: 'cust1', name: 'Customer 1' },
       },
       {
         id: '2',
         total: 200.0,
-        customerId: 'cust2',
+        customerReference: 'cust2',
         customer: { id: 'cust2', name: 'Customer 2' },
       },
     ];
@@ -49,7 +49,7 @@ describe('GET /orders', () => {
       properties: {
         id: { type: 'string' },
         total: { type: 'number' },
-        customerId: { type: 'string' },
+        customerReference: { type: 'string' },
         customer: {
           type: 'object',
           properties: {
@@ -59,7 +59,7 @@ describe('GET /orders', () => {
           required: ['id', 'name'],
         },
       },
-      required: ['id', 'total', 'customerId', 'customer'],
+      required: ['id', 'total', 'customerReference', 'customer'],
     };
 
     // Define the schema for the response data

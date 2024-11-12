@@ -12,21 +12,21 @@ jest.mock('@/prisma/client', () => ({
   },
 }));
 
-describe('GET /orders/:customerId', () => {
+describe('GET /orders/:customerReference', () => {
   it('should return a list of orders for a specific customer', async () => {
-    const customerId = 'cust1'; // Mock customer ID
+    const customerReference = 'cust1'; // Mock customer ID
     const mockOrders = [
       {
         id: '1',
         total: 150.0,
-        customerId: customerId,
-        customer: { id: customerId, name: 'Customer 1' },
+        customerReference: customerReference,
+        customer: { id: customerReference, name: 'Customer 1' },
       },
       {
         id: '2',
         total: 200.0,
-        customerId: customerId,
-        customer: { id: customerId, name: 'Customer 1' },
+        customerReference: customerReference,
+        customer: { id: customerReference, name: 'Customer 1' },
       },
     ];
 
@@ -35,7 +35,7 @@ describe('GET /orders/:customerId', () => {
 
     // Mock the NextRequest and params
     const mockRequest = {} as unknown as NextRequest;
-    const mockParams = { params: { customerId } };
+    const mockParams = { params: { customerReference } };
 
     // Call the GET function with the mock request and params
     const response = await GET(mockRequest, mockParams);
@@ -49,7 +49,7 @@ describe('GET /orders/:customerId', () => {
       properties: {
         id: { type: 'string' },
         total: { type: 'number' },
-        customerId: { type: 'string' },
+        customerReference: { type: 'string' },
         customer: {
           type: 'object',
           properties: {
@@ -59,7 +59,7 @@ describe('GET /orders/:customerId', () => {
           required: ['id', 'name'],
         },
       },
-      required: ['id', 'total', 'customerId', 'customer'],
+      required: ['id', 'total', 'customerReference', 'customer'],
     };
 
     // Define the schema for the response data
@@ -73,13 +73,13 @@ describe('GET /orders/:customerId', () => {
   });
 
   it('should return an empty array when no orders exist for the customer', async () => {
-    const customerId = 'cust2'; // Mock customer ID
+    const customerReference = 'cust2'; // Mock customer ID
     // Mock the findMany method to return an empty array
     (prisma.order.findMany as jest.Mock).mockResolvedValue([]);
 
     // Mock the NextRequest and params
     const mockRequest = {} as unknown as NextRequest;
-    const mockParams = { params: { customerId } };
+    const mockParams = { params: { customerReference } };
 
     const response = await GET(mockRequest, mockParams);
     const responseData = await response.json();
@@ -88,7 +88,7 @@ describe('GET /orders/:customerId', () => {
     expect(response.status).toBe(200);
   });
   it('should handle errors from the Prisma client', async () => {
-    const customerId = 'cust3'; // Mock customer ID
+    const customerReference = 'cust3'; // Mock customer ID
     // Mock the findMany method to throw an error
     (prisma.order.findMany as jest.Mock).mockRejectedValue(
       new Error('Database error')
@@ -96,7 +96,7 @@ describe('GET /orders/:customerId', () => {
 
     // Mock the NextRequest and params
     const mockRequest = {} as unknown as NextRequest;
-    const mockParams = { params: { customerId } };
+    const mockParams = { params: { customerReference } };
 
     const response = await GET(mockRequest, mockParams);
     const responseData = await response.json();
