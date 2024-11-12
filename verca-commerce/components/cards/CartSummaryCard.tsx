@@ -12,7 +12,7 @@ async function CartSummaryCard({
   const request = await getCartByCustomerReference(customerReference);
 
   const subtotal = request.products.reduce(
-    (acc, product) => acc + product.product.price,
+    (acc, product) => acc + product.product.price * product.quantity,
     0
   );
 

@@ -11,7 +11,7 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
 
   return (
     <Link
-      href={`/shop/product/${product.id}`}
+      href={`/shop/product/${product.productId}`}
       className='card bg-base-100 shadow-xl'
     >
       <figure>
