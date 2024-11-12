@@ -46,16 +46,16 @@ async function ProductsCartCard({
             <div className='flex items-center justify-between mt-auto'>
               <div className='flex items-center justify-evenly space-x-10'>
                 <DecreaseProductQuantity
-                  productId={product.product.id}
+                  productId={product.product.productId}
                   quantity={product.quantity}
                 />
                 {product.quantity}
                 <IncreaseProductQuantity
-                  productId={product.product.id}
+                  productId={product.product.productId}
                   quantity={product.quantity}
                 />
               </div>
-              <RemoveFromCart productId={product.product.id} />
+              <RemoveFromCart productId={product.product.productId} />
             </div>
           </div>
         </div>
