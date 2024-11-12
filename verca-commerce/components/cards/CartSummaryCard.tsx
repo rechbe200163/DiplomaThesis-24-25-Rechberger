@@ -32,7 +32,7 @@ async function CartSummaryCard({
               {product.product.name}
             </div>
             <div className='text-lg font-medium text-gray-700'>
-              {formatPrice(product.product.price)}
+              {formatPrice(product.product.price) + ' x ' + product.quantity}
             </div>
           </div>
         ))}
@@ -40,9 +40,6 @@ async function CartSummaryCard({
 
         <div className='text-lg font-medium text-gray-700 mb-2'>
           Subtotal: {formatPrice(subtotal)}
-        </div>
-        <div className='text-lg font-medium text-gray-700 mb-2'>
-          Shipping: {formatPrice(shipping)}
         </div>
         <div className='text-xl font-bold text-gray-800 mt-4 border-t pt-4'>
           Total: {formatPrice(subtotal + tax + shipping)}

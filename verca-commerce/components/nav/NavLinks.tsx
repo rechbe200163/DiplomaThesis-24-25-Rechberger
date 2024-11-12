@@ -9,7 +9,7 @@ function NavLinks() {
   const pathname = usePathname();
 
   const links = [
-    { label: 'All', href: '/search' },
+    { label: 'All', href: '/shop/search' },
     { label: 'About', href: '/about' },
   ];
 

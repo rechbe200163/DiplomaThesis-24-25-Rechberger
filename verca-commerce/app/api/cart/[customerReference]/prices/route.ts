@@ -8,7 +8,7 @@ export async function GET(
 ) {
   const params = await props.params;
   try {
-    const customerReference = params.customerReference;
+    const customerReference = Number(params.customerReference);
 
     const cartProducts = await prisma.cart.findUnique({
       where: {

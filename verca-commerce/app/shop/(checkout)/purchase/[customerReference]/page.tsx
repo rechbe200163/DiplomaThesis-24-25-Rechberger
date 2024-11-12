@@ -21,6 +21,7 @@ export default async function PurchasePage(props: {
     name: product.product.name,
     price: product.product.price,
     imagePath: product.product.imagePath,
+    quantity: product.quantity,
   }));
 
   const paymentIntent = await stripe.paymentIntents.create({
@@ -37,7 +38,7 @@ export default async function PurchasePage(props: {
 
   return (
     <CheckOutForm
-      products={products as Product[]}
+      products={products as ExtendedProduct[]}
       cartId={cartId}
       clientSecret={paymentIntent.client_secret}
       paymentAmount={paymentIntent.amount}

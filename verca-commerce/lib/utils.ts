@@ -27,8 +27,6 @@ export function generateCustomerRefercenceNumber(): number {
 export async function checkUserRole() {
   const session = await auth();
 
-  console.log(session);
-
   if (!session) {
     return null;
   }

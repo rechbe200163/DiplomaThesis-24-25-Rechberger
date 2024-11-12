@@ -23,9 +23,11 @@ import {
 import { Button } from '../ui/button';
 import { FormState } from '@/lib/form.types';
 import { reduceStockofPurchasedProducts } from '@/lib/actions/product.actions';
+import { CartWithProducts } from '@/lib/types';
+import { ExtendedProduct } from '@/lib/interfaces';
 
 type CheckoutFromProps = {
-  products: Product[];
+  products: ExtendedProduct[];
   cartId: string;
   clientSecret: string;
   paymentAmount: number;
@@ -39,8 +41,10 @@ export const CheckOutForm = ({
   products,
   clientSecret,
   cartId,
-  paymentAmount,
+  paymentIntentAmount,
 }: CheckoutFromProps) => {
+  const total = paymentIntentAmount;
+
   return (
     <div className='max-w-5xl w-full mx-auto space-y-8 p-10'>
       {products.map((product) => (
@@ -59,7 +63,10 @@ export const CheckOutForm = ({
             </div>
             <div>
               <h2 className='text-lg font-semibold'>{product.name}</h2>
-              <p>{formatPrice(product.price)}</p>
+              <p>
+                {formatPrice(product.price)} x {product.quantity} ={' '}
+                {formatPrice(product.price * product.quantity)}
+              </p>
             </div>
           </div>
         </div>
@@ -83,7 +90,7 @@ function Form({
   cartId,
 }: {
   amount: number;
-  products: Product[];
+  products: ExtendedProduct[];
   cartId: string;
 }) {
   const stripe = useStripe();

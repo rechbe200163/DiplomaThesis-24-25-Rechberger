@@ -1,9 +1,25 @@
 import { Customer, Product, SiteConfig } from '@prisma/client';
 import { CartCount, CartWithProducts, ProductWithCategoryNames } from './types';
+const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
   try {
-    const res = await fetch('https://localhost:3000/api/products', {
+    const res = await fetch(`${baseApiUrl}/products`, {
+      cache: 'no-store',
+    });
+
+    const products = await res.json();
+    return products;
+  } catch (error) {
+    throw new Error('Failed to fetch products');
+  }
+}
+
+export async function getFilterdProducts(
+  query: string
+): Promise<ProductWithCategoryNames[]> {
+  try {
+    const res = await fetch(`${baseApiUrl}/products?q=${query}`, {
       cache: 'no-store',
     });
 
@@ -16,7 +32,7 @@ export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
 
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
-    const res = await fetch('https://localhost:3000/api/siteConfig', {
+    const res = await fetch(`${baseApiUrl}/siteConfig`, {
       next: { tags: ['siteConfig'] },
     });
 
@@ -31,12 +47,9 @@ export async function getProductById(
   productId: string
 ): Promise<ProductWithCategoryNames> {
   try {
-    const res = await fetch(
-      `https://localhost:3000/api/products/${productId}`,
-      {
-        cache: 'no-store',
-      }
-    );
+    const res = await fetch(`${baseApiUrl}/products/${productId}`, {
+      cache: 'no-store',
+    });
 
     const product = await res.json();
     return product;
@@ -73,7 +86,6 @@ export async function getCartByCustomerReference(
     );
 
     const cart = await res.json();
-    console.log(cart);
 
     return cart;
   } catch (error) {
