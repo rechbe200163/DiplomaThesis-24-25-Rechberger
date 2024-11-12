@@ -5,13 +5,7 @@ import prisma from '@/prisma/client';
 import { Product } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
 import { ExtendedProduct } from '../interfaces';
-
-type FormState = {
-  success: boolean;
-  errors?: {
-    title: string[];
-  };
-};
+import { FormState } from '../form.types';
 
 export async function addToCart(
   productId: string,
