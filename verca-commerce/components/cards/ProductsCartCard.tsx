@@ -6,6 +6,9 @@ import RemoveFromCart from '../forms/cart/removeFromCart';
 import { formatPrice } from '@/lib/utils';
 import IncreaseProductQuantity from '../forms/cart/increaseProductQuantity';
 import DecreaseProductQuantity from '../forms/cart/decreaseProductQuantity';
+import { GenericActionForm } from '../forms/cart/genericForm';
+import { removeFromCart, updateQuantity } from '@/lib/actions/product.actions';
+import { MinusIcon } from 'lucide-react';
 
 async function ProductsCartCard({
   customerReference,
@@ -44,7 +47,7 @@ async function ProductsCartCard({
               {formatPrice(product.product.price)} x {product.quantity}
             </div>
             <div className='flex items-center justify-between mt-auto'>
-              <div className='flex items-center justify-evenly space-x-10'>
+              <div className='flex items-center justify-between '>
                 <DecreaseProductQuantity
                   productId={product.product.productId}
                   quantity={product.quantity}
@@ -55,7 +58,14 @@ async function ProductsCartCard({
                   quantity={product.quantity}
                 />
               </div>
-              <RemoveFromCart productId={product.product.productId} />
+              {/* <RemoveFromCart productId={product.product.productId} /> */}
+              <GenericActionForm
+                buttonText='remove'
+                action={removeFromCart}
+                param={product.product.productId}
+                size='sm'
+                variant='destructive'
+              />
             </div>
           </div>
         </div>
