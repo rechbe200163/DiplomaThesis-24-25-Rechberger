@@ -1,18 +1,9 @@
 'use client';
 
 import { updateQuantity } from '@/lib/actions/product.actions';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectValue,
-} from '../../ui/select';
-import { SelectTrigger } from '@radix-ui/react-select';
 import { useActionState } from 'react';
 import { Button } from '../../ui/button';
-import { MinusIcon, PlusIcon } from 'lucide-react';
+import { MinusIcon } from 'lucide-react';
 
 function DecreaseProductQuantity({
   productId,
