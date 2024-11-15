@@ -170,7 +170,7 @@ export async function updateQuantity(
     }
 
     const product = await prisma.product.findUnique({
-      where: { id: productId, deleted: false },
+      where: { productId: productId, deleted: false },
     });
 
     if (!product) {
