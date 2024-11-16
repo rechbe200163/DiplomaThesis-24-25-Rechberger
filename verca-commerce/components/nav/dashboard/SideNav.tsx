@@ -20,6 +20,24 @@ import {
 } from '@/components/ui/collapsible';
 import { Collapsible } from '@radix-ui/react-collapsible';
 
+const links = [
+  {
+    href: '/dashboard',
+    name: 'Dashboard',
+    icon: () => <i className='ri-amazon-line'></i>,
+  },
+  {
+    href: '/dashboard/orders',
+    name: 'Orders',
+    icon: () => <i className='ri-apple-line'></i>,
+  },
+  {
+    href: '/dashboard/products',
+    name: 'Products',
+    icon: () => <i className='ri-microsoft-fill'></i>,
+  },
+];
+
 export function AppSidebar() {
   return (
     <Sidebar collapsible='icon' variant='inset'>
@@ -46,7 +64,52 @@ export function AppSidebar() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <NavLinksProfile />
+                <NavLinksProfile linkType='account' />
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+        <Collapsible defaultOpen className='group/collapsible'>
+          <SidebarGroup>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger>
+                Shopping
+                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <NavLinksProfile linkType='shopping' />
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+        <Collapsible defaultOpen className='group/collapsible'>
+          <SidebarGroup>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger>
+                Support
+                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <NavLinksProfile linkType='support' />
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+        <Collapsible defaultOpen className='group/collapsible'>
+          <SidebarGroup>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger>
+                Danger
+                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <NavLinksProfile linkType='danger' />
               </SidebarGroupContent>
             </CollapsibleContent>
           </SidebarGroup>

@@ -1,42 +1,76 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { HomeIcon, LucideListOrdered } from 'lucide-react';
+import {
+  BellIcon,
+  ClockIcon,
+  CreditCardIcon,
+  HeartIcon,
+  HelpCircleIcon,
+  HomeIcon,
+  LucideListOrdered,
+  MapPinIcon,
+  StarIcon,
+  TrashIcon,
+} from 'lucide-react';
 import { PiInvoice } from 'react-icons/pi';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { Item } from '@radix-ui/react-select';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
-const links = [
+const accountLinks = [
   { name: 'Account', href: '/profile', icon: HomeIcon },
-  { name: 'Orders', href: '/profile/orders', icon: LucideListOrdered },
-  { name: 'Invoices', href: '/profile/invoices', icon: PiInvoice },
+  { name: 'Addresses', href: '/profile/addresses', icon: MapPinIcon },
+  {
+    name: 'Payment Methods',
+    href: '/profile/payment-methods',
+    icon: CreditCardIcon,
+  },
 ];
 
-export default function NavLinksProfile() {
-  const pathname = usePathname();
+const shoppingLinks = [
+  { name: 'Orders', href: '/profile/orders', icon: LucideListOrdered },
+  { name: 'Wishlist', href: '/profile/wishlist', icon: HeartIcon },
+  { name: 'Invoices', href: '/profile/invoices', icon: PiInvoice },
+  { name: 'Favorites', href: '/profile/favorites', icon: StarIcon },
+];
+
+const supportLinks = [
+  { name: 'Support', href: '/profile/support', icon: HelpCircleIcon },
+  { name: 'Notifications', href: '/profile/notifications', icon: BellIcon },
+  { name: 'Activity Log', href: '/profile/activity', icon: ClockIcon },
+];
+
+const accountDangerZone = [
+  { name: 'Delete Account', href: '/profile/delete-account', icon: TrashIcon },
+];
+
+// Objekt zur Zuordnung der linkTypes zu den jeweiligen Link-Arrays
+const linksMap = {
+  account: accountLinks,
+  shopping: shoppingLinks,
+  support: supportLinks,
+  danger: accountDangerZone,
+};
+
+type LinkType = 'account' | 'shopping' | 'support' | 'danger';
+
+export default function NavLinksProfile({ linkType }: { linkType: LinkType }) {
+  // Das passende Array basierend auf linkType auswählen
+  const links = linksMap[linkType] || [];
+
   return (
     <SidebarMenu>
-      {/* <Search placeholder='Search ' /> */}
       {links.map((link) => {
-        const LinkIcon = link.icon;
+        const Icon = link.icon;
         return (
           <SidebarMenuItem key={link.href}>
-            <SidebarMenuButton
-              asChild
-              className={cn(
-                'flex items-center justify-start w-full px-4 py-2',
-                pathname === link.href ? 'bg-gray-300' : 'hover:bg-gray-100'
-              )}
-            >
+            <SidebarMenuButton asChild>
               <Link href={link.href}>
-                <LinkIcon className='w-6 h-6' />
+                <Icon />
                 <span>{link.name}</span>
               </Link>
             </SidebarMenuButton>
