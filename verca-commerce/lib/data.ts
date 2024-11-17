@@ -111,7 +111,7 @@ export async function fetchProductsInCart(
   }
 }
 
-export async function fetchUser(customerReference: string): Promise<Customer> {
+export async function fetchUser(customerReference: number): Promise<Customer> {
   try {
     const res = await fetch(
       `https://localhost:3000/api/customers/${customerReference}`,
