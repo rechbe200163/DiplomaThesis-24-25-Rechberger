@@ -6,6 +6,7 @@ import { Product } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
 import { ExtendedProduct } from '../interfaces';
 import { FormState } from '../form.types';
+import { createOrder } from './orders.actions';
 
 export async function addToCart(
   productId: string,
@@ -355,13 +356,13 @@ export async function reduceStockofPurchasedProducts(
     });
   }
 
+  createOrder(products, cartId);
   clearCart(cartId);
 
   return {
     success: true,
   };
 }
-
 async function clearCart(cartId: string): Promise<FormState> {
   try {
     const session = await auth();
