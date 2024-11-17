@@ -1,16 +1,12 @@
+'use client';
+
 import Link from 'next/link';
-import clsx from 'clsx';
 import {
   BellIcon,
-  ClockIcon,
   CreditCardIcon,
-  HeartIcon,
-  HelpCircleIcon,
   HomeIcon,
   LucideListOrdered,
   MapPinIcon,
-  StarIcon,
-  TrashIcon,
 } from 'lucide-react';
 import { PiInvoice } from 'react-icons/pi';
 import {
@@ -18,48 +14,37 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
 import React from 'react';
+import { BiSupport } from 'react-icons/bi';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const accountLinks = [
   { name: 'Account', href: '/profile', icon: HomeIcon },
   { name: 'Addresses', href: '/profile/addresses', icon: MapPinIcon },
-  {
-    name: 'Payment Methods',
-    href: '/profile/payment-methods',
-    icon: CreditCardIcon,
-  },
 ];
 
 const shoppingLinks = [
   { name: 'Orders', href: '/profile/orders', icon: LucideListOrdered },
-  { name: 'Wishlist', href: '/profile/wishlist', icon: HeartIcon },
   { name: 'Invoices', href: '/profile/invoices', icon: PiInvoice },
-  { name: 'Favorites', href: '/profile/favorites', icon: StarIcon },
 ];
 
 const supportLinks = [
-  { name: 'Support', href: '/profile/support', icon: HelpCircleIcon },
+  { name: 'Support', href: '/profile/support', icon: BiSupport },
   { name: 'Notifications', href: '/profile/notifications', icon: BellIcon },
-  { name: 'Activity Log', href: '/profile/activity', icon: ClockIcon },
 ];
-
-const accountDangerZone = [
-  { name: 'Delete Account', href: '/profile/delete-account', icon: TrashIcon },
-];
-
 // Objekt zur Zuordnung der linkTypes zu den jeweiligen Link-Arrays
 const linksMap = {
   account: accountLinks,
   shopping: shoppingLinks,
   support: supportLinks,
-  danger: accountDangerZone,
 };
 
-type LinkType = 'account' | 'shopping' | 'support' | 'danger';
+type LinkType = 'account' | 'shopping' | 'support';
 
 export default function NavLinksProfile({ linkType }: { linkType: LinkType }) {
   // Das passende Array basierend auf linkType auswählen
+  const pathname = usePathname();
   const links = linksMap[linkType] || [];
 
   return (
@@ -69,7 +54,13 @@ export default function NavLinksProfile({ linkType }: { linkType: LinkType }) {
         return (
           <SidebarMenuItem key={link.href}>
             <SidebarMenuButton asChild>
-              <Link href={link.href}>
+              <Link
+                href={link.href}
+                className={cn(
+                  'flex items-center px-4 py-2 rounded-lg hover:bg-gray-300',
+                  pathname === link.href && 'bg-gray-400'
+                )}
+              >
                 <Icon />
                 <span>{link.name}</span>
               </Link>
