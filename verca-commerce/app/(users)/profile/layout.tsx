@@ -1,7 +1,7 @@
 import { auth } from '@/auth';
 import HeaderBox from '@/components/header/HeaderBox';
 import InteractiviyComponent from '@/components/nav/dashboard/InteractiviyComponent';
-import DashboardFooter from '@/components/nav/dashboard/ProfileIconComponent';
+import DashboardFooter from '@/components/nav/dashboard/DashboardFooter';
 import { AppSidebar } from '@/components/nav/dashboard/SideNav';
 import DashbaordFooterSkeleton from '@/components/skeletons/DashboardFooterSkeleton';
 import SideNavSkeleton from '@/components/skeletons/SideNavSkeleton';
