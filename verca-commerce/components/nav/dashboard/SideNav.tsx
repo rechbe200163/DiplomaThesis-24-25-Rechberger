@@ -11,32 +11,26 @@ import {
 import Image from 'next/image';
 import NavLinksProfile from './NavLinksProfile';
 import { HomeIcon } from '@radix-ui/react-icons/dist/HomeIcon';
-import { ChevronDown, LucideListOrdered } from 'lucide-react';
-import { PiInvoice } from 'react-icons/pi';
+import {
+  ChevronDown,
+  HelpCircle,
+  History,
+  LucideListOrdered,
+  UserCog,
+} from 'lucide-react';
+import {
+  PiInvoice,
+  PiPersonSimpleSnowboardLight,
+  PiShoppingBagBold,
+} from 'react-icons/pi';
 import Link from 'next/link';
 import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { Collapsible } from '@radix-ui/react-collapsible';
-
-const links = [
-  {
-    href: '/dashboard',
-    name: 'Dashboard',
-    icon: () => <i className='ri-amazon-line'></i>,
-  },
-  {
-    href: '/dashboard/orders',
-    name: 'Orders',
-    icon: () => <i className='ri-apple-line'></i>,
-  },
-  {
-    href: '/dashboard/products',
-    name: 'Products',
-    icon: () => <i className='ri-microsoft-fill'></i>,
-  },
-];
+import DashboardFooter from './DashboardFooter';
+import { BiSupport } from 'react-icons/bi';
 
 export function AppSidebar() {
   return (
@@ -58,7 +52,8 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
-                History
+                <UserCog className='mr-1' />
+                Details
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -73,6 +68,7 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
+                <PiShoppingBagBold className='mr-1' />
                 Shopping
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
@@ -88,7 +84,8 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
-                Support
+                <HelpCircle className='mr-1' />
+                Help
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -99,23 +96,10 @@ export function AppSidebar() {
             </CollapsibleContent>
           </SidebarGroup>
         </Collapsible>
-        <Collapsible defaultOpen className='group/collapsible'>
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                Danger
-                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <NavLinksProfile linkType='danger' />
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <DashboardFooter />
+      </SidebarFooter>
     </Sidebar>
   );
 }
