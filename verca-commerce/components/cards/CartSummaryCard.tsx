@@ -1,4 +1,4 @@
-import { getCartByCustomerReference } from '@/lib/data';
+import { getCartByCustomerReference } from '@/lib/data.shop';
 import { formatPrice } from '@/lib/utils';
 import React from 'react';
 import Link from 'next/link';

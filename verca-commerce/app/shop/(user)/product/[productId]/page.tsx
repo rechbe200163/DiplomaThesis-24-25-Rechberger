@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { getProductById } from '@/lib/data';
+import { getProductById } from '@/lib/data.shop';
 import { formatPrice } from '@/lib/utils';
 import {
   Accordion,

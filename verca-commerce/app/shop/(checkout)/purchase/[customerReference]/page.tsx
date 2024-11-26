@@ -1,4 +1,4 @@
-import { getCartByCustomerReference } from '@/lib/data';
+import { getCartByCustomerReference } from '@/lib/data.shop';
 import React from 'react';
 import { Product } from '@prisma/client';
 import { stripe } from '@/lib/stripeClient';

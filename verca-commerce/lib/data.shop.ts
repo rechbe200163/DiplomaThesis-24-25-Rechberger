@@ -1,3 +1,5 @@
+'server only';
+
 import { Customer, Product, SiteConfig } from '@prisma/client';
 import { CartCount, CartWithProducts, ProductWithCategoryNames } from './types';
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;

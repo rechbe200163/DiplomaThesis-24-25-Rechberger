@@ -1,4 +1,4 @@
-import { getCartByCustomerReference } from '@/lib/data';
+import { getCartByCustomerReference } from '@/lib/data.shop';
 import Image from 'next/image';
 import React from 'react';
 import RemoveFromCart from '../forms/cart/removeFromCart';

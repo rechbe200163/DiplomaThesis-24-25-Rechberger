@@ -1,27 +1,27 @@
-import { auth } from "@/auth";
-import { Input } from "@/components/ui/input";
-import { fetchUser } from "@/lib/data";
-import React from "react";
+import { auth } from '@/auth';
+import { Input } from '@/components/ui/input';
+import { fetchUser } from '@/lib/data.shop';
+import React from 'react';
 
 async function UserDetailsCard() {
   const session = await auth();
   const user = await fetchUser(session!.user.id);
   return (
-    <div className="card card-body">
-      <h1 className="card-title">User Details</h1>
+    <div className='card card-body'>
+      <h1 className='card-title'>User Details</h1>
       <Input
-        className="card-text"
-        defaultValue={user.firstName || "First Name"}
-        type="text"
+        className='card-text'
+        defaultValue={user.firstName || 'First Name'}
+        type='text'
       />
-      <Input className="card-text" defaultValue={user.lastName} type="text" />
-      <Input className="card-text" defaultValue={user.email} type="text" />
+      <Input className='card-text' defaultValue={user.lastName} type='text' />
+      <Input className='card-text' defaultValue={user.email} type='text' />
       <Input
-        className="card-text"
+        className='card-text'
         defaultValue={user.phoneNumber}
-        type="text"
+        type='text'
       />
-      <Input className="card-text" defaultValue={"********"} type="password" />
+      <Input className='card-text' defaultValue={'********'} type='password' />
     </div>
   );
 }

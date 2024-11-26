@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { fetchProductsInCart } from '@/lib/data';
+import { fetchProductsInCart } from '@/lib/data.shop';
 import Link from 'next/link';
 import React from 'react';
 import { IoCartOutline } from 'react-icons/io5';
