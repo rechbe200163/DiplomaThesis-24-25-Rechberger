@@ -1,4 +1,7 @@
 import { Prisma } from '@prisma/client';
+import { Eye } from 'lucide-react';
+
+//! SHOP
 
 const productWithCategoryNames = Prisma.validator<Prisma.ProductDefaultArgs>()({
   include: {
@@ -71,3 +74,18 @@ const cartCount = Prisma.validator<Prisma.CartDefaultArgs>()({
 });
 
 export type CartCount = Prisma.CartGetPayload<typeof cartCount>;
+
+//! DASHBOARD
+
+const orderDetails = Prisma.validator<Prisma.OrderDefaultArgs>()({
+  include: {
+    products: {
+      include: {
+        product: true,
+      },
+    },
+    invoice: true,
+  },
+});
+
+export type OrderDetails = Prisma.OrderGetPayload<typeof orderDetails>;
