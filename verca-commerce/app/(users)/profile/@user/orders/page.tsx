@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import React from 'react';
 import { getOrdersByCustomer } from '@/lib/data.dashboard';
+import OrderCard from '@/components/cards/dashboard/OrderCard';
 
 async function UserOrdersPage() {
   const session = await auth();
@@ -11,14 +12,7 @@ async function UserOrdersPage() {
     <div>
       <h1>Orders</h1>
       <ul>
-        {order.map((order) => (
-          <li key={order.orderId}>
-            <p>Order ID: {order.orderId}</p>
-            <p>Order Date: {order.deliveryDate + ''}</p>
-            <p>Order Total: {order.invoice?.invoiceAmount}</p>
-            <p>Order Status: {order.invoice?.dateOfPayment + ''}</p>
-          </li>
-        ))}
+        <OrderCard orders={order} />
       </ul>
     </div>
   );
