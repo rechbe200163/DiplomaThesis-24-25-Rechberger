@@ -19,6 +19,16 @@ export function formatPrice(price: number) {
   return formattedPrice;
 }
 
+export function formatDate(date: Date) {
+  const formattedDate = new Date(date).toLocaleDateString('de-AT', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+}
+
 export function generateCustomerRefercenceNumber(): number {
   const nanoid = customAlphabet('1234567890', 9);
   return Number(nanoid());
