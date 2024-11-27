@@ -15,8 +15,7 @@ import Image from 'next/image';
 
 function OrderCard({ orders }: { orders: OrderDetails[] }) {
   return (
-    <div>
-      {/* // <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4'> */}
+    <div className='grid grid-row-1 sm:grid-row-2 lg:grid-row-3 gap-6 p-4'>
       {orders.map((order) => (
         <div key={order.orderId} className='card bg-base-100 shadow-xl'>
           <Card>
@@ -60,7 +59,6 @@ function OrderCard({ orders }: { orders: OrderDetails[] }) {
                     </div>
                     <div className='flex items-center'>
                       <span className='font-semibold'>
-                        $
                         {(
                           product.productAmount * product.product.price
                         ).toFixed(2)}
@@ -72,8 +70,9 @@ function OrderCard({ orders }: { orders: OrderDetails[] }) {
             </CardContent>
             <CardContent>
               <p className='mb-2'>
-                <span className='font-semibold'>Order Total:</span> $
-                {order.invoice?.invoiceAmount.toFixed(2) || 'N/A'}
+                <span className='font-semibold'>Order Total:</span>
+                {formatPrice(Number(order.invoice?.invoiceAmount.toFixed(2))) ||
+                  'N/A'}
               </p>
               <p className='mb-2'>
                 <span className='font-semibold'>Status:</span>{' '}
@@ -85,9 +84,14 @@ function OrderCard({ orders }: { orders: OrderDetails[] }) {
               </p>
             </CardContent>
             <CardFooter>
-              <Button variant='default' className='w-full'>
-                View Details
-              </Button>
+              <ul className='steps'>
+                <li className='step step-accent'>Order Placed</li>
+                <li className='step step-accent'>Order Recieved</li>
+                <li className='step step-accent'>Order in Process</li>
+                <li className='step step-accent'>Shipment in preparation</li>
+                <li className='step'>Dispatched</li>
+                <li className='step'>Delivered</li>
+              </ul>
             </CardFooter>
           </Card>
         </div>
