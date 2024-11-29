@@ -11,7 +11,7 @@ async function UserOrdersPage() {
   const order = await getOrdersByCustomer(customerReference!);
   return (
     <div>
-      <h1>Orders</h1>
+      <h1 className='sticky top-10'>Orders</h1>
       <ul>
         <Orders orders={order} />
       </ul>
