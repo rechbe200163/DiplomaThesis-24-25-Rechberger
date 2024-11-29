@@ -6,31 +6,17 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
 } from '@/components/ui/sidebar';
 import Image from 'next/image';
 import NavLinksProfile from './NavLinksProfile';
-import { HomeIcon } from '@radix-ui/react-icons/dist/HomeIcon';
+import { ChevronDown, HelpCircle, UserCog } from 'lucide-react';
+import { PiShoppingBagBold } from 'react-icons/pi';
 import {
-  ChevronDown,
-  HelpCircle,
-  History,
-  LucideListOrdered,
-  UserCog,
-} from 'lucide-react';
-import {
-  PiInvoice,
-  PiPersonSimpleSnowboardLight,
-  PiShoppingBagBold,
-} from 'react-icons/pi';
-import Link from 'next/link';
-import {
+  Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { Collapsible } from '@radix-ui/react-collapsible';
 import DashboardFooter from './DashboardFooter';
-import { BiSupport } from 'react-icons/bi';
 
 export function AppSidebar() {
   return (
