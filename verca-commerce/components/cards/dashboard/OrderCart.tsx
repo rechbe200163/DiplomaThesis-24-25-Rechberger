@@ -50,7 +50,7 @@ function OrderCart({ order }: { order: OrderDetails }) {
             >
               <div className='flex items-center gap-4'>
                 <Image
-                  src={product.product.imagePath || '/mock_images/Mock_1.jpg'}
+                  src={product.product.imagePath || 'https://picsum.photos/80'}
                   width={80}
                   height={80}
                   alt={product.product.name + '-image'}
