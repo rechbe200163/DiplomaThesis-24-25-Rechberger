@@ -6,13 +6,23 @@ export async function GET(
   props: { params: Promise<{ customerReference: string }> }
 ) {
   const params = await props.params;
+  const skip = Number(req.nextUrl.searchParams.get('skip')) | 0;
+  const take = Number(req.nextUrl.searchParams.get('take')) | 10;
+  const sort = req.nextUrl.searchParams.get('sort');
+
+  console.log(sort);
 
   try {
     const customerReference = Number(params.customerReference);
 
     // Detailansicht einer Bestellung
     const orderDetails = await prisma.order.findMany({
+      skip,
+      take,
       where: { customerReference, deleted: false },
+      orderBy: {
+        date: sort === 'latest' ? 'desc' : 'asc',
+      },
       include: {
         products: {
           include: {
