@@ -1,24 +1,37 @@
 'server only';
+import { OrderDetails } from './types';
 
-import { Customer, Product, SiteConfig } from '@prisma/client';
-import {
-  CartCount,
-  CartWithProducts,
-  OrderDetails,
-  ProductWithCategoryNames,
-} from './types';
-import { cache } from 'react';
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export async function getOrdersByCustomer(
-  customerReferance: number
+export async function getOrdersByCustomerPagination(
+  customerReferance: number,
+  page: number = 0
 ): Promise<OrderDetails[]> {
   try {
-    const response = await fetch(`${baseApiUrl}/orders/${customerReferance}`, {
-      next: { tags: ['orders'] },
-    });
+    const response = await fetch(
+      `${baseApiUrl}/orders/${customerReferance}?page=${page}`,
+      {
+        next: { tags: ['orders'] },
+      }
+    );
     return response.json();
   } catch (error) {
     throw new Error('Failed to fetch orders');
+  }
+}
+
+export async function getTotalOrders(
+  customerReference: number
+): Promise<{ totalOrders: number }> {
+  try {
+    const response = await fetch(
+      `${baseApiUrl}/orders/${customerReference}?count=count`,
+      {
+        next: { tags: ['ordersCount'] },
+      }
+    );
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch orders count');
   }
 }
