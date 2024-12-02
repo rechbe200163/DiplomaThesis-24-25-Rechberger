@@ -23,6 +23,14 @@ function PaginationComponent({ totalPages }: { totalPages: number }) {
 
     if (page === 1) {
       params.delete('page');
+    } else if (page > totalPages) {
+      if (totalPages === 1) {
+        params.delete('page');
+      } else {
+        params.set('page', totalPages.toString());
+      }
+    } else if (page < 1) {
+      params.delete('page');
     } else {
       params.set('page', page.toString());
     }
@@ -30,49 +38,36 @@ function PaginationComponent({ totalPages }: { totalPages: number }) {
     return `${pathname}?${params.toString()}`;
   }
 
+  function getActivePage() {
+    const params = new URLSearchParams(searchParams);
+    const page = params.get('page');
+
+    return page ? parseInt(page) : 1;
+  }
+
   return (
     <div>
       <Pagination aria-disabled={totalPages <= 5}>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href={generateUrl(1)} />
+            <PaginationPrevious href={generateUrl(getActivePage() - 1)} />
           </PaginationItem>
           {Array.from({ length: totalPages }, (_, i) => (
             <PaginationItem key={i}>
               <PaginationLink
                 href={generateUrl(i + 1)}
-                className={cn(
-                  pathname.includes(`page=${i + 1}`) && 'bg-gray-200'
-                )}
-                isActive={pathname.includes(`page=${i + 1}`) || i === 0}
+                isActive={getActivePage() === i + 1 || getActivePage() === null}
               >
                 {i + 1}
               </PaginationLink>
             </PaginationItem>
           ))}
           <PaginationItem>
-            <PaginationNext href={generateUrl(totalPages)} />
+            <PaginationNext href={generateUrl(getActivePage() + 1)} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>
-    // <div>
-    //   <Pagination aria-disabled={totalPages <= 5}>
-    //     <PaginationContent>
-    //       <PaginationItem>
-    //         <PaginationPrevious href='#' />
-    //       </PaginationItem>
-    //       {Array.from({ length: totalPages }, (_, i) => (
-    //         <PaginationItem key={i}>
-    //           <PaginationLink href='#'>{i + 1}</PaginationLink>
-    //         </PaginationItem>
-    //       ))}
-    //       <PaginationItem>
-    //         <PaginationNext href='#' />
-    //       </PaginationItem>
-    //     </PaginationContent>
-    //   </Pagination>
-    // </div>
   );
 }
 
