@@ -6,38 +6,79 @@ export async function GET(
   props: { params: Promise<{ customerReference: string }> }
 ) {
   const params = await props.params;
-  const skip = Number(req.nextUrl.searchParams.get('skip')) | 0;
-  const take = Number(req.nextUrl.searchParams.get('take')) | 10;
   const sort = req.nextUrl.searchParams.get('sort');
+  const page = Number(req.nextUrl.searchParams.get('page'));
+  const count = req.nextUrl.searchParams.get('count');
 
-  console.log(sort);
-
+  const ORDERS_PER_PAGE = 5;
   try {
     const customerReference = Number(params.customerReference);
 
-    // Detailansicht einer Bestellung
-    const orderDetails = await prisma.order.findMany({
-      skip,
-      take,
-      where: { customerReference, deleted: false },
-      orderBy: {
-        date: sort === 'latest' ? 'desc' : 'asc',
-      },
-      include: {
-        products: {
-          include: {
-            product: true, // Produktdetails
-          },
-        },
-        invoice: true, // Rechnungsdetails
-      },
-    });
-
-    if (!orderDetails) {
-      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    if (!customerReference) {
+      return NextResponse.json(
+        { error: 'Invalid customer reference' },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json(orderDetails, { status: 200 });
+    if (count === 'count') {
+      const orderCount = await prisma.order.count({
+        where: { customerReference, deleted: false },
+      });
+      return NextResponse.json({ totalOrders: orderCount }, { status: 200 });
+    }
+
+    if (page) {
+      //calc skip
+      const skip = (page - 1) * ORDERS_PER_PAGE;
+      // clac take
+      const take = ORDERS_PER_PAGE;
+
+      console.log('skip:', skip);
+      console.log('take:', take);
+      console.log('page:', page);
+
+      const orderDetails = await prisma.order.findMany({
+        skip,
+        take,
+        where: { customerReference, deleted: false },
+        orderBy: {
+          date: sort === 'latest' ? 'desc' : 'asc',
+        },
+        include: {
+          products: {
+            include: {
+              product: true, //Produktdetails
+            },
+          },
+          invoice: true, //Rechnungsdetails
+        },
+      });
+
+      if (!orderDetails.length) {
+        return NextResponse.json({ error: 'No orders found' }, { status: 404 });
+      }
+
+      return NextResponse.json(orderDetails, { status: 200 });
+    } else {
+      const orderDetails = await prisma.order.findMany({
+        where: { customerReference, deleted: false },
+        include: {
+          products: {
+            include: {
+              product: true, //Produktdetails
+            },
+          },
+          invoice: true, //Rechnungsdetails
+        },
+      });
+
+      if (!orderDetails.length) {
+        return NextResponse.json({ error: 'No orders found' }, { status: 404 });
+      }
+
+      return NextResponse.json(orderDetails, { status: 200 });
+    }
   } catch (error) {
     console.error('Error fetching orders:', error);
     return NextResponse.json(
