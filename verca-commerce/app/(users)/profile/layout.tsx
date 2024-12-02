@@ -35,8 +35,8 @@ export default async function Layout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <main className='m-4 space-y-4'>
-          <SidebarTrigger />
+        <main className='flex flex-row h-full w-full p-2'>
+          <SidebarTrigger className='sticky top-2' />
           {session?.user.role === user ? admin : user}
         </main>
       </SidebarInset>
