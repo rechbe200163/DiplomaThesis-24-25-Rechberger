@@ -26,8 +26,10 @@ async function UserOrdersPage(props: {
   const totalPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
 
   return (
-    <div className=''>
-      <h1 className='sticky top-10'>Orders</h1>
+    <div className='px-2'>
+      <div className='flex items-center'>
+        <h1 className='text-2xl font-semibold sticky top-2'>Orders</h1>
+      </div>
       <Orders orders={orders} />
       <PaginationComponent totalPages={totalPages} />
     </div>
