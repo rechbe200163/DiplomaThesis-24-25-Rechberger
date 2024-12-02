@@ -44,6 +44,7 @@ function PaginationComponent({ totalPages }: { totalPages: number }) {
                 className={cn(
                   pathname.includes(`page=${i + 1}`) && 'bg-gray-200'
                 )}
+                isActive={pathname.includes(`page=${i + 1}`) || i === 0}
               >
                 {i + 1}
               </PaginationLink>
