@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { ProductWithCategoryNames } from '@/lib/types';
 import Link from 'next/link';
+import ImageComponent from '../images/ImagesConponent';
 
 const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   const isAddedLast7Days =
@@ -14,13 +15,13 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
       href={`/shop/product/${product.productId}`}
       className='card bg-base-100 shadow-xl'
     >
-      <figure>
-        <Image
-          src='https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp'
-          alt='Shoes'
-          width={400}
+      <figure className='flex grow-0'>
+        <ImageComponent
+          imagePath={product.imagePath!}
+          alt={product.name}
+          widht={400}
           height={400}
-          className='w-full rounded-t-xl'
+          classname='w-full rounded-t-xl'
         />
       </figure>
       <div className='card-body rounded-xl text-gray-400 w-full'>

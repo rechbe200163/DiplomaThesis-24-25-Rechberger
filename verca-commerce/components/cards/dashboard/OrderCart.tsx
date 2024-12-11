@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { OrderDetails } from '@/lib/types';
+import ImageComponent from '@/components/images/ImagesConponent';
 function OrderCart({ order }: { order: OrderDetails }) {
   return (
     <Card
@@ -49,12 +50,12 @@ function OrderCart({ order }: { order: OrderDetails }) {
               className='flex items-center justify-between p-2 rounded-lg'
             >
               <div className='flex items-center gap-4'>
-                <Image
-                  src={product.product.imagePath || 'https://picsum.photos/80'}
-                  width={80}
-                  height={80}
-                  alt={product.product.name + '-image'}
-                  className='object-cover rounded-lg shadow-sm'
+                <ImageComponent
+                  imagePath={product.product.imagePath!}
+                  alt={product.product.name}
+                  widht={400}
+                  height={400}
+                  classname='w-full rounded-xl'
                 />
                 <div>
                   <p className='font-semibold text-gray-800'>
@@ -96,15 +97,17 @@ function OrderCart({ order }: { order: OrderDetails }) {
         </p>
       </CardContent>
       <CardFooter className='bg-gray-50 rounded-b-lg'>
-        <Accordion type='single' collapsible className='w-full items-stretch'>
+        <Accordion
+          type='single'
+          collapsible
+          className='w-full items-stretch justify-stretch'
+        >
           <AccordionItem value='item-1'>
             <AccordionTrigger>View Details</AccordionTrigger>
             <AccordionContent>
               <ul className='steps text-gray-700'>
                 <li className='step step-info'>Order Placed</li>
-                <li className='step step-info'>Order Received</li>
                 <li className='step step-info'>Order in Process</li>
-                <li className='step step-info'>Shipment in Preparation</li>
                 <li className='step step-neutral'>Dispatched</li>
                 <li className='step step-neutral'>Delivered</li>
               </ul>

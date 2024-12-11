@@ -9,6 +9,7 @@ import DecreaseProductQuantity from '../forms/cart/decreaseProductQuantity';
 import { GenericActionForm } from '../forms/cart/genericForm';
 import { removeFromCart, updateQuantity } from '@/lib/actions/product.actions';
 import { MinusIcon } from 'lucide-react';
+import ImageComponent from '../images/ImagesConponent';
 
 async function ProductsCartCard({
   customerReference,
@@ -25,15 +26,12 @@ async function ProductsCartCard({
           className='card card-side shadow-xl rounded-lg overflow-hidden bg-white'
         >
           <figure className='w-1/3'>
-            <Image
-              src={
-                product.product.imagePath ||
-                'https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp'
-              }
-              alt={product.product.name + ' image'}
-              className='object-cover w-full h-full'
-              width={400}
+            <ImageComponent
+              imagePath={product.product.imagePath!}
+              alt={product.product.name}
+              widht={400}
               height={400}
+              classname='w-full rounded-t-xl'
             />
           </figure>
           <div className='card-body flex flex-col gap-4 p-4 w-2/3'>

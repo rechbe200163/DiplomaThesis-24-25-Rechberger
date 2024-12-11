@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/accordion';
 import { BiAddToQueue } from 'react-icons/bi';
 import AddToCartForm from '@/components/forms/cart/addToCard';
+import ImageComponent from '@/components/images/ImagesConponent';
 
 interface ProductDetailsPageProps {
   params: Promise<{
@@ -25,12 +26,12 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
     <div className='p-4 md:p-20'>
       <div className='card flex flex-col xl:flex-row w-full shadow-xl'>
         <figure className='flex-none w-full xl:w-1/3'>
-          <Image
-            src='https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp'
+          <ImageComponent
+            imagePath={product.imagePath!}
             alt={product.name}
-            width={500}
+            widht={500}
             height={500}
-            className='rounded-xl xl:rounded-none object-cover w-full'
+            classname='w-full rounded-t-xl'
           />
           <figcaption className='sr-only'>{product.name}</figcaption>
         </figure>
