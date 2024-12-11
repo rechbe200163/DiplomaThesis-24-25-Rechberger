@@ -28,7 +28,6 @@ export default function SearchComponent({
       : `${pathname}/search`;
 
     replace(`${newPath}?${params.toString()}`);
-    console.log(term);
   }
 
   return (

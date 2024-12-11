@@ -40,7 +40,6 @@ export async function GET(req: NextRequest) {
           { status: 404 }
         );
       }
-      console.log(filterdPoducts);
       return NextResponse.json(filterdPoducts, { status: 200 });
     }
 

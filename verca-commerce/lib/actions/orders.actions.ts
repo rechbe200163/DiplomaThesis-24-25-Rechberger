@@ -24,7 +24,6 @@ export async function createOrder(
   const orderItems = products.map((product) => {
     return { productId: product.productId, productAmount: product.quantity };
   });
-  console.log(orderItems);
   const order = await prisma.order.create({
     data: {
       customerReference,
