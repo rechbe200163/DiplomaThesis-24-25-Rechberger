@@ -1,9 +1,10 @@
 import { Product } from '@prisma/client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { ProductWithCategoryNames } from '@/lib/types';
 import Link from 'next/link';
-import ImageComponent from '../images/ImagesConponent';
+import ImageComponent from '../images/ImageComponent';
+import ImageSkeleton from '../images/ImageSkeleton';
 
 const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   const isAddedLast7Days =
@@ -13,16 +14,18 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   return (
     <Link
       href={`/shop/product/${product.productId}`}
-      className='card bg-base-100 shadow-xl'
+      className='card bg-base-100 shadow-xl max-w-[400px] max-h-[400px]'
     >
-      <figure className='flex grow-0'>
-        <ImageComponent
-          imagePath={product.imagePath!}
-          alt={product.name}
-          widht={400}
-          height={400}
-          classname='w-full rounded-t-xl'
-        />
+      <figure className='max-h-fit '>
+        <Suspense fallback={<ImageSkeleton />}>
+          <ImageComponent
+            imagePath={product.imagePath!}
+            alt={product.name}
+            widht={400}
+            height={400}
+            classname='w-full'
+          />
+        </Suspense>
       </figure>
       <div className='card-body rounded-xl text-gray-400 w-full'>
         <h2 className='card-title '>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { formatDate, formatPrice } from '@/lib/utils';
-import Image from 'next/image';
+
 import {
   Accordion,
   AccordionContent,
@@ -16,7 +16,8 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { OrderDetails } from '@/lib/types';
-import ImageComponent from '@/components/images/ImagesConponent';
+import ImageComponent from '@/components/images/ImageComponent';
+import ImageSkeleton from '@/components/images/ImageSkeleton';
 function OrderCart({ order }: { order: OrderDetails }) {
   return (
     <Card
@@ -50,13 +51,15 @@ function OrderCart({ order }: { order: OrderDetails }) {
               className='flex items-center justify-between p-2 rounded-lg'
             >
               <div className='flex items-center gap-4'>
-                <ImageComponent
-                  imagePath={product.product.imagePath!}
-                  alt={product.product.name}
-                  widht={400}
-                  height={400}
-                  classname='w-full rounded-xl'
-                />
+                <Suspense fallback={<ImageSkeleton />}>
+                  <ImageComponent
+                    imagePath={product.product.imagePath!}
+                    alt={product.product.name}
+                    widht={400}
+                    height={400}
+                    classname='w-full rounded-xl'
+                  />
+                </Suspense>
                 <div>
                   <p className='font-semibold text-gray-800'>
                     {product.product.name}

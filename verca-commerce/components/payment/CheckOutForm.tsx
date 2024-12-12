@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { Product } from '@prisma/client';
 import { loadStripe } from '@stripe/stripe-js';
@@ -25,7 +25,8 @@ import { FormState } from '@/lib/form.types';
 import { reduceStockofPurchasedProducts } from '@/lib/actions/product.actions';
 import { CartWithProducts } from '@/lib/types';
 import { ExtendedProduct } from '@/lib/interfaces';
-import ImageComponent from '../images/ImagesConponent';
+import ImageComponent from '../images/ImageComponent';
+import ImageSkeleton from '../images/ImageSkeleton';
 
 type CheckoutFromProps = {
   products: ExtendedProduct[];
@@ -55,13 +56,15 @@ export const CheckOutForm = ({
         >
           <div className='flex items-center space-x-4'>
             <div className='aspect-video flex-shrink-0 w-1/3 relative'>
-              <ImageComponent
-                imagePath={product.imagePath!}
-                alt={product.name}
-                widht={400}
-                height={400}
-                classname='w-full rounded-t-xl'
-              />
+              <Suspense fallback={<ImageSkeleton />}>
+                <ImageComponent
+                  imagePath={product.imagePath!}
+                  alt={product.name}
+                  widht={400}
+                  height={400}
+                  classname='w-full rounded-t-xl'
+                />
+              </Suspense>
             </div>
             <div>
               <h2 className='text-lg font-semibold'>{product.name}</h2>

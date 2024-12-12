@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { getProductById } from '@/lib/data.shop';
 import { formatPrice } from '@/lib/utils';
@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/accordion';
 import { BiAddToQueue } from 'react-icons/bi';
 import AddToCartForm from '@/components/forms/cart/addToCard';
-import ImageComponent from '@/components/images/ImagesConponent';
+import ImageComponent from '@/components/images/ImageComponent';
+import ImageSkeleton from '@/components/images/ImageSkeleton';
 
 interface ProductDetailsPageProps {
   params: Promise<{
@@ -26,13 +27,15 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
     <div className='p-4 md:p-20'>
       <div className='card flex flex-col xl:flex-row w-full shadow-xl'>
         <figure className='flex-none w-full xl:w-1/3'>
-          <ImageComponent
-            imagePath={product.imagePath!}
-            alt={product.name}
-            widht={500}
-            height={500}
-            classname='w-full rounded-t-xl'
-          />
+          <Suspense fallback={<ImageSkeleton />}>
+            <ImageComponent
+              imagePath={product.imagePath!}
+              alt={product.name}
+              widht={500}
+              height={500}
+              classname='w-fit'
+            />
+          </Suspense>
           <figcaption className='sr-only'>{product.name}</figcaption>
         </figure>
         <div className='card-body flex-1 p-4 md:p-6'>
