@@ -12,7 +12,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(price: number) {
-  const formattedPrice = (price / 100).toLocaleString('de-at', {
+  const formattedPrice = (price / 100).toLocaleString('de-AT', {
     style: 'currency',
     currency: 'EUR',
   });
@@ -53,12 +53,7 @@ export async function getSignedURL(
   const bucket = process.env.SUPABASE_IMAGE_BUCKET;
   const { data, error } = await supabaseClient.storage
     .from(bucket!)
-    .createSignedUrl(imagePath, 60, {
-      transform: {
-        width,
-        height,
-      },
-    });
+    .createSignedUrl(imagePath, 315000000);
   return data?.signedUrl!;
 }
 
