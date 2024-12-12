@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { getSignedURL } from '@/lib/utils';
-import { ImageDown } from 'lucide-react';
+import { cn, getSignedURL } from '@/lib/utils';
+import { unstable_cacheLife as cacheLife } from 'next/cache';
 
 interface ImagesConponentProps {
   imagePath: string;
@@ -18,16 +18,9 @@ async function ImageComponent({
   height,
   classname,
 }: ImagesConponentProps) {
+  // wait 5 seconds
   const imageURL = await getSignedURL(imagePath, widht, height);
-  return (
-    <Image
-      src={imageURL}
-      alt={alt}
-      width={widht}
-      height={height}
-      className={classname}
-    />
-  );
+  return <Image src={imageURL} alt={alt} width={widht} height={height} />;
 }
 
 export default ImageComponent;
