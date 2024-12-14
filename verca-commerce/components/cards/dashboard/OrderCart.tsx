@@ -16,13 +16,21 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { OrderDetails } from '@/lib/types';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 function OrderCart({ order }: { order: OrderDetails }) {
   return (
     <Card
       key={order.orderId}
       className='shadow-lg transition-transform transform duration-200 border border-gray-300'
     >
-      <CardHeader className='bg-gray-50 p-4 rounded-t-lg'>
+      <CardHeader className='flex-row items-center justify-between'>
         <div className='flex items-center flex-wrap gap-4 text-gray-700 text-sm'>
           <span className='font-bold'>Order ID:</span>
           <span>{order.orderId}</span>
@@ -39,6 +47,17 @@ function OrderCart({ order }: { order: OrderDetails }) {
             <strong>Ordered On:</strong> {formatDate(order.date)}
           </span>
         </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>Invoice</DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>Subscription</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardHeader>
       {/* Product Information */}
       <CardContent>
