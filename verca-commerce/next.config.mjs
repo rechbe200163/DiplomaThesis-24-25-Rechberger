@@ -16,6 +16,12 @@ const nextConfig = {
         pathname: '/**',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'supaapi.mrhost.uk',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -33,11 +33,6 @@ export async function GET(
       const skip = (page - 1) * ORDERS_PER_PAGE;
       // clac take
       const take = ORDERS_PER_PAGE;
-
-      console.log('skip:', skip);
-      console.log('take:', take);
-      console.log('page:', page);
-
       const orderDetails = await prisma.order.findMany({
         skip,
         take,

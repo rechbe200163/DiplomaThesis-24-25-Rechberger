@@ -12,7 +12,6 @@ export default async function PurchasePage(props: {
 
   const { customerReference } = params;
 
-  console.log(customerReference);
   const cart = await getCartByCustomerReference(customerReference);
 
   const cartId = cart.cartId;

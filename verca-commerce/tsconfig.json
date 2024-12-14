@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "nanoID.js",
-    "nano.js"
+    "nano.js",
+    "lib/supabaseClient.mjs"
   ],
   "exclude": ["node_modules"]
 }

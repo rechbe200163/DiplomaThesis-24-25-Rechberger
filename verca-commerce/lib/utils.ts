@@ -1,17 +1,18 @@
 import { auth } from '@/auth';
 import { BusinessSector } from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
-import { count } from 'console';
+
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
-import { customAlphabet, nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
+import { supabaseClient } from './supabaseClient';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatPrice(price: number) {
-  const formattedPrice = (price / 100).toLocaleString('de-at', {
+  const formattedPrice = (price / 100).toLocaleString('de-AT', {
     style: 'currency',
     currency: 'EUR',
   });
@@ -42,6 +43,18 @@ export async function checkUserRole() {
   }
 
   return session.user.role;
+}
+
+export async function getSignedURL(
+  imagePath: string,
+  width: number,
+  height: number
+): Promise<string> {
+  const bucket = process.env.SUPABASE_IMAGE_BUCKET;
+  const { data, error } = await supabaseClient.storage
+    .from(bucket!)
+    .createSignedUrl(imagePath, 315000000);
+  return data?.signedUrl!;
 }
 
 export const authSignUpFormSchema = () =>

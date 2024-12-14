@@ -20,6 +20,13 @@ enum Role {
   EMPLOYEE
 }
 
+enum orderState {
+  order_placed
+  order_in_progress
+  dispatched
+  delivered
+}
+
 enum BusinessSector {
   AGRICULTURE
   MANUFACTURING
@@ -37,8 +44,8 @@ enum BusinessSector {
 }
 
 model Customer {
-  customerId        String    @id @default(cuid())
-  customerReference Int    @unique
+  customerId        String    @id @default(uuid())
+  customerReference Int       @unique
   email             String    @unique
   phoneNumber       String    @db.VarChar(15)
   password          String    @db.VarChar(255)
@@ -60,7 +67,7 @@ model Customer {
 }
 
 model Address {
-  addressId    String    @id @default(cuid()) // Unique ID for easier referencing
+  addressId    String    @id @default(uuid()) // Unique ID for easier referencing
   city         String    @db.VarChar(100)
   country      String    @db.VarChar(40)
   postcode     String    @db.VarChar(10)
@@ -78,8 +85,8 @@ model Address {
 }
 
 model Cart {
-  cartId            String           @id @default(cuid())
-  customerReference Int           @unique
+  cartId            String           @id @default(uuid())
+  customerReference Int              @unique
   customer          Customer         @relation(fields: [customerReference], references: [customerReference]) // not in the database model
   products          CartOnProducts[]
 
@@ -87,7 +94,7 @@ model Cart {
 }
 
 model Product {
-  productId   String    @id @default(cuid())
+  productId   String    @id @default(uuid())
   name        String    @unique @db.VarChar(255)
   price       Int
   description String    @db.Text
@@ -106,7 +113,7 @@ model Product {
 }
 
 model Category {
-  categoryId String    @id @default(cuid())
+  categoryId String    @id @default(uuid())
   name       String    @unique @db.VarChar(255)
   imagePath  String?   @db.VarChar(255) // probably should be paths for multiple images
   modifiedAt DateTime? @updatedAt
@@ -118,11 +125,13 @@ model Category {
 }
 
 model Order {
-  orderId           String   @id @default(cuid())
-  customerReference Int 
-  date              DateTime @default(now())
-  deliveryDate      DateTime @default(now())
-  deleted           Boolean  @default(false)
+  orderId           String      @id @default(uuid())
+  customerReference Int
+  date              DateTime    @default(now())
+  deliveryDate      DateTime    @default(now())
+  deleted           Boolean     @default(false)
+  orderStatus       orderState?
+  selfCollect       Boolean     @default(false)
 
   customer Customer          @relation(fields: [customerReference], references: [customerReference])
   products OrderOnProducts[]
@@ -133,7 +142,7 @@ model Order {
 }
 
 model Invoice {
-  invoiceId     String   @id @default(cuid())
+  invoiceId     String   @id @default(uuid())
   orderId       String   @unique
   invoiceAmount Int //price in cents
   dateOfPayment DateTime @default(now())
@@ -144,7 +153,7 @@ model Invoice {
 }
 
 model Route {
-  routeId String           @id @default(cuid())
+  routeId String           @id @default(uuid())
   name    String           @db.VarChar(255)
   deleted Boolean          @default(false)
   order   RoutesOnOrders[]
@@ -154,7 +163,7 @@ model Route {
 
 //* Emplyee model
 model Employees {
-  employeeId String  @id @default(cuid())
+  employeeId String  @id @default(uuid())
   email      String  @unique
   password   String  @db.VarChar(255)
   firstName  String  @db.VarChar(255)
@@ -167,7 +176,7 @@ model Employees {
 
 //* model for the site configuration
 model SiteConfig {
-  siteConfigId String @id @default(cuid())
+  siteConfigId String @id @default(uuid())
   companyName  String @db.VarChar(255)
   //? should probably also have a slogan or a short description field
   //? should probalby also have a relation to a socialMedia model with links to social media

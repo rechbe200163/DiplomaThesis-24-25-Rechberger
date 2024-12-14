@@ -20,7 +20,6 @@ export async function createInvoice(
   const invoiceAmount = products.reduce((acc, product) => {
     return acc + product.quantity * product.price;
   }, 0);
-  console.log(invoiceAmount);
   const invoice = await prisma.invoice.create({
     data: {
       orderId,
