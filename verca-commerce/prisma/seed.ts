@@ -38,6 +38,7 @@ async function main() {
       price: 999,
       description: 'Test Description',
       stock: 10,
+      imagePath: 'product_images/mock_image1.png',
     },
   });
   const product1 = await prisma.product.upsert({
@@ -48,6 +49,7 @@ async function main() {
       price: 500,
       description: 'Test Description1',
       stock: 20,
+      imagePath: 'product_images/mock_image2.png',
     },
   });
 
