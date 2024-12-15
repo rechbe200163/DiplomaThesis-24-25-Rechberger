@@ -26,6 +26,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { orderState } from '@prisma/client';
+
 function OrderCart({ order }: { order: OrderDetails }) {
   return (
     <Card
@@ -74,8 +76,8 @@ function OrderCart({ order }: { order: OrderDetails }) {
                   <ImageComponent
                     imagePath={product.product.imagePath!}
                     alt={product.product.name}
-                    width={400}
-                    height={400}
+                    width={96}
+                    height={96}
                     classname='w-full rounded-xl'
                   />
                 </Suspense>
@@ -108,7 +110,7 @@ function OrderCart({ order }: { order: OrderDetails }) {
           <span className='font-semibold'>Status: </span>
           {order.invoice?.dateOfPayment ? (
             <>
-              Paid on{' '}
+              Paid on
               <span className='text-green-600 font-medium'>
                 {new Date(order.invoice.dateOfPayment).toLocaleDateString()}
               </span>
@@ -127,12 +129,8 @@ function OrderCart({ order }: { order: OrderDetails }) {
           <AccordionItem value='item-1'>
             <AccordionTrigger>View Details</AccordionTrigger>
             <AccordionContent>
-              <ul className='steps text-gray-700'>
-                <li className='step step-info'>Order Placed</li>
-                <li className='step step-info'>Order in Process</li>
-                <li className='step step-neutral'>Dispatched</li>
-                <li className='step step-neutral'>Delivered</li>
-              </ul>
+              {/*Order Status*/}
+              {PaymentStatusProgressBar(order.orderStatus)}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -142,3 +140,32 @@ function OrderCart({ order }: { order: OrderDetails }) {
 }
 
 export default OrderCart;
+
+function PaymentStatusProgressBar(orderStatus: orderState) {
+  // Extract enum keys dynamically
+  const states = Object.keys(orderState) as Array<keyof typeof orderState>;
+
+  return (
+    <ul className='steps steps-vertical md:steps-horizontal w-full'>
+      {states.map((state, index) => {
+        // Determine if the current state or any predecessors should be marked as complete
+        const isComplete = states.indexOf(orderStatus) >= index;
+
+        return (
+          <li
+            key={state}
+            className={`step ${isComplete ? 'step-neutral' : ''}`}
+          >
+            {formatStateLabel(state)}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function formatStateLabel(state: string) {
+  return state
+    .replace(/_/g, ' ') // Replace underscores with spaces
+    .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize the first letter of each word
+}
