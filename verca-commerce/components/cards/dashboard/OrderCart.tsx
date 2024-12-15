@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { orderState } from '@prisma/client';
+import Link from 'next/link';
 
 function OrderCart({ order }: { order: OrderDetails }) {
   return (
@@ -54,12 +55,10 @@ function OrderCart({ order }: { order: OrderDetails }) {
         <DropdownMenu>
           <DropdownMenuTrigger>Invoice</DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`${order.invoice?.pdfUrl}`}>Download Invoice</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>
