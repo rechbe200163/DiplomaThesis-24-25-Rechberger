@@ -49,12 +49,16 @@ export async function getSignedURL(
   imagePath: string,
   width: number,
   height: number
-): Promise<string> {
+): Promise<string | null> {
   const bucket = process.env.SUPABASE_IMAGE_BUCKET;
   const { data, error } = await supabaseClient.storage
     .from(bucket!)
     .createSignedUrl(imagePath, 315000000);
-  return data?.signedUrl!;
+  if (error) {
+    console.error(error);
+    return null;
+  }
+  return data.signedUrl;
 }
 
 export const authSignUpFormSchema = () =>
