@@ -60,7 +60,7 @@ export const CheckOutForm = ({
                 <ImageComponent
                   imagePath={product.imagePath!}
                   alt={product.name}
-                  widht={400}
+                  width={400}
                   height={400}
                   classname='w-full rounded-t-xl'
                 />

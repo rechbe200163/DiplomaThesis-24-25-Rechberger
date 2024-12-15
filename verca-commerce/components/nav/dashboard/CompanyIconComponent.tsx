@@ -17,7 +17,7 @@ async function CompanyIconComponent() {
           <ImageComponent
             imagePath={siteConfig.logoPath!}
             alt={siteConfig.companyName}
-            widht={400}
+            width={400}
             height={400}
             classname='w-full rounded-t-xl'
           />
