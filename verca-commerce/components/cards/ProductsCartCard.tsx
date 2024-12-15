@@ -20,24 +20,24 @@ async function ProductsCartCard({
   const products = await getCartByCustomerReference(customerReference);
 
   return (
-    <div className='flex flex-col gap-6 p-4 md:p-0 w-full md:w-2/3 overflow-auto max-h-96'>
+    <div className='flex flex-col gap-6 p-4 md:p-0  overflow-auto relative '>
       {products.products.map((product) => (
         <div
           key={product.product.name}
-          className='card card-side shadow-xl rounded-lg overflow-hidden bg-white'
+          className='card card-side shadow-xl rounded-lg overflow-hidden bg-white max-w-full w-full mx-auto '
         >
-          <figure className='w-1/3'>
+          <figure className='relative flex-shirnk-0'>
             <Suspense fallback={<ImageSkeleton />}>
               <ImageComponent
                 imagePath={product.product.imagePath!}
                 alt={product.product.name}
-                widht={400}
+                width={400}
                 height={400}
-                classname='w-full rounded-t-xl'
+                classname='absolute top-0 left-0 w-full h-full object-cover'
               />
             </Suspense>
           </figure>
-          <div className='card-body flex flex-col gap-4 p-4 w-2/3'>
+          <div className='card-body flex flex-col gap-4 p-4 w-full'>
             <div className='text-lg font-semibold text-gray-800'>
               {product.product.name}
             </div>
@@ -48,7 +48,7 @@ async function ProductsCartCard({
               {formatPrice(product.product.price)} x {product.quantity}
             </div>
             <div className='flex items-center justify-between mt-auto'>
-              <div className='flex items-center justify-between '>
+              <div className='flex items-center justify-between'>
                 <DecreaseProductQuantity
                   productId={product.product.productId}
                   quantity={product.quantity}
@@ -59,7 +59,6 @@ async function ProductsCartCard({
                   quantity={product.quantity}
                 />
               </div>
-              {/* <RemoveFromCart productId={product.product.productId} /> */}
               <GenericActionForm
                 buttonText='remove'
                 action={removeFromCart}
