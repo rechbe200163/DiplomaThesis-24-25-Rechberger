@@ -130,7 +130,7 @@ model Order {
   date              DateTime    @default(now())
   deliveryDate      DateTime    @default(now())
   deleted           Boolean     @default(false)
-  orderStatus       orderState?
+  orderStatus       orderState  @default(order_placed)
   selfCollect       Boolean     @default(false)
 
   customer Customer          @relation(fields: [customerReference], references: [customerReference])
