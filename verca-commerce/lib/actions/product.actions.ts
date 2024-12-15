@@ -6,7 +6,7 @@ import { Product } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
 import { ExtendedProduct } from '../interfaces';
 import { FormState } from '../form.types';
-import { createOrder } from './orders.actions';
+import { createOrder } from '../services/order.services';
 
 export async function addToCart(
   productId: string,
