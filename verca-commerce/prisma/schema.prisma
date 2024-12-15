@@ -130,7 +130,6 @@ model Order {
   date              DateTime   @default(now())
   deliveryDate      DateTime   @default(now())
   deleted           Boolean    @default(false)
-  pdfUrl            String     @db.VarChar(255)
   orderStatus       orderState @default(order_placed)
   selfCollect       Boolean    @default(false)
 
@@ -147,8 +146,10 @@ model Invoice {
   orderId       String   @unique
   invoiceAmount Int //price in cents
   dateOfPayment DateTime @default(now())
-  deleted       Boolean  @default(false)
-  order         Order    @relation(fields: [orderId], references: [orderId])
+  pdfUrl        String   @db.VarChar(255)
+
+  deleted Boolean @default(false)
+  order   Order   @relation(fields: [orderId], references: [orderId])
 
   @@map("invoices")
 }
