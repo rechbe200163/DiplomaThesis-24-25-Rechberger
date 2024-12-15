@@ -39,7 +39,15 @@ async function ImageComponent({
     );
   }
 
-  return <Image src={imageURL} alt={alt} width={width} height={height} />;
+  return (
+    <Image
+      src={imageURL}
+      alt={alt}
+      width={width}
+      height={height}
+      className={classname}
+    />
+  );
 }
 
 export default ImageComponent;
