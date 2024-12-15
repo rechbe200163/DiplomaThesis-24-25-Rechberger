@@ -1,26 +1,45 @@
 import React from 'react';
 import Image from 'next/image';
 import { cn, getSignedURL } from '@/lib/utils';
-import { unstable_cacheLife as cacheLife } from 'next/cache';
+import { AspectRatio } from '../ui/aspect-ratio';
 
-interface ImagesConponentProps {
+interface ImagesComponentProps {
   imagePath: string;
   alt: string;
-  widht: number;
+  width: number;
   height: number;
-  classname: string;
+  classname?: string;
 }
 
 async function ImageComponent({
   imagePath,
   alt,
-  widht,
+  width,
   height,
-  classname,
-}: ImagesConponentProps) {
-  // wait 5 seconds
-  const imageURL = await getSignedURL(imagePath, widht, height);
-  return <Image src={imageURL} alt={alt} width={widht} height={height} />;
+  classname = '',
+}: ImagesComponentProps) {
+  const imageURL = await getSignedURL(imagePath, width, height);
+
+  if (!imageURL) {
+    // Placeholder image with dynamic Tailwind styling
+    return (
+      <div
+        className={cn(
+          'bg-gray-300',
+          'flex',
+          'items-center',
+          'justify-center',
+          'rounded-md',
+          'overflow-hidden',
+          classname
+        )}
+      >
+        <p className='text-gray-500 text-sm'>Image not found</p>
+      </div>
+    );
+  }
+
+  return <Image src={imageURL} alt={alt} width={width} height={height} />;
 }
 
 export default ImageComponent;
