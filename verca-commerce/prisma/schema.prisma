@@ -125,13 +125,14 @@ model Category {
 }
 
 model Order {
-  orderId           String      @id @default(uuid())
+  orderId           String     @id @default(uuid())
   customerReference Int
-  date              DateTime    @default(now())
-  deliveryDate      DateTime    @default(now())
-  deleted           Boolean     @default(false)
-  orderStatus       orderState  @default(order_placed)
-  selfCollect       Boolean     @default(false)
+  date              DateTime   @default(now())
+  deliveryDate      DateTime   @default(now())
+  deleted           Boolean    @default(false)
+  pdfUrl            String     @db.VarChar(255)
+  orderStatus       orderState @default(order_placed)
+  selfCollect       Boolean    @default(false)
 
   customer Customer          @relation(fields: [customerReference], references: [customerReference])
   products OrderOnProducts[]
