@@ -31,8 +31,8 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
             <ImageComponent
               imagePath={product.imagePath!}
               alt={product.name}
-              widht={500}
-              height={500}
+              width={1000}
+              height={1000}
               classname='w-fit'
             />
           </Suspense>
