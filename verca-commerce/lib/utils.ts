@@ -6,6 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
 import { customAlphabet } from 'nanoid';
 import { supabaseClient } from './supabaseClient';
+import { redirect } from 'next/navigation';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -54,6 +55,18 @@ export async function getSignedURL(
   const { data, error } = await supabaseClient.storage
     .from(bucket!)
     .createSignedUrl(imagePath, 315000000);
+  if (error) {
+    console.error(error);
+    return null;
+  }
+  return data.signedUrl;
+}
+
+export async function generatePdfUrl(pdfPath: string): Promise<string | null> {
+  const bucket = process.env.SUPABASE_PDF_BUCKET;
+  const { data, error } = await supabaseClient.storage
+    .from(bucket!)
+    .createSignedUrl(pdfPath, 60 * 60 * 48); // url will be valid for 48 hours
   if (error) {
     console.error(error);
     return null;
