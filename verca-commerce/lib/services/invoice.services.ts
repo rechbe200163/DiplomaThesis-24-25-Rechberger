@@ -19,54 +19,43 @@ export async function createInvoiceWithPDF(
     };
   }
 
-  // Berechnung des Rechnungsbetrags
+  // claclulate invoice amount
   const invoiceAmount = products.reduce((acc, product) => {
     return acc + product.quantity * product.price;
   }, 0);
 
-  // Erstelle die Rechnung
+  // generate PDF for invoice
+  const pdfBytes = await generateInvoicePDF(orderId, products, invoiceAmount);
+  // load pdf to supabase storage
+  const filePath = await uploadInvoicePDF(pdfBytes, orderId);
+  // save invoice to database
   const invoice = await prisma.invoice.create({
     data: {
       orderId,
+      pdfUrl: filePath,
       invoiceAmount,
     },
   });
 
-  // Generiere das PDF für die Rechnung
-  const pdfBytes = await generateInvoicePDF(
-    invoice.invoiceId,
-    products,
-    invoiceAmount
-  );
-
-  // Lade die PDF-Datei in Supabase hoch
-  const filePath = await uploadInvoicePDF(pdfBytes, invoice.invoiceId);
-
-  // Update die Rechnung in der Datenbank mit dem PDF-Link
-  const updatedInvoice = await prisma.invoice.update({
-    where: { invoiceId: invoice.invoiceId },
-    data: { pdfUrl: filePath },
-  });
-
-  return { success: true, invoice: updatedInvoice };
+  return { success: true, invoice: invoice };
 }
 
 async function generateInvoicePDF(
-  invoiceId: string,
+  orderId: string,
   products: ExtendedProduct[],
   invoiceAmount: number
 ) {
   const pdfDoc = await PDFDocument.create(); // Erstelle ein neues PDF-Dokument
 
-  // Füge eine Seite hinzu
+  // add a new page to the PDF
   const page = pdfDoc.addPage();
   const { width, height } = page.getSize();
 
   // Schriftart definieren
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-  // Text in die PDF setzen
-  page.drawText(`Invoice ID: ${invoiceId}`, { x: 50, y: height - 50, font });
+  //
+  page.drawText(`Order ID: ${orderId}`, { x: 50, y: height - 50, font });
   page.drawText(`Total Amount: $${invoiceAmount.toFixed(2)}`, {
     x: 50,
     y: height - 100,
@@ -91,11 +80,11 @@ async function generateInvoicePDF(
 }
 
 async function uploadInvoicePDF(pdfBytes: Uint8Array, invoiceId: string) {
-  // Supabase Storage - PDF-Datei hochladen
+  // Upload the PDF to the Supabase storage
   const { data, error } = await supabaseClient.storage
-    .from('invoices') // Der Bucket, in dem die PDF gespeichert wird
+    .from('invoicePdf') // supabase bucket which stores the PDFs
     .upload(`invoices/${invoiceId}.pdf`, pdfBytes, {
-      contentType: 'application/pdf', // Dateityp setzen
+      contentType: 'application/pdf', // data type of the file
     });
 
   if (error) {
