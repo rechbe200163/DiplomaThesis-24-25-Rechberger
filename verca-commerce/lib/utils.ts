@@ -6,7 +6,6 @@ import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
 import { customAlphabet } from 'nanoid';
 import { supabaseClient } from './supabaseClient';
-import { redirect } from 'next/navigation';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -62,16 +61,18 @@ export async function getSignedURL(
   return data.signedUrl;
 }
 
-export async function generatePdfUrl(pdfPath: string): Promise<string | null> {
-  const bucket = process.env.SUPABASE_PDF_BUCKET;
+export async function generatePdfUrl(pdfPath: string): Promise<string> {
+  const bucket = process.env.SUPABASE_INVOICE_BUCKET;
   const { data, error } = await supabaseClient.storage
     .from(bucket!)
-    .createSignedUrl(pdfPath, 60 * 60 * 48); // url will be valid for 48 hours
+    .createSignedUrl(pdfPath, 60 * 60 * 365 * 10); // 10 years
   if (error) {
     console.error(error);
-    return null;
+    return error + '';
   }
+  console.log('Data', data, 'Error', error);
   return data.signedUrl;
+  // redirect(data.signedUrl, RedirectType.push); // Redirect to the PDF in the same tab with adding a new entry to the history stack of the browser
 }
 
 export const authSignUpFormSchema = () =>
