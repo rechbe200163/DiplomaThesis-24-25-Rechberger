@@ -132,12 +132,14 @@ async function main() {
     data: {
       orderId: order.orderId,
       invoiceAmount: 1998, // 2 * 999
+      pdfUrl: 'invoice.pdf',
     },
   });
   await prisma.invoice.create({
     data: {
       orderId: order2.orderId,
-      invoiceAmount: product1.price, //
+      invoiceAmount: product1.price,
+      pdfUrl: 'invoice.pdf',
     },
   });
 
