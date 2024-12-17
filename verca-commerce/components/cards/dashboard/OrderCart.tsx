@@ -1,5 +1,5 @@
+import { formatDate, formatPrice, generatePdfUrl } from '@/lib/utils';
 import React, { Suspense } from 'react';
-import { formatDate, formatPrice } from '@/lib/utils';
 
 import {
   Accordion,
@@ -27,7 +27,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { orderState } from '@prisma/client';
-import Link from 'next/link';
+import DownloadPdf from '@/components/nav/dashboard/DownloadPdf';
 
 function OrderCart({ order }: { order: OrderDetails }) {
   return (
@@ -35,33 +35,35 @@ function OrderCart({ order }: { order: OrderDetails }) {
       key={order.orderId}
       className='shadow-lg transition-transform transform duration-200 border border-gray-300'
     >
-      <CardHeader className='flex-row items-center justify-between'>
-        <div className='flex items-center flex-wrap gap-4 text-gray-700 text-sm'>
-          <span className='font-bold'>Order ID:</span>
-          <span>{order.orderId}</span>
-          <Separator orientation='vertical' className='h-4' />
-          <span>
-            <strong>Delivery Date:</strong> {formatDate(order.deliveryDate)}
-          </span>
-          <Separator orientation='vertical' className='h-4' />
-          <span>
-            <strong>Total Items:</strong> {order.products.length}
-          </span>
-          <Separator orientation='vertical' className='h-4' />
-          <span>
-            <strong>Ordered On:</strong> {formatDate(order.date)}
-          </span>
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger>Invoice</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={`${order.invoice?.pdfUrl}`}>Download Invoice</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </CardHeader>
+      <div className='flex items-center justify-stretch'>
+        <CardHeader className='flex-row items-center justify-between'>
+          <div className='flex items-center flex-wrap gap-4 text-gray-700 text-sm'>
+            <span className='font-bold'>Order ID:</span>
+            <span>{order.orderId}</span>
+            <Separator orientation='vertical' className='h-4' />
+            <span>
+              <strong>Delivery Date:</strong> {formatDate(order.deliveryDate)}
+            </span>
+            <Separator orientation='vertical' className='h-4' />
+            <span>
+              <strong>Total Items:</strong> {order.products.length}
+            </span>
+            <Separator orientation='vertical' className='h-4' />
+            <span>
+              <strong>Ordered On:</strong> {formatDate(order.date)}
+            </span>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>Download</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <DownloadPdf pdfPath={order.invoice?.pdfUrl!} />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </CardHeader>
+      </div>
       {/* Product Information */}
       <CardContent>
         <div className='grid grid-cols-1 gap-4'>
