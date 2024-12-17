@@ -79,11 +79,12 @@ async function generateInvoicePDF(
   return pdfBytes; // Rückgabe der Byte-Daten der generierten PDF
 }
 
-async function uploadInvoicePDF(pdfBytes: Uint8Array, invoiceId: string) {
+async function uploadInvoicePDF(pdfBytes: Uint8Array, orderId: string) {
+  const invoiceBucket = process.env.SUPABASE_INVOICE_BUCKET; // Supabase bucket name
   // Upload the PDF to the Supabase storage
   const { data, error } = await supabaseClient.storage
-    .from('invoicePdf') // supabase bucket which stores the PDFs
-    .upload(`invoices/${invoiceId}.pdf`, pdfBytes, {
+    .from(invoiceBucket!) // supabase bucket which stores the PDFs
+    .upload(`invoice_${orderId}.pdf`, pdfBytes, {
       contentType: 'application/pdf', // data type of the file
     });
 
