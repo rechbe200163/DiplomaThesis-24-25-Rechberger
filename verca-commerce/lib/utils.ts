@@ -70,7 +70,6 @@ export async function generatePdfUrl(pdfPath: string): Promise<string> {
     console.error(error);
     return error + '';
   }
-  console.log('Data', data, 'Error', error);
   return data.signedUrl;
   // redirect(data.signedUrl, RedirectType.push); // Redirect to the PDF in the same tab with adding a new entry to the history stack of the browser
 }
