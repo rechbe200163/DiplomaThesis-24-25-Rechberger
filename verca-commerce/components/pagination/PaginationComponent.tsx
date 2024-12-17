@@ -10,11 +10,9 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { cn } from '@/lib/utils';
 
 function PaginationComponent({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
-  const { replace } = useRouter();
   const searchParams = useSearchParams();
 
   // function to set page number as seahr params
