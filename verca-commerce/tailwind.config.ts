@@ -8,7 +8,32 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  prefix: '',
+  daisyui: {
+    themes: [
+      {
+        custom: {
+          // use variables from the global CSS
+          primary: 'var(--primary)',
+          'primary-focus': 'var(--primary-focus)',
+          'primary-content': 'var(--primary-content)',
+          secondary: 'var(--secondary)',
+          'secondary-focus': 'var(--secondary-focus)',
+          'secondary-content': 'var(--secondary-content)',
+          accent: 'var(--accent)',
+          'accent-focus': 'var(--accent-focus)',
+          'accent-content': 'var(--accent-content)',
+          neutral: 'var(--neutral)',
+          'neutral-focus': 'var(--neutral-focus)',
+          'neutral-content': 'var(--neutral-content)',
+          'base-100': 'var(--base-100)',
+          info: 'var(--info)',
+          success: 'var(--success)',
+          warning: 'var(--warning)',
+          error: 'var(--error)',
+        },
+      },
+    ],
+  },
   theme: {
     container: {
       center: 'true',
