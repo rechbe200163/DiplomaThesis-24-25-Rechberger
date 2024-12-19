@@ -15,7 +15,7 @@ async function NavBar() {
   const session = await auth();
 
   return (
-    <div className=' navbar  '>
+    <div className=' navbar bg-neutral-content'>
       <div className='flex-1 gap-7 flex'>
         <Link href={'/shop'} className='text-xl font-bold'>
           <Suspense fallback={<Skeleton className='w-20 h-4' />}>
