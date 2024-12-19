@@ -16,18 +16,16 @@ async function CartIconComponent() {
   );
 
   return (
-    <div>
-      <Link href={`/shop/${session.user.customerReference}/cart`}>
-        <div className='flex relative'>
-          <IoCartOutline size={35} />
-          {productsCount && productsCount._count?.products > 0 && (
-            <div className='badge badge-primary badge-md absolute -top-2 -right-4'>
-              {productsCount._count.products}
-            </div>
-          )}
-        </div>
-      </Link>
-    </div>
+    <Link href={`/shop/${session.user.customerReference}/cart`}>
+      <div className='flex relative'>
+        <IoCartOutline size={35} className='text-base-100' />
+        {productsCount && productsCount._count?.products > 0 && (
+          <div className='badge badge-info badge-md absolute -top-2 -right-4'>
+            {productsCount._count.products}
+          </div>
+        )}
+      </div>
+    </Link>
   );
 }
 

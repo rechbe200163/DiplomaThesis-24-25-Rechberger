@@ -31,7 +31,8 @@ function DecreaseProductQuantity({
           variant={'outline'}
           size={'icon'}
           type='submit'
-          disabled={quantity <= 1}
+          disabled={quantity <= 1 || isPending}
+          className='hover:bg-base-100 transition duration-300 ease-in-out'
         >
           <MinusIcon />
         </Button>
@@ -40,7 +41,7 @@ function DecreaseProductQuantity({
 
       {/* Display errors if any */}
       {formState.errors?.title[0] && (
-        <div className='text-red-500 text-sm mt-2'>
+        <div className='text-error text-sm mt-2'>
           {formState.errors.title.join(', ')}
         </div>
       )}

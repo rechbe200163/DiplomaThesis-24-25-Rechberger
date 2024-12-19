@@ -36,7 +36,13 @@ function IncreaseProductQuantity({
   return (
     <form action={action} className='flex items-center'>
       <div className='justify-items-stretch'>
-        <Button variant={'outline'} size={'icon'} type='submit'>
+        <Button
+          variant={'outline'}
+          size={'icon'}
+          type='submit'
+          disabled={isPending}
+          className='hover:bg-base-100 transition duration-300 ease-in-out'
+        >
           <PlusIcon />
         </Button>
         <input type='hidden' name='update' value={1}></input>
@@ -44,7 +50,7 @@ function IncreaseProductQuantity({
 
       {/* Display errors if any */}
       {formState.errors?.title[0] && (
-        <div className='text-red-500 text-sm mt-2'>
+        <div className='text-error text-sm mt-2'>
           {formState.errors.title.join(', ')}
         </div>
       )}

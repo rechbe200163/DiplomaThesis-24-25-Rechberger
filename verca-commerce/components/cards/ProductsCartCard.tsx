@@ -18,7 +18,6 @@ async function ProductsCartCard({
   customerReference: number;
 }) {
   const products = await getCartByCustomerReference(customerReference);
-
   return (
     <div className='flex flex-col gap-6 p-4 md:p-0  overflow-auto relative '>
       {products.products.map((product) => (
@@ -26,14 +25,14 @@ async function ProductsCartCard({
           key={product.product.name}
           className='card card-side shadow-xl rounded-lg overflow-hidden bg-white max-w-full w-full mx-auto '
         >
-          <figure className='relative flex-shirnk-0'>
+          <figure className='card-image relative'>
             <Suspense fallback={<ImageSkeleton />}>
               <ImageComponent
                 imagePath={product.product.imagePath!}
                 alt={product.product.name}
                 width={400}
                 height={400}
-                classname='absolute top-0 left-0 w-full h-full object-cover'
+                classname='w-full h-auto object-cover'
               />
             </Suspense>
           </figure>

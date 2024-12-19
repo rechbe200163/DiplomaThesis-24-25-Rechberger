@@ -28,7 +28,7 @@ function RemoveFromCart({ productId }: { productId: string }) {
         )}
       </button>
       {formState?.errors && (
-        <div className='text-red-500 text-sm mt-2'>
+        <div className='text-error text-sm mt-2'>
           {formState?.errors.title.join(', ')}
         </div>
       )}

@@ -3,12 +3,13 @@
 import React, { useActionState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface GenericActionFormProps {
   action: (...args: any[]) => Promise<any>; // Die übergebene Server-Action
   buttonText?: string; // Der Button-Inhalt
   buttonLoaderText?: string;
-  buttonStyle?: 'shadcn' | 'default'; // Optional: Benutzerdefinierter Button
+  className?: string; // Optional: Benutzerdefinierter Button
   variant?:
     | 'outline'
     | 'ghost'
@@ -30,7 +31,7 @@ export function GenericActionForm({
   action,
   buttonText,
   buttonLoaderText,
-  buttonStyle = 'default',
+  className,
   size = 'default',
   variant = 'default',
   hideAdditionalInputs,
@@ -64,9 +65,10 @@ export function GenericActionForm({
         size={size}
         type='submit'
         disabled={buttonDisabled}
-        className={`${
-          buttonStyle === 'shadcn' ? 'shadow-md' : ''
-        } flex items-center`}
+        className={cn(
+          className,
+          'hover:bg-base-100 transition duration-300 ease-in-out'
+        )}
       >
         {isPending ? (
           <Loader2 className='animate-spin' size={24} />
@@ -76,7 +78,7 @@ export function GenericActionForm({
       </Button>
 
       {formState.errors?.title[0] && (
-        <div className='text-red-500 text-sm mt-2'>
+        <div className='text-error text-sm mt-2'>
           {formState.errors.title.join(', ')}
         </div>
       )}

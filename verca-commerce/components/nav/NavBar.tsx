@@ -35,7 +35,7 @@ async function NavBar() {
                 src={session.user.image || '/images/default-profile.png'}
                 alt={session.user.name?.split(' ')[0]}
               />
-              <AvatarFallback className='bg-emerald-400'>
+              <AvatarFallback className='bg-success-600 text-black'>
                 {session.user.lastName[0] + session.user.firstName![0]}
               </AvatarFallback>
             </Avatar>

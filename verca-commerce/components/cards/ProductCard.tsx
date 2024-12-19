@@ -14,7 +14,7 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   return (
     <Link
       href={`/shop/product/${product.productId}`}
-      className='card bg-base-100 shadow-xl max-w-[400px] max-h-[400px]'
+      className='card bg-base-100 shadow-xl max-w-[400px] max-h-[400px] text-base-content'
     >
       <figure className='max-h-fit '>
         <Suspense fallback={<ImageSkeleton />}>
@@ -27,10 +27,12 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
           />
         </Suspense>
       </figure>
-      <div className='card-body rounded-xl text-gray-400 w-full'>
+      <div className='card-body rounded-xl w-full'>
         <h2 className='card-title '>
           {product.name}
-          {isAddedLast7Days && <div className='badge badge-secondary'>NEW</div>}
+          {isAddedLast7Days && (
+            <div className='badge badge-secondary '>NEW</div>
+          )}
         </h2>
         <p>
           {product.description.length >= 30
@@ -39,15 +41,20 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
         </p>
         <div className='card-actions justify-between items-center'>
           {product.stock > 0 && product.stock <= 5 ? (
-            <div className='badge badge-error font-bold'>
+            <div className='badge badge-error font-bold text-error-content'>
               only {product.stock} left
             </div>
           ) : product.stock === 0 ? (
-            <div className='badge badge-error font-bold'>Sold out</div>
+            <div className='badge badge-error font-bold text-error-content'>
+              Sold out
+            </div>
           ) : null}
           <div>
             {product.categories.map((category) => (
-              <div key={category.category.name} className='badge badge-outline'>
+              <div
+                key={category.category.name}
+                className='badge badge-info text-info-content'
+              >
                 {category.category.name}
               </div>
             ))}
