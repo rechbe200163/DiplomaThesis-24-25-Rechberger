@@ -1,6 +1,6 @@
-import NavBar from "@/components/nav/NavBar";
-import Footer from "@/components/footer/Footer";
-import Breadcrumbs from "@/components/nav/BreadCrumps";
+import NavBar from '@/components/nav/NavBar';
+import Footer from '@/components/footer/Footer';
+import Breadcrumbs from '@/components/nav/BreadCrumps';
 
 export default function ShopLayout({
   children,
@@ -8,11 +8,11 @@ export default function ShopLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="p-4 md:p-8">
+    <div className='p-4 md:p-8 text-base-100'>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Shop", href: "/shop" },
+          { label: 'Home', href: '/' },
+          { label: 'Shop', href: '/shop' },
         ]}
       />
       {children}

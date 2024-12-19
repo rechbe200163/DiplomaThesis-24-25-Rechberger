@@ -8,32 +8,43 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
+  prefix: '',
   daisyui: {
     themes: [
       {
         custom: {
-          // use variables from the global CSS
-          primary: 'var(--primary)',
-          'primary-focus': 'var(--primary-focus)',
-          'primary-content': 'var(--primary-content)',
-          secondary: 'var(--secondary)',
-          'secondary-focus': 'var(--secondary-focus)',
-          'secondary-content': 'var(--secondary-content)',
-          accent: 'var(--accent)',
-          'accent-focus': 'var(--accent-focus)',
-          'accent-content': 'var(--accent-content)',
-          neutral: 'var(--neutral)',
-          'neutral-focus': 'var(--neutral-focus)',
-          'neutral-content': 'var(--neutral-content)',
-          'base-100': 'var(--base-100)',
-          info: 'var(--info)',
-          success: 'var(--success)',
-          warning: 'var(--warning)',
-          error: 'var(--error)',
+          primary: '#4a90e2', // Soft Blue
+          'primary-focus': '#3a7ed1', // Slightly darker blue for focus
+          'primary-content': '#ffffff', // White text
+
+          secondary: '#ffb343', // Mint Green
+          'secondary-focus': '#41c8aa', // Slightly darker mint green
+          'secondary-content': '#000000', // Black text
+
+          accent: '#2c3e50', // Deep Slate Blue
+          'accent-focus': '#1a2836', // Darker version of Deep Slate Blue
+          'accent-content': '#ffffff', // White text
+
+          neutral: '#3e4c59', // Muted Steel Grey
+          'neutral-focus': '#2c3846', // Darker Steel Grey
+          'neutral-content': '#d1d5db', // Light grey for contrast
+
+          'base-100': '#1e293b', // Dark blue-grey
+          'base-200': '#334155', // Slightly lighter blue-grey
+          'base-300': '#475569', // Even lighter blue-grey
+          'base-content': '#cbd5e1', // White text for readability
+          'base-content-black': '#000000', // Black text for readability
+
+          info: '#00a7b3', // Muted Slate
+          success: '#7ed321', // Soft Lime Green
+          warning: '#f8e71c', // Gentle Yellow
+          error: '#ff2c2c', // Soft Red
+          'error-content': '#000000', // White text for readability
         },
       },
     ],
   },
+
   theme: {
     container: {
       center: 'true',

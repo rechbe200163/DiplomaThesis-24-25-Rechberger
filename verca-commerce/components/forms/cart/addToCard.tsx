@@ -15,7 +15,11 @@ function AddToCartForm({ productId }: { productId: string }) {
   });
   return (
     <form action={action}>
-      <Button type='submit' disabled={isPending}>
+      <Button
+        type='submit'
+        disabled={isPending}
+        className='bg-base-200 text-white hover:bg-base-100'
+      >
         {isPending ? (
           <>
             <Loader2 size={20} className='animate-spin' /> &nbsp; Adding to
@@ -26,7 +30,7 @@ function AddToCartForm({ productId }: { productId: string }) {
         )}
       </Button>
       {formState?.errors && (
-        <div className='text-red-500 text-sm mt-2'>
+        <div className='text-error text-sm mt-2'>
           {formState?.errors.title.join(', ')}
         </div>
       )}

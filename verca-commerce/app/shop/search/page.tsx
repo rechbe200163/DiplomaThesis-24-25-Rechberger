@@ -23,7 +23,7 @@ export default async function SearchPage(props: {
       ) : (
         <div className='text-center my-10'>
           <p className='text-gray-600 text-lg font-medium'>
-            Sorry! it seems we don't have what you're looking for.
+            Sorry! it seems we don&apos;t have what you&apos;re looking for.
           </p>
         </div>
       )}

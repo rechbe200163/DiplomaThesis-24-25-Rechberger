@@ -22,9 +22,9 @@ function NavLinks() {
               key={index}
               href={link.href}
               className={cn(
-                'text-zinc-500 hover:underline transition-transform ',
+                'text-base-100 hover:underline transition-transform ',
                 {
-                  'font-medium text-zinc-950 underline ':
+                  'font-medium hover:bg-neutral-content underline ':
                     pathname === link.href,
                 }
               )}

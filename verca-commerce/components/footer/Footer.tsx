@@ -31,7 +31,7 @@ async function Footer() {
       </aside>
 
       <nav>
-        <h1 className='footer-title text-white'>Contact</h1>
+        <h1 className='footer-title text-base-content'>Contact</h1>
         <a>{siteConfig.email}</a>
         <a>{siteConfig.phoneNumber}</a>
       </nav>
