@@ -17,6 +17,9 @@ RUN npm install --force
 # Copy the rest of the application code
 COPY . .
 
+# genrerate prisma client
+RUN npx prisma generate
+
 # Expose the port the app runs on
 EXPOSE 3000
 
