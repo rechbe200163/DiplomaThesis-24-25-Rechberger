@@ -75,9 +75,8 @@ export async function GET(
       return NextResponse.json(orderDetails, { status: 200 });
     }
   } catch (error) {
-    console.error('Error fetching orders:', error);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal Server Error' + error },
       { status: 500 }
     );
   }
