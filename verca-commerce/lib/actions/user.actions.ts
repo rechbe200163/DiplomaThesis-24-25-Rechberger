@@ -1,9 +1,14 @@
 'use server';
-
+import { FormState } from './../form.types';
 import prisma from '@/prisma/client';
-import { authSignUpFormSchema } from '../utils';
+import {
+  authSignUpFormSchema,
+  generateCustomerRefercenceNumber,
+} from '../utils';
 import { hash } from 'bcryptjs';
-import { FormState } from '../form.types';
+import { auth } from '@/auth';
+import { uploadAvatar } from '../services/user.services';
+import { revalidateTag } from 'next/cache';
 
 export async function signUp(
   email: string,
@@ -65,6 +70,8 @@ export async function signUp(
 
     const pwHash = await hash(password, 12);
 
+    const customerReference = generateCustomerRefercenceNumber();
+
     // Create Customer and Cart in a single transaction
     const customer = await prisma.customer.create({
       data: {
@@ -74,6 +81,7 @@ export async function signUp(
         lastName: lastName,
         companyNumber: companyNumber,
         phoneNumber: phoneNumber,
+        customerReference: customerReference,
         address: {
           connectOrCreate: {
             where: {
@@ -113,6 +121,37 @@ export async function signUp(
         title: ['Something went wrong'],
       },
       success: false,
+    };
+  }
+}
+
+export async function processImage(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const session = await auth();
+  if (!session || !session.user) {
+    return {
+      success: false,
+      errors: {
+        title: ['Please sign in to upload a profile picture'],
+      },
+    };
+  }
+  try {
+    const file = formData.get('file') as File;
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+
+    uploadAvatar(buffer, session.user.customerReference!);
+
+    revalidateTag('user');
+    return { success: true };
+  } catch (error) {
+    console.error('error from uploadProfilePicture', error);
+    return {
+      success: false,
+      errors: { title: ['Could not upload file', error as string] },
     };
   }
 }
