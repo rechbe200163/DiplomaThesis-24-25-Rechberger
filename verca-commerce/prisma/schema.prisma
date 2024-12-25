@@ -55,6 +55,7 @@ model Customer {
   modifiedAt        DateTime? @updatedAt
   deleted           Boolean   @default(false)
   signedUp          DateTime  @default(now())
+  avatarPath        String?   @db.VarChar(255)
   addressId         String
 
   role           Role            @default(USER)
