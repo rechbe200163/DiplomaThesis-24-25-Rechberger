@@ -17,21 +17,14 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import DashboardFooter from './DashboardFooter';
+import CompanyIconComponent from './CompanyIconComponent';
+import ImageComponent from '@/components/images/ImageComponent';
 
 export function AppSidebar() {
   return (
     <Sidebar collapsible='icon' variant='inset'>
       <SidebarHeader>
-        <div className='flex items-center justify-center'>
-          <Image
-            src='/assets/images/logo.svg'
-            width={200}
-            height={200}
-            alt='Logo'
-            className='w-8 h-8'
-          />
-          <h1 className='text-lg font-bold ml-2'>Verca</h1>
-        </div>
+        <CompanyIconComponent />
       </SidebarHeader>
       <SidebarContent>
         <Collapsible defaultOpen className='group/collapsible'>
