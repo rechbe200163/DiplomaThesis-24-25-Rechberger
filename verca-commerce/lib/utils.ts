@@ -51,7 +51,7 @@ export async function getSignedURL(imagePath: string): Promise<string | null> {
     .from(bucket!)
     .createSignedUrl(imagePath, 315000000);
   if (error) {
-    console.error(error);
+    console.error('Error Generating Signed URL', error);
     return null;
   }
   return data.signedUrl;

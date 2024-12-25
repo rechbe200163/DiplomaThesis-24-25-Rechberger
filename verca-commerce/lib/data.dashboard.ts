@@ -2,6 +2,9 @@
 import { OrderDetails } from './types';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
+interface Avatar {
+  avatarPath: string;
+}
 
 export async function getOrdersByCustomerPagination(
   customerReferance: number,
@@ -36,7 +39,9 @@ export async function getTotalOrders(
   }
 }
 
-export async function fetchUserAvatrPath(customerReference: number) {
+export async function fetchUserAvatrPath(
+  customerReference: number
+): Promise<Avatar> {
   try {
     const response = await fetch(
       `${baseApiUrl}/customers/${customerReference}/avatar`,
