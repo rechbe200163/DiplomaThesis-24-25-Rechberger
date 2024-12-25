@@ -140,6 +140,16 @@ export async function processImage(
   }
   try {
     const file = formData.get('file') as File;
+
+    if (file.size === 0) {
+      return {
+        success: false,
+        errors: {
+          title: ['No file selected'],
+        },
+      };
+    }
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
 
