@@ -18,7 +18,7 @@ async function ImageComponent({
   height,
   classname = '',
 }: ImagesComponentProps) {
-  const imageURL = await getSignedURL(imagePath, width, height);
+  const imageURL = await getSignedURL(imagePath);
 
   if (!imageURL) {
     // Placeholder image with dynamic Tailwind styling
