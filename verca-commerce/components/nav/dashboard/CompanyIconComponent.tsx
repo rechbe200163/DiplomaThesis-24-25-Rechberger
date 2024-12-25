@@ -11,7 +11,7 @@ async function CompanyIconComponent() {
     <nav>
       <Link
         href='/shop'
-        className='mb-12 cursor-pointer flex items-center gap-2'
+        className='cursor-pointer flex items-center justify-center'
       >
         <Suspense fallback={<ImageSkeleton />}>
           <ImageComponent
@@ -19,10 +19,12 @@ async function CompanyIconComponent() {
             alt={siteConfig.companyName}
             width={400}
             height={400}
-            classname='w-full rounded-t-xl'
+            classname='w-40 h-40 rounded-lg'
           />
         </Suspense>
-        <h1 className='sidebar-logo'>{siteConfig?.companyName || 'Horizon'}</h1>
+        {!siteConfig.logoPath && (
+          <h1 className='sidebar-logo'>{siteConfig?.companyName || 'Home'}</h1>
+        )}
       </Link>
     </nav>
   );
