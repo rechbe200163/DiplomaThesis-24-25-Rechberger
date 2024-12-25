@@ -35,3 +35,17 @@ export async function getTotalOrders(
     throw new Error('Failed to fetch orders count');
   }
 }
+
+export async function fetchUserAvatrPath(customerReference: number) {
+  try {
+    const response = await fetch(
+      `${baseApiUrl}/customers/${customerReference}/avatar`,
+      {
+        next: { tags: ['avatar'] },
+      }
+    );
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch user avatar');
+  }
+}
