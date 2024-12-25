@@ -45,11 +45,7 @@ export async function checkUserRole() {
   return session.user.role;
 }
 
-export async function getSignedURL(
-  imagePath: string,
-  width: number,
-  height: number
-): Promise<string | null> {
+export async function getSignedURL(imagePath: string): Promise<string | null> {
   const bucket = process.env.SUPABASE_IMAGE_BUCKET;
   const { data, error } = await supabaseClient.storage
     .from(bucket!)
