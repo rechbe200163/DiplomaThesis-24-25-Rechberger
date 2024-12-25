@@ -8,12 +8,13 @@ export async function uploadAvatar(
   customerReference: number
 ) {
   const imageBucket = process.env.SUPABASE_IMAGE_BUCKET; // Supabase bucket name
-  const fileName = `avatars/avatar_${customerReference}`;
+  const fileName = `avatars/avatar_${customerReference}.png`;
   // Upload the PDF to the Supabase storage
   const { data, error } = await supabaseClient.storage
     .from(imageBucket!) // supabase bucket which stores the images
     .upload(fileName, fileBuffer, {
       contentType: 'image/*', // data type of the file
+      upsert: true, // update the file if it already exists
     });
 
   if (error) {

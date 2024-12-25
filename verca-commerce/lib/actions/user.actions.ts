@@ -145,7 +145,7 @@ export async function processImage(
 
     uploadAvatar(buffer, session.user.customerReference!);
 
-    revalidateTag('user');
+    revalidateTag('avatar');
     return { success: true };
   } catch (error) {
     console.error('error from uploadProfilePicture', error);
