@@ -27,15 +27,15 @@ async function UserAvatar() {
   );
   const imageURL = await getSignedURL(avatarPath);
   return (
-    <>
-      <Avatar>
+    <div className='flex space-x-5 items-center'>
+      <Avatar className='cursor-pointer'>
         <AvatarImage src={imageURL!} />
         <AvatarFallback>
           <User2Icon />
         </AvatarFallback>
       </Avatar>
       <span>{session?.user.email}</span>
-    </>
+    </div>
   );
 }
 
