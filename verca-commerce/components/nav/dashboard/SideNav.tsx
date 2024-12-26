@@ -22,7 +22,7 @@ import ImageComponent from '@/components/images/ImageComponent';
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible='icon' variant='inset'>
+    <Sidebar collapsible='offcanvas' variant='floating'>
       <SidebarHeader>
         <CompanyIconComponent />
       </SidebarHeader>
