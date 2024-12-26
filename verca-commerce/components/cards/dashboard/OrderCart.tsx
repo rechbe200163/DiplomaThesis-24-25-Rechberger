@@ -1,13 +1,11 @@
-import { formatDate, formatPrice, generatePdfUrl } from '@/lib/utils';
-import React, { Suspense } from 'react';
-
+import { formatDate, formatPrice } from '@/lib/utils';
+import { Suspense } from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-
 import {
   Card,
   CardContent,
@@ -16,122 +14,113 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { OrderDetails } from '@/lib/types';
-import ImageComponent from '@/components/images/ImageComponent';
-import ImageSkeleton from '@/components/images/ImageSkeleton';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Download, ChevronDown } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import ImageComponent from '@/components/images/ImageComponent';
+import ImageSkeleton from '@/components/images/ImageSkeleton';
 import { orderState } from '@prisma/client';
-import DownloadPdf from '@/components/nav/dashboard/DownloadPdf';
+import CopyOrderId from '@/components/helpers/CopyOrderId';
 
-function OrderCart({ order }: { order: OrderDetails }) {
+function OrderCard({ order }: { order: OrderDetails }) {
   return (
     <Card
       key={order.orderId}
-      className='shadow-lg transition-transform transform duration-200 border border-gray-300'
+      className='overflow-hidden transition-all hover:shadow-lg'
     >
-      <div className='flex items-center justify-stretch'>
-        <CardHeader className='flex-row items-center justify-between'>
-          <div className='flex items-center flex-wrap gap-4 text-gray-700 text-sm'>
-            <span className='font-bold'>Order ID:</span>
-            <span>{order.orderId}</span>
-            <Separator orientation='vertical' className='h-4' />
-            <span>
-              <strong>Delivery Date:</strong> {formatDate(order.deliveryDate)}
-            </span>
-            <Separator orientation='vertical' className='h-4' />
-            <span>
-              <strong>Total Items:</strong> {order.products.length}
-            </span>
-            <Separator orientation='vertical' className='h-4' />
-            <span>
-              <strong>Ordered On:</strong> {formatDate(order.date)}
-            </span>
+      <CardHeader className='bg-muted'>
+        <div className='flex flex-wrap items-center justify-between gap-4'>
+          <div className='flex flex-wrap items-center gap-4'>
+            <div>
+              <p className='text-sm font-medium'>Order ID</p>
+              <p className='text-lg font-bold'>{order.orderId}</p>
+              <CopyOrderId orderId={order.orderId} />
+            </div>
+            <Separator orientation='vertical' className='h-10' />
+            <div>
+              <p className='text-sm font-medium'>Ordered On</p>
+              <p className='text-base'>{formatDate(new Date(order.date))}</p>
+            </div>
+            <Separator orientation='vertical' className='h-10' />
+            <div>
+              <p className='text-sm font-medium'>Total Items</p>
+              <p className='text-base'>{order.products.length}</p>
+            </div>
           </div>
           <DropdownMenu>
-            <DropdownMenuTrigger>Download</DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
+              <Button variant='outline'>
+                Download <ChevronDown className='ml-2 h-4 w-4' />
+              </Button>
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <DownloadPdf pdfPath={order.invoice?.pdfUrl!} />
+                <Download className='mr-2 h-4 w-4' />
+                Invoice PDF
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </CardHeader>
-      </div>
-      {/* Product Information */}
-      <CardContent>
-        <div className='grid grid-cols-1 gap-4'>
+        </div>
+      </CardHeader>
+      <CardContent className='p-6'>
+        <div className='space-y-4'>
           {order.products.map((product) => (
             <div
               key={product.product.productId}
-              className='flex items-center justify-between p-2 rounded-lg'
+              className='flex items-center space-x-4'
             >
-              <div className='flex items-center gap-4'>
+              <div className='relative h-24 w-24 overflow-hidden rounded-md'>
                 <Suspense fallback={<ImageSkeleton />}>
                   <ImageComponent
                     imagePath={product.product.imagePath!}
                     alt={product.product.name}
                     width={96}
                     height={96}
-                    classname='w-full rounded-xl'
+                    classname='object-cover'
                   />
                 </Suspense>
-                <div>
-                  <p className='font-semibold text-gray-800'>
-                    {product.product.name}
-                  </p>
-                  <p className='text-sm text-gray-600'>
-                    {product.productAmount} x{' '}
-                    {formatPrice(product.product.price)}
-                  </p>
-                </div>
+              </div>
+              <div className='flex-1'>
+                <p className='font-semibold'>{product.product.name}</p>
+                <p className='text-sm text-muted-foreground'>
+                  {product.productAmount} x {formatPrice(product.product.price)}
+                </p>
               </div>
               <div className='text-right'>
-                <span className='font-semibold text-gray-800'>
+                <p className='font-semibold'>
                   {formatPrice(product.productAmount * product.product.price)}
-                </span>
+                </p>
               </div>
             </div>
           ))}
         </div>
       </CardContent>
-      <CardContent>
-        <p className='mb-2 text-gray-700'>
-          <span className='font-semibold'>Order Total: </span>
-          {formatPrice(Number(order.invoice?.invoiceAmount.toFixed(2))) ||
-            'N/A'}
-        </p>
-        <p className='mb-2 text-gray-700'>
-          <span className='font-semibold'>Status: </span>
-          {order.invoice?.dateOfPayment ? (
-            <>
-              Paid on
-              <span className='text-green-600 font-medium'>
-                {new Date(order.invoice.dateOfPayment).toLocaleDateString()}
-              </span>
-            </>
-          ) : (
-            <span className='text-red-600'>Pending</span>
-          )}
-        </p>
-      </CardContent>
-      <CardFooter className='bg-gray-50 rounded-b-lg'>
-        <Accordion
-          type='single'
-          collapsible
-          className='w-full items-stretch justify-stretch'
-        >
-          <AccordionItem value='item-1'>
-            <AccordionTrigger>View Details</AccordionTrigger>
+      <CardFooter className='bg-muted flex flex-wrap items-center justify-between gap-4 px-6 py-4'>
+        <div>
+          <p className='text-sm font-medium'>Order Total</p>
+          <p className='text-lg font-bold'>
+            {formatPrice(Number(order.invoice?.invoiceAmount.toFixed(2)) || 0)}
+          </p>
+        </div>
+        <div>
+          <p className='text-sm font-medium'>Payment Status</p>
+          <Badge
+            variant={order.invoice?.dateOfPayment ? 'default' : 'destructive'}
+          >
+            {order.invoice?.dateOfPayment ? 'Paid' : 'Pending'}
+          </Badge>
+        </div>
+        <Accordion type='single' collapsible className='w-full'>
+          <AccordionItem value='details'>
+            <AccordionTrigger>View Order Status</AccordionTrigger>
             <AccordionContent>
-              {/*Order Status*/}
-              {PaymentStatusProgressBar(order.orderStatus)}
+              <PaymentStatusProgressBar orderStatus={order.orderStatus} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -140,33 +129,43 @@ function OrderCart({ order }: { order: OrderDetails }) {
   );
 }
 
-export default OrderCart;
-
-function PaymentStatusProgressBar(orderStatus: orderState) {
-  // Extract enum keys dynamically
-  const states = Object.keys(orderState) as Array<keyof typeof orderState>;
+function PaymentStatusProgressBar({
+  orderStatus,
+}: {
+  orderStatus: orderState;
+}) {
+  const states = [
+    'order_placed',
+    'order_confirmed',
+    'order_shipped',
+    'order_delivered',
+  ];
 
   return (
-    <ul className='steps steps-vertical md:steps-horizontal w-full'>
+    <div className='flex justify-between'>
       {states.map((state, index) => {
-        // Determine if the current state or any predecessors should be marked as complete
         const isComplete = states.indexOf(orderStatus) >= index;
-
         return (
-          <li
-            key={state}
-            className={`step ${isComplete ? 'step-neutral' : ''}`}
-          >
-            {formatStateLabel(state)}
-          </li>
+          <div key={state} className='flex flex-col items-center'>
+            <div
+              className={`rounded-full h-3 w-3 ${
+                isComplete ? 'bg-primary' : 'bg-muted'
+              }`}
+            />
+            <p className='mt-2 text-xs font-medium'>
+              {formatStateLabel(state)}
+            </p>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 }
 
 function formatStateLabel(state: string) {
   return state
-    .replace(/_/g, ' ') // Replace underscores with spaces
-    .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize the first letter of each word
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
+export default OrderCard;

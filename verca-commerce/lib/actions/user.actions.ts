@@ -125,6 +125,27 @@ export async function signUp(
   }
 }
 
+export async function updateUserDetails(
+  customerReference: number,
+  prevstate: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const validData = authSignUpFormSchema().safeParse({
+    ...Object.fromEntries(formData.entries()),
+  });
+
+  if (!validData.success) {
+    return {
+      success: false,
+      errors: {
+        title: ['Invalid form data'],
+      },
+    };
+  }
+
+  return { success: true };
+}
+
 export async function processImage(
   prevState: FormState,
   formData: FormData

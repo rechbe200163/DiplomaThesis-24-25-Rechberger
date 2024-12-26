@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-
-const inter = Inter({ subsets: ['latin'] });
+import { Toaster as SonnerToast } from 'sonner';
+import { funnelDisplay, lexend, roboto } from './ui/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,9 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' data-theme={'custom'}>
-      <body className={inter.className}>
+      <body className={lexend.className}>
         <main>{children}</main>
         <Toaster />
+        <SonnerToast />
       </body>
     </html>
   );
