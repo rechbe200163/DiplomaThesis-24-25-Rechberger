@@ -20,7 +20,7 @@ import DashboardFooter from './DashboardFooter';
 import CompanyIconComponent from './CompanyIconComponent';
 import ImageComponent from '@/components/images/ImageComponent';
 
-export function AppSidebar() {
+export function DashboardSidebar() {
   return (
     <Sidebar collapsible='offcanvas' variant='floating'>
       <SidebarHeader>

@@ -32,7 +32,6 @@ function DecreaseProductQuantity({
           size={'icon'}
           type='submit'
           disabled={quantity <= 1 || isPending}
-          className='hover:bg-base-100 transition duration-300 ease-in-out'
         >
           <MinusIcon />
         </Button>

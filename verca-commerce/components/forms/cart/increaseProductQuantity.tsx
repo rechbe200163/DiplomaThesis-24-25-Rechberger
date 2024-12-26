@@ -41,7 +41,6 @@ function IncreaseProductQuantity({
           size={'icon'}
           type='submit'
           disabled={isPending}
-          className='hover:bg-base-100 transition duration-300 ease-in-out'
         >
           <PlusIcon />
         </Button>

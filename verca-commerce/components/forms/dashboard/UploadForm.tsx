@@ -34,11 +34,7 @@ export default function UploadForm() {
           accept='.png, .jpg, .jpeg'
           className='opacity-100'
         />
-        <Button
-          disabled={isPending}
-          type='submit'
-          className='bg-base-200 text-white hover:bg-base-100 w-full'
-        >
+        <Button disabled={isPending} type='submit'>
           {isPending ? (
             <>
               <Loader2 size={20} className='animate-spin' /> &nbsp; Uploading

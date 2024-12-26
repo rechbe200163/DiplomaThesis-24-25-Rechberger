@@ -65,10 +65,7 @@ export function GenericActionForm({
         size={size}
         type='submit'
         disabled={buttonDisabled}
-        className={cn(
-          className,
-          'hover:bg-base-100 transition duration-300 ease-in-out'
-        )}
+        className={cn(className)}
       >
         {isPending ? (
           <Loader2 className='animate-spin' size={24} />

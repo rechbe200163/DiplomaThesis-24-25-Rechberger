@@ -8,7 +8,9 @@ import OrderList from '@/components/cards/dashboard/OrdersComponent';
 
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { console } from 'inspector';
-import { Skeleton } from '@/components/ui/skeleton';
+import { getAllProducts } from '@/lib/data.shop';
+import ProductCard from '@/components/cards/ProductCard';
+import OrderCart from '@/components/cards/dashboard/OrderCart';
 
 async function UserOrdersPage(props: {
   searchParams?: Promise<{
@@ -29,9 +31,15 @@ async function UserOrdersPage(props: {
   const totalPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-4'>
       <h2 className='text-3xl font-bold tracking-tight'>Your Orders</h2>
-      <OrderList orders={orders} />
+      <div className='grid grid-row-1 sm:grid-row-2 lg:grid-row-3 gap-6 py-6'>
+        {orders.length > 0 ? (
+          orders.map((order) => <OrderCart key={order.orderId} order={order} />)
+        ) : (
+          <div className='col-span-full text-center'>No orders yet</div>
+        )}
+      </div>
       <PaginationComponent totalPages={totalPages} />
     </div>
   );

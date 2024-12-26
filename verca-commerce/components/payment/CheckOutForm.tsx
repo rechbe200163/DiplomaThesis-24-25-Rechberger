@@ -156,7 +156,7 @@ function Form({
         </CardContent>
         <CardFooter>
           <Button
-            className='w-full bg-base-100 hover:bg-base-300'
+            className='w-full'
             size='lg'
             disabled={
               stripe == null || elements == null || amount === 0 || isLoading

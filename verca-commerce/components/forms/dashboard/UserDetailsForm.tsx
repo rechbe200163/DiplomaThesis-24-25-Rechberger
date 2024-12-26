@@ -21,11 +21,7 @@ function AddToCartForm({ customerReference }: { customerReference: number }) {
   );
   return (
     <form action={action}>
-      <Button
-        type='submit'
-        disabled={isPending}
-        className='bg-base-200 text-white hover:bg-base-100'
-      >
+      <Button type='submit' disabled={isPending}>
         {isPending ? (
           <>
             <Loader2 size={20} className='animate-spin' /> &nbsp; Adding to

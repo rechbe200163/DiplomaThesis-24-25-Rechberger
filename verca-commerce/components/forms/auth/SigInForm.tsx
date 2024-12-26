@@ -81,10 +81,7 @@ const SignInForm = () => {
           />
         </div>
         <div className='w-full'>
-          <Button
-            className='w-full text-primary-content bg-base-300 hover:bg-accent'
-            disabled={isLoading}
-          >
+          <Button className='w-full ' disabled={isLoading}>
             {isLoading ? (
               <>
                 <Loader2 size={20} className='animate-spin' /> &nbsp; Loging you
