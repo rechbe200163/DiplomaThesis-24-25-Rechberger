@@ -10,12 +10,18 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import CartIconComponent from './CartIconComponent';
 import { Search } from 'lucide-react';
 import SearchComponent from '../search/SearchComponent';
+import { fetchUserAvatrPath } from '@/lib/data.dashboard';
+import { getSignedURL } from '@/lib/utils';
 
 async function NavBar() {
   const session = await auth();
+  const { avatarPath } = await fetchUserAvatrPath(
+    session?.user.customerReference!
+  );
+  const imageURL = await getSignedURL(avatarPath);
 
   return (
-    <div className=' navbar bg-neutral-content'>
+    <div className=' navbar bg-neutral-content space-x-20'>
       <div className='flex-1 gap-7 flex'>
         <Link href={'/shop'} className='text-xl font-bold'>
           <Suspense fallback={<Skeleton className='w-20 h-4' />}>
@@ -23,18 +29,14 @@ async function NavBar() {
           </Suspense>
         </Link>
         <NavLinks />
-        <SearchComponent placeholder='Search for products...' />
       </div>
+      <SearchComponent placeholder='Search for products...' />
       <div className='flex items-center space-x-6 pr-5 w-fit'>
-        {/* <SearchComponent placeholder="Search for products..." /> */}
         <CartIconComponent />
         {session ? (
           <Link href='/profile'>
             <Avatar>
-              <AvatarImage
-                src={session.user.image || '/images/default-profile.png'}
-                alt={session.user.name?.split(' ')[0]}
-              />
+              <AvatarImage src={imageURL!} className='object-cover' />
               <AvatarFallback className='bg-success-600 text-black'>
                 {session.user.lastName[0] + session.user.firstName![0]}
               </AvatarFallback>
