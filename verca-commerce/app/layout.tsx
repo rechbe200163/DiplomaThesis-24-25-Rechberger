@@ -3,7 +3,14 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as SonnerToast } from 'sonner';
-import { funnelDisplay, lexend, roboto } from './ui/fonts';
+import {
+  electrolize,
+  funnelDisplay,
+  inter,
+  lexend,
+  nunito_sans,
+  roboto,
+} from './ui/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' data-theme={'custom'}>
-      <body className={lexend.className}>
+    <html lang='en'>
+      <body className={`${inter.className} subpixel-antialiased`}>
         <main>{children}</main>
         <Toaster />
         <SonnerToast />

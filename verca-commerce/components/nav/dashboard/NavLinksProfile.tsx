@@ -57,8 +57,8 @@ export default function NavLinksProfile({ linkType }: { linkType: LinkType }) {
               <Link
                 href={link.href}
                 className={cn(
-                  'flex items-center px-4 py-2 rounded-lg hover:bg-neutral',
-                  pathname === link.href && 'bg-neutral-content'
+                  'flex items-center px-4 py-2 rounded-lg hover:bg-gray-200 transition-transform',
+                  pathname === link.href && 'bg-gray-300 hover:bg-gray-400'
                 )}
               >
                 <Icon />
