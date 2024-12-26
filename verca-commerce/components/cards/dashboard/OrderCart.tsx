@@ -39,8 +39,12 @@ function OrderCard({ order }: { order: OrderDetails }) {
           <div className='flex flex-wrap items-center gap-4'>
             <div>
               <p className='text-sm font-medium'>Order ID</p>
-              <p className='text-lg font-bold'>{order.orderId}</p>
-              <CopyOrderId orderId={order.orderId} />
+              <div className='flex items-center gap-2'>
+                <p className='text-lg font-bold min-w-6 text-clip'>
+                  {order.orderId}
+                </p>
+                <CopyOrderId orderId={order.orderId} />
+              </div>
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>

@@ -21,13 +21,10 @@ function NavLinks() {
             <Link
               key={index}
               href={link.href}
-              className={cn(
-                'text-base-100 hover:underline transition-transform ',
-                {
-                  'font-medium hover:bg-neutral-content underline ':
-                    pathname === link.href,
-                }
-              )}
+              className={cn('text-base-100 hover:underline ', {
+                'font-medium hover:bg-neutral-content underline ':
+                  pathname === link.href,
+              })}
             >
               {link.label}
             </Link>

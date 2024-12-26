@@ -3,14 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as SonnerToast } from 'sonner';
-import {
-  electrolize,
-  funnelDisplay,
-  inter,
-  lexend,
-  nunito_sans,
-  roboto,
-} from './ui/fonts';
+import { inter } from './ui/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
