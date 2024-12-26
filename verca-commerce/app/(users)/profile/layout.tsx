@@ -24,7 +24,7 @@ export default async function DashboardLayout({
   }
   return (
     <SidebarProvider>
-      <div className='flex flex-col h-screen  '>
+      <div className='flex flex-col h-screen '>
         <div className='flex flex-1 overflow-hidden'>
           <DashboardSidebar />
           <div className='flex-1 flex flex-col overflow-hidden'>

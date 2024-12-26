@@ -32,9 +32,9 @@ function OrderCard({ order }: { order: OrderDetails }) {
   return (
     <Card
       key={order.orderId}
-      className='overflow-hidden transition-all hover:shadow-lg'
+      className='overflow-hidden transition-all hover:shadow-lg bg-gray-50'
     >
-      <CardHeader className='bg-muted'>
+      <CardHeader className=''>
         <div className='flex flex-wrap items-center justify-between gap-4'>
           <div className='flex flex-wrap items-center gap-4'>
             <div>
@@ -72,21 +72,21 @@ function OrderCard({ order }: { order: OrderDetails }) {
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className='p-6'>
-        <div className='space-y-4'>
+      <CardContent className='p-6 '>
+        <div className='space-y-4 items-center'>
           {order.products.map((product) => (
             <div
               key={product.product.productId}
               className='flex items-center space-x-4'
             >
-              <div className='relative h-24 w-24 overflow-hidden rounded-md'>
+              <div className='relative h-24 w-24 overflow-hidden rounded-md flex items-center justify-center'>
                 <Suspense fallback={<ImageSkeleton />}>
                   <ImageComponent
                     imagePath={product.product.imagePath!}
                     alt={product.product.name}
                     width={96}
                     height={96}
-                    classname='object-cover'
+                    classname='object-cover rounded-md'
                   />
                 </Suspense>
               </div>
@@ -105,7 +105,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
           ))}
         </div>
       </CardContent>
-      <CardFooter className='bg-muted flex flex-wrap items-center justify-between gap-4 px-6 py-4'>
+      <CardFooter className='flex flex-wrap items-center justify-between gap-4 px-6 py-4'>
         <div>
           <p className='text-sm font-medium'>Order Total</p>
           <p className='text-lg font-bold'>

@@ -1,15 +1,12 @@
+import React from 'react';
 import { auth } from '@/auth';
-import React, { Suspense } from 'react';
 import {
   getOrdersByCustomerPagination,
   getTotalOrders,
 } from '@/lib/data.dashboard';
-import OrderList from '@/components/cards/dashboard/OrdersComponent';
 
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { console } from 'inspector';
-import { getAllProducts } from '@/lib/data.shop';
-import ProductCard from '@/components/cards/ProductCard';
 import OrderCart from '@/components/cards/dashboard/OrderCart';
 
 async function UserOrdersPage(props: {
@@ -33,7 +30,7 @@ async function UserOrdersPage(props: {
   return (
     <div className='space-y-4'>
       <h2 className='text-3xl font-bold tracking-tight'>Your Orders</h2>
-      <div className='grid grid-row-1 sm:grid-row-2 lg:grid-row-3 gap-6 py-6'>
+      <div className='flex flex-col gap-4'>
         {orders.length > 0 ? (
           orders.map((order) => <OrderCart key={order.orderId} order={order} />)
         ) : (
