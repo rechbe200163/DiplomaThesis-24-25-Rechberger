@@ -98,7 +98,7 @@ export function AccountForm({
       </div>
 
       {showBusinessInfo && (
-        <>
+        <div className='flex items-center space-x-14'>
           <div className='space-y-2'>
             <Label htmlFor='companyNumber'>Company Number</Label>
             <Input
@@ -127,7 +127,7 @@ export function AccountForm({
               </SelectContent>
             </Select>
           </div>
-        </>
+        </div>
       )}
 
       <Button type='submit' disabled={isPending}>
