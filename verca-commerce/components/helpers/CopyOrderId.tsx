@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Button } from '../ui/button';
-import { toast } from 'sonner';
 import { Copy } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const CopyOrderId = ({ orderId }: { orderId: string }) => {
   return (
@@ -13,7 +13,10 @@ const CopyOrderId = ({ orderId }: { orderId: string }) => {
       className='h-6 w-6'
       onClick={() => {
         navigator.clipboard.writeText(orderId);
-        toast.success('Order ID copied to clipboard');
+        toast({
+          title: 'Success!',
+          description: 'Order ID copied to clipboard.',
+        });
       }}
     >
       <Copy className='h-4 w-4' />
