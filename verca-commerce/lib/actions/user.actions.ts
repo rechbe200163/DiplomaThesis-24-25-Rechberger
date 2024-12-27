@@ -2,11 +2,15 @@
 import { FormState } from './../form.types';
 import prisma from '@/prisma/client';
 import {
+  accountFormSchema,
   authSignUpFormSchema,
   generateCustomerRefercenceNumber,
 } from '../utils';
 import { hash } from 'bcryptjs';
 import { processImage } from '../services/user.services';
+import { auth } from '@/auth';
+import { revalidateTag } from 'next/cache';
+import { BusinessSector } from '@prisma/client';
 
 export async function signUp(
   email: string,
@@ -127,15 +131,58 @@ export async function updateAccount(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  console.log(formData);
-  if (formData.get('avatarPath')) {
-    return processImage(formData.get('avatarPath') as File);
+  const session = await auth();
+  if (!session) {
+    return {
+      success: false,
+      errors: {
+        title: ['You need to be logged in to update your account'],
+      },
+    };
   }
+  const validData = accountFormSchema.safeParse({
+    firstName: formData.get('firstName') as string,
+    lastName: formData.get('lastName') as string,
+    email: formData.get('email') as string,
+    phoneNumber: formData.get('phoneNumber') as string,
+    businessSector: formData.get('businessSector') as BusinessSector,
+    companyNumber: formData.get('companyNumber') as string,
+  });
+
+  if (!validData.success) {
+    return {
+      success: false,
+      errors: {
+        title: ['Invalid form data'],
+      },
+    };
+  }
+
+  const customer = await prisma.customer.update({
+    where: {
+      customerReference: session.user.customerReference,
+    },
+    data: {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      phoneNumber: formData.get('phoneNumber') as string,
+      businessSector: formData.get('businessSector') as BusinessSector,
+      companyNumber: formData.get('companyNumber') as string,
+    },
+  });
+
+  revalidateTag('customer');
+
+  if (formData.get('avatarPath')) {
+    return await processImage(formData.get('avatarPath') as File);
+  }
+
   return {
     success: true,
-    message: 'Account updated successfully',
   };
 }
+
 export async function updatePassword(
   prevState: FormState,
   formData: FormData

@@ -125,6 +125,32 @@ export const accountFormSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address.',
   }),
+  phoneNumber: z
+    .string()
+    .min(1, {
+      message: 'Phone number is required.',
+    })
+    .optional(),
+  businessSector: z
+    .enum([
+      BusinessSector.AGRICULTURE,
+      BusinessSector.CONSTRUCTION,
+      BusinessSector.EDUCATION,
+      BusinessSector.FINANCE,
+      BusinessSector.HEALTH,
+      BusinessSector.HOSPITALITY,
+      BusinessSector.MANUFACTURING,
+      BusinessSector.RETAIL,
+      BusinessSector.TECHNOLOGY,
+      BusinessSector.TRANSPORTATION,
+    ])
+    .optional(),
+  companyNumber: z
+    .string()
+    .min(1, {
+      message: 'Company number is required.',
+    })
+    .optional(),
   profilePicture: z.instanceof(File).optional(),
 });
 
