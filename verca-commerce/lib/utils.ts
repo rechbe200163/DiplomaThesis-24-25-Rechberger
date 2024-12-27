@@ -6,6 +6,8 @@ import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
 import { customAlphabet } from 'nanoid';
 import { supabaseClient } from './supabaseClient';
+import { resend } from './resendClient';
+import NotificationEmail from '@/app/auth/emails/notification-email';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,6 +27,18 @@ export function formatDate(date: Date) {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
+  });
+
+  return formattedDate;
+}
+
+export function formatDateTime(date: Date) {
+  const formattedDate = new Date(date).toLocaleDateString('de-AT', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
   });
 
   return formattedDate;
@@ -68,6 +82,26 @@ export async function generatePdfUrl(pdfPath: string): Promise<string> {
   }
   return data.signedUrl;
   // redirect(data.signedUrl, RedirectType.push); // Redirect to the PDF in the same tab with adding a new entry to the history stack of the browser
+}
+
+export async function sendNotificationEmail(
+  to: string,
+  type: 'email' | 'password',
+  username: string,
+  changeTime: string
+) {
+  try {
+    const data = await resend.emails.send({
+      from: 'Verca Commerce <updates.mrhost.uk>',
+      to: [to],
+      subject: `${type.charAt(0).toUpperCase() + type.slice(1)} Change Notification`,
+      react: NotificationEmail({ type, username, changeTime }),
+    });
+
+    console.log('Email sent successfully:', data);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
 }
 
 export const authSignUpFormSchema = () =>
@@ -144,13 +178,15 @@ export const accountFormSchema = z.object({
       BusinessSector.TECHNOLOGY,
       BusinessSector.TRANSPORTATION,
     ])
-    .optional(),
+    .optional()
+    .nullable(),
   companyNumber: z
     .string()
     .min(1, {
       message: 'Company number is required.',
     })
-    .optional(),
+    .optional()
+    .nullable(),
   profilePicture: z.instanceof(File).optional(),
 });
 
