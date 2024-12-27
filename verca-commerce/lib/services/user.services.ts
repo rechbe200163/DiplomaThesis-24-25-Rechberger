@@ -2,6 +2,8 @@
 
 import prisma from '@/prisma/client';
 import { supabaseClient } from '../supabaseClient';
+import { revalidateTag } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function uploadAvatar(
   fileBuffer: Uint8Array,
@@ -41,5 +43,41 @@ async function updateUserData(customerReference: number, avatarPath: string) {
   } catch (error) {
     console.error('Error updating user data:', error);
     throw new Error('Failed to update user data');
+  }
+}
+
+export async function processImage(file: File) {
+  const session = await auth();
+  if (!session) {
+    return {
+      success: false,
+      errors: {
+        title: ['Not authenticated'],
+      },
+    };
+  }
+  try {
+    if (file.size === 0) {
+      return {
+        success: false,
+        errors: {
+          title: ['No file selected'],
+        },
+      };
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+
+    uploadAvatar(buffer, session.user.customerReference!);
+
+    revalidateTag('avatar');
+    return { success: true };
+  } catch (error) {
+    console.error('error from uploadProfilePicture', error);
+    return {
+      success: false,
+      errors: { title: ['Could not upload file', error as string] },
+    };
   }
 }

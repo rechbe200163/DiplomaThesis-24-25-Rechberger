@@ -6,9 +6,7 @@ import {
   generateCustomerRefercenceNumber,
 } from '../utils';
 import { hash } from 'bcryptjs';
-import { auth } from '@/auth';
-import { uploadAvatar } from '../services/user.services';
-import { revalidateTag } from 'next/cache';
+import { processImage } from '../services/user.services';
 
 export async function signUp(
   email: string,
@@ -125,64 +123,25 @@ export async function signUp(
   }
 }
 
-export async function updateUserDetails(
-  customerReference: number,
-  prevstate: FormState,
-  formData: FormData
-): Promise<FormState> {
-  const validData = authSignUpFormSchema().safeParse({
-    ...Object.fromEntries(formData.entries()),
-  });
-
-  if (!validData.success) {
-    return {
-      success: false,
-      errors: {
-        title: ['Invalid form data'],
-      },
-    };
-  }
-
-  return { success: true };
-}
-
-export async function processImage(
+export async function updateAccount(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  const session = await auth();
-  if (!session || !session.user) {
-    return {
-      success: false,
-      errors: {
-        title: ['Please sign in to upload a profile picture'],
-      },
-    };
+  console.log(formData);
+  if (formData.get('avatarPath')) {
+    return processImage(formData.get('avatarPath') as File);
   }
-  try {
-    const file = formData.get('file') as File;
-
-    if (file.size === 0) {
-      return {
-        success: false,
-        errors: {
-          title: ['No file selected'],
-        },
-      };
-    }
-
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
-
-    uploadAvatar(buffer, session.user.customerReference!);
-
-    revalidateTag('avatar');
-    return { success: true };
-  } catch (error) {
-    console.error('error from uploadProfilePicture', error);
-    return {
-      success: false,
-      errors: { title: ['Could not upload file', error as string] },
-    };
-  }
+  return {
+    success: true,
+    message: 'Account updated successfully',
+  };
+}
+export async function updatePassword(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  return {
+    success: true,
+    message: 'Account updated successfully',
+  };
 }
