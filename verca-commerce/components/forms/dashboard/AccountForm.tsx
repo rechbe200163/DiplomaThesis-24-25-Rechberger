@@ -139,13 +139,6 @@ export function AccountForm({
           'Update Account'
         )}
       </Button>
-
-      {/* {formState.success && (
-        <p className='text-sm text-green-600'>Account updated successfully!</p>
-      )}
-      {formState.errors!.title && (
-        <p className='text-sm text-red-600'>{formState.errors!.title}</p>
-      )} */}
     </form>
   );
 }

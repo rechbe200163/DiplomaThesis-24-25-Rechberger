@@ -4,7 +4,9 @@ import prisma from '@/prisma/client';
 import {
   accountFormSchema,
   authSignUpFormSchema,
+  formatDateTime,
   generateCustomerRefercenceNumber,
+  sendNotificationEmail,
 } from '../utils';
 import { hash } from 'bcryptjs';
 import { processImage } from '../services/user.services';
@@ -156,6 +158,15 @@ export async function updateAccount(
         title: ['Invalid form data'],
       },
     };
+  }
+
+  if (validData.data.email !== session.user.email) {
+    await sendNotificationEmail(
+      validData.data.email,
+      'email',
+      `${session.user.firstName} ${session.user.lastName}`,
+      formatDateTime(new Date())
+    );
   }
 
   const customer = await prisma.customer.update({
