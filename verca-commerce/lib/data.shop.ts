@@ -118,7 +118,7 @@ export async function fetchUser(customerReference: number): Promise<Customer> {
     const res = await fetch(
       `https://localhost:3000/api/customers/${customerReference}`,
       {
-        next: { tags: ['user'] },
+        next: { tags: ['customer'] },
       }
     );
 
