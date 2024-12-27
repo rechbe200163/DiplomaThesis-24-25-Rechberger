@@ -10,15 +10,21 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import CartIconComponent from './CartIconComponent';
 import { Search } from 'lucide-react';
 import SearchComponent from '../search/SearchComponent';
-import { fetchUserAvatrPath } from '@/lib/data.dashboard';
+import { fetchUserAvatrPath as fetchUserAvatarPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
+import { string } from 'zod';
 
 async function NavBar() {
+  let imageURL: string | null = null;
   const session = await auth();
-  const { avatarPath } = await fetchUserAvatrPath(
-    session?.user.customerReference!
-  );
-  const imageURL = await getSignedURL(avatarPath);
+  if (session) {
+    const { avatarPath } = await fetchUserAvatarPath(
+      session?.user.customerReference!
+    );
+    if (avatarPath) {
+      imageURL = await getSignedURL(avatarPath);
+    }
+  }
 
   return (
     <div className=' navbar bg-neutral-content space-x-20'>

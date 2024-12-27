@@ -1,6 +1,5 @@
 import { auth } from '@/auth';
 import SignOutComponent from '@/components/auth/signOut';
-import UploadForm from '@/components/forms/dashboard/UploadForm';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DialogContent,
@@ -15,10 +14,7 @@ import {
 } from '@/components/ui/sidebar';
 import { fetchUserAvatrPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
-import { AspectRatio } from '@radix-ui/react-aspect-ratio';
-import { Dialog } from '@radix-ui/react-dialog';
-import { ChevronUp, LogOut, User, User2, User2Icon } from 'lucide-react';
-import Link from 'next/link';
+import { User2Icon } from 'lucide-react';
 import React from 'react';
 async function UserAvatar() {
   const session = await auth();
@@ -27,7 +23,7 @@ async function UserAvatar() {
   );
   const imageURL = await getSignedURL(avatarPath);
   return (
-    <div className='flex space-x-5 items-center'>
+    <>
       <Avatar className='cursor-pointer'>
         <AvatarImage src={imageURL!} />
         <AvatarFallback>
@@ -35,7 +31,7 @@ async function UserAvatar() {
         </AvatarFallback>
       </Avatar>
       <span>{session?.user.email}</span>
-    </div>
+    </>
   );
 }
 
@@ -44,18 +40,7 @@ async function DashboardFooter() {
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuSubButton>
-          <Dialog>
-            <DialogTrigger asChild>
-              <div className='flex items-center space-x-2'>
-                <UserAvatar /> {/* Wrapped in a single parent element */}
-              </div>
-            </DialogTrigger>
-            <DialogTitle></DialogTitle>
-            <DialogContent className='sm:max-w-[425px]'>
-              <DialogHeader>Choose a new profile picture</DialogHeader>
-              <UploadForm />
-            </DialogContent>
-          </Dialog>
+          <UserAvatar /> {/* Wrapped in a single parent element */}
           <SignOutComponent />
         </SidebarMenuSubButton>
       </SidebarMenuItem>
