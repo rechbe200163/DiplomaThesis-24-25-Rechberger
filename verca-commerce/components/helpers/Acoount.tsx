@@ -2,7 +2,6 @@ import { auth } from '@/auth';
 import { fetchUser } from '@/lib/data.shop';
 import React from 'react';
 import { AccountForm } from '../forms/dashboard/AccountForm';
-import { fetchUserAvatrPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
 
 const UpdatUserData = async () => {
