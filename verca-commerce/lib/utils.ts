@@ -8,6 +8,7 @@ import { customAlphabet } from 'nanoid';
 import { supabaseClient } from './supabaseClient';
 import { resend } from './resendClient';
 import NotificationEmail from '@/app/auth/emails/notification-email';
+import { compare, hash } from 'bcryptjs';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -47,6 +48,11 @@ export function formatDateTime(date: Date) {
 export function generateCustomerRefercenceNumber(): number {
   const nanoid = customAlphabet('1234567890', 9);
   return Number(nanoid());
+}
+
+export async function hashUserPassword(password: string) {
+  const hashedPassword = await hash(password, 12);
+  return hashedPassword;
 }
 
 export async function checkUserRole() {
@@ -102,6 +108,14 @@ export async function sendNotificationEmail(
   } catch (error) {
     console.error('Error sending email:', error);
   }
+}
+
+export async function comparePasswords(
+  password: string,
+  hashedPassword: string
+): Promise<boolean> {
+  const isPasswordValid = await compare(password, hashedPassword);
+  return isPasswordValid;
 }
 
 export const authSignUpFormSchema = () =>

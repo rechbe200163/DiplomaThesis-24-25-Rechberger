@@ -4,11 +4,13 @@ import prisma from '@/prisma/client';
 import {
   accountFormSchema,
   authSignUpFormSchema,
+  comparePasswords,
   formatDateTime,
   generateCustomerRefercenceNumber,
+  hashUserPassword,
+  passwordFormSchema,
   sendNotificationEmail,
 } from '../utils';
-import { hash } from 'bcryptjs';
 import { processImage } from '../services/user.services';
 import { auth } from '@/auth';
 import { revalidateTag } from 'next/cache';
@@ -72,7 +74,7 @@ export async function signUp(
       };
     }
 
-    const pwHash = await hash(password, 12);
+    const pwHash = await hashUserPassword(password);
 
     const customerReference = generateCustomerRefercenceNumber();
 
@@ -198,8 +200,102 @@ export async function updatePassword(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  return {
-    success: true,
-    message: 'Account updated successfully',
-  };
+  try {
+    // Authenticate the current session to ensure the user is logged in
+    const session = await auth();
+    if (!session) {
+      // If no session is found, return an error indicating login is required
+      return {
+        success: false,
+        errors: {
+          title: ['You need to be logged in to update your account'],
+        },
+      };
+    }
+
+    // check if form data is empty
+    if (
+      !formData.get('currentPassword') ||
+      !formData.get('newPassword') ||
+      !formData.get('confirmPassword')
+    ) {
+      return {
+        success: false,
+        errors: {
+          title: ['Please fill in all fields'],
+        },
+      };
+    }
+
+    // Validate the form data against the schema
+    const validData = passwordFormSchema.safeParse({
+      currentPassword: formData.get('currentPassword') as string,
+      newPassword: formData.get('newPassword') as string,
+      confirmPassword: formData.get('confirmPassword') as string,
+    });
+    console.log(validData.error?.message);
+    if (!validData.success) {
+      // Return an error if the validation fails
+      return {
+        success: false,
+        errors: {
+          title: [`${validData.error?.message}`],
+        },
+      };
+    }
+
+    // Fetch the customer record from the database using the session's customer reference
+    const customer = await prisma.customer.findUnique({
+      where: { customerReference: session.user.customerReference },
+    });
+
+    if (!customer) {
+      // If no customer is found, return an error indicating this
+      return {
+        success: false,
+        errors: {
+          title: ['Customer not found'],
+        },
+      };
+    }
+
+    // Compare the provided current password with the stored password
+    if (!comparePasswords(validData.data.currentPassword, customer.password)) {
+      // If the passwords do not match, return an error
+      return {
+        success: false,
+        errors: {
+          title: ['Current password is incorrect'],
+        },
+      };
+    }
+
+    // Update the customer's password in the database with the newly hashed password
+    await prisma.customer.update({
+      where: { customerReference: customer.customerReference },
+      data: { password: await hashUserPassword(validData.data.newPassword) },
+    });
+
+    // Send a notification email to the customer about the password change
+    sendNotificationEmail(
+      customer!.email, // Customer's email address
+      'password', // Notification type
+      `${customer.firstName} ${customer.lastName}`, // Full name for personalization
+      formatDateTime(customer.modifiedAt!) // Timestamp of modification
+    );
+
+    // Return a success response after all operations complete successfully
+    return { success: true };
+  } catch (error) {
+    // Log the error for debugging purposes
+    console.error('error from updatePassword', error);
+
+    // Return a generic error response to the user
+    return {
+      success: false,
+      errors: {
+        title: ['An unexpected error occurred. Please try again later.'],
+      },
+    };
+  }
 }
