@@ -81,7 +81,7 @@ export default function AddToCartForm({ productId }: AddToCartFormProps) {
           </>
         )}
       </Button>
-      {formState.errors.title && (
+      {formState.errors && formState.errors.title.length > 0 && (
         <div className='text-red-500 text-sm'>{formState.errors.title}</div>
       )}
     </form>
