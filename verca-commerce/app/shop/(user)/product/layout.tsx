@@ -7,15 +7,5 @@ export default function ShopLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div className='p-4 md:p-8 text-base-100'>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Shop', href: '/shop' },
-        ]}
-      />
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }

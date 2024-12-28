@@ -1,10 +1,10 @@
-import { Product } from '@prisma/client';
-import React, { Suspense } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { ProductWithCategoryNames } from '@/lib/types';
 import Link from 'next/link';
 import ImageComponent from '../images/ImageComponent';
-import ImageSkeleton from '../images/ImageSkeleton';
+import { Badge } from '../ui/badge';
+import { Card } from '../ui/card';
 
 const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   const isAddedLast7Days =
@@ -14,51 +14,41 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   return (
     <Link
       href={`/shop/product/${product.productId}`}
-      className='card bg-base-100 shadow-xl max-w-[400px] max-h-[400px] text-base-content'
+      className='group bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1'
     >
-      <figure className='max-h-fit '>
-        <Suspense fallback={<ImageSkeleton />}>
-          <ImageComponent
-            imagePath={product.imagePath!}
-            alt={product.name}
-            width={400}
-            height={400}
-            classname='w-full'
-          />
-        </Suspense>
-      </figure>
-      <div className='card-body rounded-xl w-full'>
-        <h2 className='card-title '>
-          {product.name}
-          {isAddedLast7Days && (
-            <div className='badge badge-secondary '>NEW</div>
-          )}
-        </h2>
-        <p>
-          {product.description.length >= 30
-            ? product.description.slice(0, 30) + '...'
-            : product.description}
+      <div className='relative aspect-square'>
+        <ImageComponent
+          imagePath={product.imagePath!}
+          alt={product.name}
+          layout='fill'
+          objectFit='cover'
+          classname='transition-transform duration-300 rounded-lg'
+        />
+        {isAddedLast7Days && (
+          <Badge className='absolute top-2 right-2'>NEW</Badge>
+        )}
+      </div>
+      <div className='pt-4 px-4 pb-6'>
+        <h2 className='text-lg font-semibold mb-2 truncate'>{product.name}</h2>
+        <p className='text-sm text-gray-600 mb-3 h-12 overflow-hidden'>
+          {product.description}
         </p>
-        <div className='card-actions justify-between items-center'>
+        <div className='flex flex-wrap gap-1 mb-2'>
+          {product.categories.map((category) => (
+            <Badge key={category.category.name}>{category.category.name}</Badge>
+          ))}
+        </div>
+        <div className='flex justify-between items-center'>
+          <span className='text-lg font-bold text-primary'>
+            ${product.price.toFixed(2)}
+          </span>
           {product.stock > 0 && product.stock <= 5 ? (
-            <div className='badge badge-error font-bold text-error-content'>
-              only {product.stock} left
-            </div>
+            <Badge>Only {product.stock} left</Badge>
           ) : product.stock === 0 ? (
-            <div className='badge badge-error font-bold text-error-content'>
-              Sold out
-            </div>
-          ) : null}
-          <div>
-            {product.categories.map((category) => (
-              <div
-                key={category.category.name}
-                className='badge badge-info text-info-content'
-              >
-                {category.category.name}
-              </div>
-            ))}
-          </div>
+            <Badge>Sold out</Badge>
+          ) : (
+            <Badge>In stock</Badge>
+          )}
         </div>
       </div>
     </Link>

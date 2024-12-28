@@ -31,6 +31,7 @@ export async function addToCart(
     const product = await prisma.product.findUnique({
       where: {
         productId: productId,
+        deleted: false,
       },
     });
 
@@ -84,11 +85,21 @@ export async function addToCart(
       };
     }
 
+    if (product.stock < Number(formData.get('quantity'))) {
+      return {
+        success: false,
+        errors: {
+          title: ['Quantity exceeds stock'],
+        },
+      };
+    }
+
     // Add the product to the cart
     await prisma.cartOnProducts.create({
       data: {
         cartId: cart.cartId,
         productId,
+        quantity: Number(formData.get('quantity')),
       },
     });
 

@@ -6,8 +6,10 @@ import { AspectRatio } from '../ui/aspect-ratio';
 interface ImagesComponentProps {
   imagePath: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  layout?: 'responsive' | 'fill' | 'fixed' | 'intrinsic';
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  height?: number;
   classname?: string;
 }
 
@@ -15,6 +17,8 @@ async function ImageComponent({
   imagePath,
   alt,
   width,
+  layout = 'responsive',
+  objectFit = 'cover',
   height,
   classname = '',
 }: ImagesComponentProps) {
@@ -44,6 +48,8 @@ async function ImageComponent({
       src={imageURL}
       alt={alt}
       width={width}
+      layout={layout}
+      objectFit={objectFit}
       height={height}
       className={classname}
     />
