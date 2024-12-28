@@ -1,7 +1,13 @@
 'server only';
 
 import { Customer, Product, SiteConfig } from '@prisma/client';
-import { CartCount, CartWithProducts, ProductWithCategoryNames } from './types';
+import {
+  CartCount,
+  CartProductDetails,
+  CartWithProducts,
+  ProductWithCategoryNames,
+} from './types';
+import { auth } from '@/auth';
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
@@ -73,6 +79,30 @@ export async function getOrdersByUserId(customerReference: string) {
     return orders;
   } catch (error) {
     throw new Error('Failed to fetch orders');
+  }
+}
+
+export async function getProductCartInformationById(
+  productId: string
+): Promise<CartProductDetails> {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error('Failed to authenticate');
+  }
+
+  try {
+    const res = await fetch(
+      `https://localhost:3000/api/products/${productId}?q=info&cr=${session.user.customerReference}`,
+      {
+        next: { tags: ['quantity'] },
+      }
+    );
+
+    const productsCount = await res.json();
+    return productsCount;
+  } catch (error) {
+    throw new Error('Failed to fetch products count in cart');
   }
 }
 

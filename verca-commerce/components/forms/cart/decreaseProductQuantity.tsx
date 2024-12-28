@@ -3,7 +3,7 @@
 import { updateQuantity } from '@/lib/actions/product.actions';
 import { useActionState } from 'react';
 import { Button } from '../../ui/button';
-import { MinusIcon } from 'lucide-react';
+import { Minus, MinusIcon } from 'lucide-react';
 
 function DecreaseProductQuantity({
   productId,
@@ -26,24 +26,17 @@ function DecreaseProductQuantity({
 
   return (
     <form action={action} className='flex items-center'>
-      <div className='justify-items-stretch'>
-        <Button
-          variant={'outline'}
-          size={'icon'}
-          type='submit'
-          disabled={quantity <= 1 || isPending}
-        >
-          <MinusIcon />
-        </Button>
-        <input type='hidden' name='update' value={-1}></input>
-      </div>
-
-      {/* Display errors if any */}
-      {formState.errors?.title[0] && (
-        <div className='text-error text-sm mt-2'>
-          {formState.errors.title.join(', ')}
-        </div>
-      )}
+      <Button
+        variant='ghost'
+        size='icon'
+        className='h-8 w-8 rounded-r-none'
+        type='submit'
+        disabled={quantity <= 1 || isPending}
+      >
+        <Minus className='h-3 w-3' />
+        <input type='hidden' name='quantity' value={-1} />
+        <span className='sr-only'>Decrease quantity</span>
+      </Button>
     </form>
   );
 }

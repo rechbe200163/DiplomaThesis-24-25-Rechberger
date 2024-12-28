@@ -53,15 +53,7 @@ export async function GET(
 
           select: {
             quantity: true,
-            product: {
-              select: {
-                productId: true,
-                name: true,
-                price: true,
-                imagePath: true,
-                stock: true,
-              },
-            },
+            product: true,
           },
         },
         _count: {

@@ -1,6 +1,8 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { removeFromCart } from '@/lib/actions/product.actions';
+import { Trash2 } from 'lucide-react';
 import { useActionState } from 'react';
 
 function RemoveFromCart({ productId }: { productId: string }) {
@@ -13,25 +15,15 @@ function RemoveFromCart({ productId }: { productId: string }) {
   });
   return (
     <form action={action} className='flex items-center'>
-      <button
-        type='submit'
+      <Button
         disabled={isPending}
-        className='badge badge-error font-bold'
+        variant='ghost'
+        size='icon'
+        className='text-muted-foreground hover:text-destructive'
       >
-        {isPending ? (
-          <>
-            <span className='loading loading-spinner loading-xs' />
-            &nbsp; Removing
-          </>
-        ) : (
-          'Remove'
-        )}
-      </button>
-      {formState?.errors && (
-        <div className='text-error text-sm mt-2'>
-          {formState?.errors.title.join(', ')}
-        </div>
-      )}
+        <Trash2 className='h-4 w-4' />
+        <span className='sr-only'>Remove item</span>
+      </Button>
     </form>
   );
 }

@@ -25,7 +25,6 @@ interface ProductDetailsPageProps {
 
 async function ProductDetailsPage(props: ProductDetailsPageProps) {
   const params = await props.params;
-  console.log(params);
   const product = await getProductById(params.productId);
 
   return (

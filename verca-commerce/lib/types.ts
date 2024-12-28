@@ -36,15 +36,7 @@ const cartWithProducts = Prisma.validator<Prisma.CartDefaultArgs>()({
     products: {
       select: {
         quantity: true,
-        product: {
-          select: {
-            productId: true,
-            name: true,
-            price: true,
-            imagePath: true,
-            stock: true,
-          },
-        },
+        product: true,
       },
     },
     _count: {
@@ -74,6 +66,30 @@ const cartCount = Prisma.validator<Prisma.CartDefaultArgs>()({
 });
 
 export type CartCount = Prisma.CartGetPayload<typeof cartCount>;
+
+const cartProductInfo = Prisma.validator<Prisma.CartDefaultArgs>()({
+  select: {
+    products: {
+      select: {
+        productId: true,
+        quantity: true,
+        product: {
+          select: {
+            stock: true,
+          },
+        },
+      },
+    },
+  },
+});
+
+export type CartProductDetails = {
+  productId: string;
+  quantity: number;
+  product: {
+    stock: number;
+  };
+};
 
 //! DASHBOARD
 

@@ -9,6 +9,7 @@ interface ImagesComponentProps {
   width?: number;
   layout?: 'responsive' | 'fill' | 'fixed' | 'intrinsic';
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  sizes?: string;
   height?: number;
   classname?: string;
 }
@@ -20,6 +21,7 @@ async function ImageComponent({
   layout = 'responsive',
   objectFit = 'cover',
   height,
+  sizes,
   classname = '',
 }: ImagesComponentProps) {
   const imageURL = await getSignedURL(imagePath);
@@ -51,6 +53,7 @@ async function ImageComponent({
       layout={layout}
       objectFit={objectFit}
       height={height}
+      sizes={sizes}
       className={classname}
     />
   );

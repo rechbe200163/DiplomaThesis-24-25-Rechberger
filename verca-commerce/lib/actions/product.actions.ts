@@ -170,7 +170,7 @@ export async function updateQuantity(
       };
     }
 
-    const value = formData.get('update');
+    const value = formData.get('quantity');
 
     if (!value || isNaN(parseInt(value as string))) {
       return {
@@ -219,8 +219,7 @@ export async function updateQuantity(
       },
     });
 
-    revalidateTag('cartCount');
-    revalidateTag('cart');
+    revalidateTag('quantity');
 
     return {
       success: true,
@@ -294,7 +293,6 @@ export async function removeFromCart(
     });
 
     revalidateTag('cartCount');
-    revalidateTag('cart');
 
     return {
       success: true,

@@ -12,14 +12,16 @@ import {
 import { SelectTrigger } from '@radix-ui/react-select';
 import { useActionState } from 'react';
 import { Button } from '../../ui/button';
-import { MinusIcon, PlusIcon } from 'lucide-react';
+import { MinusIcon, Plus, PlusIcon } from 'lucide-react';
 
 function IncreaseProductQuantity({
   productId,
   quantity,
+  stock,
 }: {
   productId: string;
   quantity: number;
+  stock: number;
 }) {
   // Bind updateQuantity to productId
   const increaseProductQuantity = updateQuantity.bind(null, productId);
@@ -35,24 +37,17 @@ function IncreaseProductQuantity({
 
   return (
     <form action={action} className='flex items-center'>
-      <div className='justify-items-stretch'>
-        <Button
-          variant={'outline'}
-          size={'icon'}
-          type='submit'
-          disabled={isPending}
-        >
-          <PlusIcon />
-        </Button>
-        <input type='hidden' name='update' value={1}></input>
-      </div>
-
-      {/* Display errors if any */}
-      {formState.errors?.title[0] && (
-        <div className='text-error text-sm mt-2'>
-          {formState.errors.title.join(', ')}
-        </div>
-      )}
+      <Button
+        variant='ghost'
+        size='icon'
+        className='h-8 w-8 rounded-l-none'
+        type='submit'
+        disabled={quantity >= stock || isPending}
+      >
+        <Plus className='h-3 w-3' />
+        <input type='hidden' name='quantity' value={1} />
+        <span className='sr-only'>Increase quantity</span>
+      </Button>
     </form>
   );
 }
