@@ -89,25 +89,13 @@ export async function signUp(
         phoneNumber: phoneNumber,
         customerReference: customerReference,
         address: {
-          connectOrCreate: {
-            where: {
-              city_country_postcode_state_streetName_streetNumber: {
-                city: city,
-                country: country,
-                postcode: postCode,
-                state: state,
-                streetName: streetName,
-                streetNumber: streetNumber,
-              },
-            },
-            create: {
-              city: city,
-              country: country,
-              postcode: postCode,
-              state: state,
-              streetName: streetName,
-              streetNumber: streetNumber,
-            },
+          create: {
+            city: city,
+            country: country,
+            postcode: postCode,
+            state: state,
+            streetName: streetName,
+            streetNumber: streetNumber,
           },
         },
         cart: {

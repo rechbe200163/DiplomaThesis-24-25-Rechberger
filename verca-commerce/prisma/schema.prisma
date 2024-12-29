@@ -56,7 +56,7 @@ model Customer {
   deleted           Boolean   @default(false)
   signedUp          DateTime  @default(now())
   avatarPath        String?   @db.VarChar(255)
-  addressId         String
+  addressId         String    @unique // Ensure unique association
 
   role           Role            @default(USER)
   businessSector BusinessSector?
@@ -81,8 +81,7 @@ model Address {
   customers  Customer[]
   siteConfig SiteConfig[]
 
-  @@unique([city, country, postcode, state, streetName, streetNumber]) // used for checking address should be createdt or user should be linked to existing address
-  @@map("addresses")
+  @@map("addresses") // Removed unique constraint
 }
 
 model Cart {
@@ -114,10 +113,10 @@ model Product {
 }
 
 model Category {
-  categoryId String    @id @default(uuid())
-  name       String    @unique @db.VarChar(255)
-  imagePath  String?   @db.VarChar(255) // probably should be paths for multiple images
-  deleted    Boolean   @default(false)
+  categoryId String  @id @default(uuid())
+  name       String  @unique @db.VarChar(255)
+  imagePath  String? @db.VarChar(255) // probably should be paths for multiple images
+  deleted    Boolean @default(false)
 
   products CategoriesOnProducts[]
 

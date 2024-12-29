@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import {
   BellIcon,
-  CreditCardIcon,
   HomeIcon,
   LucideListOrdered,
   MapPinIcon,
