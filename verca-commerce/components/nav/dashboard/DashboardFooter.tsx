@@ -12,13 +12,13 @@ import {
   SidebarMenuItem,
   SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
-import { fetchUserAvatrPath } from '@/lib/data.dashboard';
+import { fetchUserAvatarPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
 import { User2Icon } from 'lucide-react';
 import React from 'react';
 async function UserAvatar() {
   const session = await auth();
-  const { avatarPath } = await fetchUserAvatrPath(
+  const { avatarPath } = await fetchUserAvatarPath(
     session?.user.customerReference!
   );
   const imageURL = await getSignedURL(avatarPath);
