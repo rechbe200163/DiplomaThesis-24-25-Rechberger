@@ -7,8 +7,8 @@ interface ImagesComponentProps {
   imagePath: string;
   alt: string;
   width?: number;
-  layout?: 'responsive' | 'fill' | 'fixed' | 'intrinsic';
-  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  fill?: boolean;
+  style?: React.CSSProperties;
   sizes?: string;
   height?: number;
   classname?: string;
@@ -18,12 +18,13 @@ async function ImageComponent({
   imagePath,
   alt,
   width,
-  layout = 'responsive',
-  objectFit = 'cover',
+  fill,
+  style,
   height,
   sizes,
   classname = '',
 }: ImagesComponentProps) {
+  fill = fill ?? false;
   const imageURL = await getSignedURL(imagePath);
 
   if (!imageURL) {
@@ -50,8 +51,8 @@ async function ImageComponent({
       src={imageURL}
       alt={alt}
       width={width}
-      layout={layout}
-      objectFit={objectFit}
+      fill={fill}
+      style={style}
       height={height}
       sizes={sizes}
       className={classname}

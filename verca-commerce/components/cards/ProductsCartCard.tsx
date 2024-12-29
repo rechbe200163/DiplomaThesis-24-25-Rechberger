@@ -40,8 +40,8 @@ function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
                     <ImageComponent
                       imagePath={item.product.imagePath!}
                       alt={item.product.name}
-                      layout='fill'
-                      objectFit='cover'
+                      fill
+                      style={{ objectFit: 'cover' }}
                       sizes='(max-width: 640px) 100vw, 33vw'
                     />
                   </Suspense>

@@ -20,8 +20,8 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
         <ImageComponent
           imagePath={product.imagePath!}
           alt={product.name}
-          layout='fill'
-          objectFit='cover'
+          fill
+          style={{ objectFit: 'cover' }}
           classname='transition-transform duration-300 rounded-lg'
         />
         {isAddedLast7Days && (

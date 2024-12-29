@@ -54,8 +54,8 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
               <ImageComponent
                 imagePath={product.imagePath!}
                 alt={product.name}
-                layout='fill'
-                objectFit='cover'
+                fill
+                style={{ objectFit: 'cover' }}
                 classname='object-cover'
               />
             </Suspense>
