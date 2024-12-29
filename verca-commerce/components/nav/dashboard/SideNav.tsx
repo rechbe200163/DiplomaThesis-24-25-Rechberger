@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/collapsible';
 import DashboardFooter from './DashboardFooter';
 import CompanyIconComponent from './CompanyIconComponent';
-import ImageComponent from '@/components/images/ImageComponent';
 
 export function DashboardSidebar() {
   return (
