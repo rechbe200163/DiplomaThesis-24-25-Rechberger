@@ -220,3 +220,24 @@ export const passwordFormSchema = z
     message: "Passwords don't match",
     path: ['confirmPassword'],
   });
+
+export const addressFormSchema = z.object({
+  streetNumber: z.string().min(1, {
+    message: 'Street number is required.',
+  }),
+  streetName: z.string().min(1, {
+    message: 'Street name is required.',
+  }),
+  city: z.string().min(1, {
+    message: 'City is required.',
+  }),
+  state: z.string().min(1, {
+    message: 'State is required.',
+  }),
+  postcode: z.string().min(1, {
+    message: 'Postal code is required.',
+  }),
+  country: z.string().min(1, {
+    message: 'Country is required.',
+  }),
+});
