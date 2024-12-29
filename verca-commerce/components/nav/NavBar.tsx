@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import CartIconComponent from './CartIconComponent';
 import { Search } from 'lucide-react';
 import SearchComponent from '../search/SearchComponent';
-import { fetchUserAvatrPath as fetchUserAvatarPath } from '@/lib/data.dashboard';
+import { fetchUserAvatarPath as fetchUserAvatarPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
 import { string } from 'zod';
 
