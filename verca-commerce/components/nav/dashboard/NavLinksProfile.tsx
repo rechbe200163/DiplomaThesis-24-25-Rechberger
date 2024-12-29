@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
 
 const accountLinks = [
   { name: 'Account', href: '/profile', icon: HomeIcon },
-  { name: 'Addresses', href: '/profile/addresses', icon: MapPinIcon },
+  { name: 'Addresses', href: '/profile/address', icon: MapPinIcon },
 ];
 
 const shoppingLinks = [
