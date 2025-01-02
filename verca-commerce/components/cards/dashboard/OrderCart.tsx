@@ -27,6 +27,7 @@ import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
 import { orderState } from '@prisma/client';
 import CopyOrderId from '@/components/helpers/CopyOrderId';
+import InvoicePdfLink from '@/components/helpers/InvoicePdfLink';
 
 function OrderCard({ order }: { order: OrderDetails }) {
   return (
@@ -65,8 +66,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>
-                <Download className='mr-2 h-4 w-4' />
-                Invoice PDF
+                <InvoicePdfLink invoicePdfUrl={order.invoice?.pdfUrl!} />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
