@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { BusinessSector } from '@prisma/client';
+import { BusinessSector, Role } from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 
 import { twMerge } from 'tailwind-merge';
@@ -43,6 +43,16 @@ export function formatDateTime(date: Date) {
   });
 
   return formattedDate;
+}
+
+export default async function checkUserAuthorization(): Promise<Role | null> {
+  const session = await auth();
+
+  if (!session) {
+    return null;
+  }
+
+  return session.user.role;
 }
 
 export function generateCustomerRefercenceNumber(): number {

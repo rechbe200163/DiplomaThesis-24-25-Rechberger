@@ -17,8 +17,9 @@ import {
 import DashboardFooter from '../dashboard/DashboardFooter';
 import NavLinksProfile from '../dashboard/NavLinksProfile';
 import CompanyIconComponent from '../dashboard/CompanyIconComponent';
+import NavLinksAdminPanel from './NavLinksAdminPanel';
 
-export function DashboardSidebar() {
+export function AdminPabelSidebar() {
   return (
     <Sidebar collapsible='offcanvas' variant='floating'>
       <SidebarHeader>
@@ -29,46 +30,30 @@ export function DashboardSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
-                <UserCog className='mr-1' />
-                Details
-                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <NavLinksProfile linkType='account' />
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-        <Collapsible defaultOpen className='group/collapsible'>
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
                 <PiShoppingBagBold className='mr-1' />
-                Shopping
+                Administration
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <NavLinksProfile linkType='shopping' />
+                <NavLinksAdminPanel linkType='administration' />
               </SidebarGroupContent>
             </CollapsibleContent>
           </SidebarGroup>
         </Collapsible>
-        <Collapsible defaultOpen className='group/collapsible'>
+        <Collapsible className='group/collapsible'>
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
-                <HelpCircle className='mr-1' />
-                Help
+                <UserCog className='mr-1' />
+                Account
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <NavLinksProfile linkType='support' />
+                <NavLinksAdminPanel linkType='account' />
               </SidebarGroupContent>
             </CollapsibleContent>
           </SidebarGroup>
