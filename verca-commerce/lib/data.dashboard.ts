@@ -83,3 +83,32 @@ export async function getSalesStats(): Promise<{
     throw new Error('Failed to fetch sales stats');
   }
 }
+
+export async function getCustomerStats(): Promise<{
+  currentMonthSignUps: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/customers?q=customerStats`, {
+      next: { tags: ['customerStats'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch customer stats');
+  }
+}
+
+export async function getRevenueStats(): Promise<{
+  currentMonthRevenue: number;
+  lastMonthRevenue: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/invoices?q=revenueStats`, {
+      next: { tags: ['revenueStats'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch revenue stats');
+  }
+}

@@ -7,6 +7,73 @@ export async function GET(req: NextRequest) {
     const dop = req.nextUrl.searchParams.get('dop');
     const query = req.nextUrl.searchParams.get('q');
 
+    if (query === 'revenueStats') {
+      const now = new Date();
+      const startOfCurrentMonth = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        1
+      );
+      const startOfLastMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        1
+      );
+
+      // Current month's revenue
+      const currentMonthRevenue = await prisma.invoice.aggregate({
+        _sum: {
+          invoiceAmount: true,
+        },
+        where: {
+          deleted: false,
+          dateOfPayment: {
+            gte: startOfCurrentMonth,
+          },
+        },
+      });
+
+      // Last month's revenue
+      const lastMonthRevenue = await prisma.invoice.aggregate({
+        _sum: {
+          invoiceAmount: true,
+        },
+        where: {
+          deleted: false,
+          dateOfPayment: {
+            gte: startOfLastMonth,
+            lt: startOfCurrentMonth,
+          },
+        },
+      });
+
+      if (!currentMonthRevenue._sum.invoiceAmount) {
+        currentMonthRevenue._sum.invoiceAmount = 0;
+      }
+
+      if (!lastMonthRevenue._sum.invoiceAmount) {
+        lastMonthRevenue._sum.invoiceAmount = 0;
+      }
+
+      // Calculate percentage change
+      const percentageChange =
+        lastMonthRevenue._sum.invoiceAmount > 0
+          ? ((currentMonthRevenue._sum.invoiceAmount -
+              lastMonthRevenue._sum.invoiceAmount) /
+              lastMonthRevenue._sum.invoiceAmount) *
+            100
+          : 0;
+
+      return NextResponse.json(
+        {
+          currentMonthRevenue: currentMonthRevenue._sum.invoiceAmount!,
+          lastMonthRevenue: lastMonthRevenue._sum.invoiceAmount!,
+          percentageChange: Math.round(percentageChange),
+        },
+        { status: 200 }
+      );
+    }
+
     if (query === 'salesStats') {
       const now = new Date();
       const startOfCurrentMonth = new Date(

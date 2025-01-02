@@ -2,12 +2,47 @@ import prisma from '@/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
-    const search = req.nextUrl.searchParams.get('q') || '';
+    const query = req.nextUrl.searchParams.get('q') || '';
+
+    if (query === 'customerStats') {
+      const currentMonthSignUps = await prisma.customer.count({
+        where: {
+          signedUp: {
+            gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+          },
+        },
+      });
+
+      const lastMontSignUps = await prisma.customer.count({
+        where: {
+          signedUp: {
+            gte: new Date(
+              new Date().getFullYear(),
+              new Date().getMonth() - 1,
+              1
+            ),
+            lt: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+          },
+        },
+      });
+
+      const percentageChange = Math.round(
+        ((currentMonthSignUps - lastMontSignUps) / lastMontSignUps) * 100
+      );
+
+      return NextResponse.json(
+        {
+          currentMonthSignUps: currentMonthSignUps,
+          percentageChange,
+        },
+        { status: 200 }
+      );
+    }
 
     const products = await prisma.customer.findMany({
       where: {
         lastName: {
-          contains: search,
+          contains: query,
           mode: 'insensitive',
         },
         deleted: false,
