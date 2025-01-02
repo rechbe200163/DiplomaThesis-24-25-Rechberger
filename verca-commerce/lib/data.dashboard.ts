@@ -68,3 +68,18 @@ export async function getCustomerAddress(
     throw new Error('Failed to fetch user address');
   }
 }
+
+export async function getSalesStats(): Promise<{
+  currentMonthSales: number;
+  lastMonthSales: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/invoices?q=salesStats`, {
+      next: { tags: ['salesStats'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch sales stats');
+  }
+}
