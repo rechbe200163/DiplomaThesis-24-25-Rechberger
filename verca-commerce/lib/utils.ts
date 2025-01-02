@@ -87,13 +87,12 @@ export async function getSignedURL(imagePath: string): Promise<string | null> {
   return data.signedUrl;
 }
 
-export async function generatePdfUrl(pdfPath: string): Promise<string> {
+export async function getInvoicePdfUrl(pdfPath: string): Promise<string> {
   const bucket = process.env.SUPABASE_INVOICE_BUCKET;
   const { data, error } = await supabaseClient.storage
     .from(bucket!)
     .createSignedUrl(pdfPath, 60 * 60 * 365 * 10); // 10 years
   if (error) {
-    console.error(error);
     return error + '';
   }
   return data.signedUrl;

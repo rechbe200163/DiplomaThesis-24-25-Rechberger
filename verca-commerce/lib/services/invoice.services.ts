@@ -1,4 +1,5 @@
-'server only';
+import { formatPrice } from '@/lib/utils';
+('server only');
 import { auth } from '@/auth';
 import { FormState } from '../form.types';
 import { ExtendedProduct } from '../interfaces';
@@ -56,7 +57,7 @@ async function generateInvoicePDF(
 
   //
   page.drawText(`Order ID: ${orderId}`, { x: 50, y: height - 50, font });
-  page.drawText(`Total Amount: $${invoiceAmount.toFixed(2)}`, {
+  page.drawText(`Total Amount: $${formatPrice(invoiceAmount)}`, {
     x: 50,
     y: height - 100,
     font,
@@ -67,7 +68,7 @@ async function generateInvoicePDF(
   for (const product of products) {
     page.drawText(
       `${product.name} x ${product.quantity} - $${(
-        product.price * product.quantity
+        Number(formatPrice(product.price)) * product.quantity
       ).toFixed(2)}`,
       { x: 50, y, font }
     );
