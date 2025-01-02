@@ -22,6 +22,9 @@ export default async function DashboardLayout({
       </div>
     );
   }
+
+  console.log(session?.user.role === user ? 'admin' : 'user');
+
   return (
     <SidebarProvider>
       <div className='flex flex-col h-screen '>

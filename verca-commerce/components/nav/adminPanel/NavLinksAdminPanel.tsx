@@ -19,26 +19,21 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 const accountLinks = [
-  { name: 'Account', href: '/dashboard/account', icon: HomeIcon },
-  { name: 'Addresses', href: '/dashboard/address', icon: MapPinIcon },
+  { name: 'Account', href: '/profile', icon: HomeIcon },
+  { name: 'Addresses', href: '/profile/address', icon: MapPinIcon },
 ];
 
-const shoppingLinks = [
-  { name: 'Orders', href: '/dashboard/orders', icon: LucideListOrdered },
-];
-
-const supportLinks = [
-  { name: 'Support', href: '/dashboard/support', icon: BiSupport },
-  { name: 'Notifications', href: '/dashboard/notifications', icon: BellIcon },
+const administration = [
+  { name: 'Orders', href: '/profile/support', icon: BiSupport },
+  { name: 'Notifications', href: '/profile/notifications', icon: BellIcon },
 ];
 // Objekt zur Zuordnung der linkTypes zu den jeweiligen Link-Arrays
 const linksMap = {
   account: accountLinks,
-  shopping: shoppingLinks,
-  support: supportLinks,
+  administration: administration,
 };
 
-type LinkType = 'account' | 'shopping' | 'support';
+type LinkType = 'administration' | 'account';
 
 export default function NavLinksProfile({ linkType }: { linkType: LinkType }) {
   // Das passende Array basierend auf linkType auswählen

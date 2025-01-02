@@ -40,7 +40,7 @@ async function NavBar() {
       <div className='flex items-center space-x-6 pr-5 w-fit'>
         <CartIconComponent />
         {session ? (
-          <Link href='/profile'>
+          <Link href='/dashboard'>
             <Avatar>
               <AvatarImage src={imageURL!} className='object-cover' />
               <AvatarFallback className='bg-success-600 text-black'>

@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { addToCart } from '@/lib/actions/product.actions';
+import { cn } from '@/lib/utils';
 
 interface AddToCartFormProps {
   productId: string;
@@ -54,7 +55,12 @@ export default function AddToCartForm({ productId }: AddToCartFormProps) {
           <span className='w-12 text-center text-lg font-medium'>
             {quantity}
           </span>
-          <input type='hidden' name='quantity' value={quantity} />
+          <input
+            disabled={isPending}
+            type='hidden'
+            name='quantity'
+            value={quantity}
+          />
           <Button
             type='button'
             variant='outline'
@@ -68,7 +74,7 @@ export default function AddToCartForm({ productId }: AddToCartFormProps) {
         </div>
       </div>
 
-      <Button type='submit' className='w-full' size='lg' disabled={isPending}>
+      <Button type='submit' size='lg' disabled={isPending} className='w-full'>
         {isPending ? (
           <>
             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
