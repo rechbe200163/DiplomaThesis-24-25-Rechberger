@@ -1,13 +1,14 @@
 import React from 'react';
 import { DashboardCard } from '../DashboardCard';
-import { getSalesStats } from '@/lib/data.dashboard';
+import { getCustomerStats } from '@/lib/data.dashboard';
 
-export default async function SalesInfoCard() {
-  const { currentMonthSales, percentageChange } = await getSalesStats();
+export default async function CustomerInfoCard() {
+  const { currentMonthSignUps, percentageChange } = await getCustomerStats();
+  console.log(currentMonthSignUps, percentageChange);
   return (
     <DashboardCard
-      title='Monthly Sales'
-      value={currentMonthSales}
+      title='New Customers'
+      value={currentMonthSignUps}
       description={`${percentageChange}% from last month`}
       icon={
         <svg
