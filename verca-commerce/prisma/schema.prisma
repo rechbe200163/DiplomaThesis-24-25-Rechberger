@@ -56,7 +56,7 @@ model Customer {
   deleted           Boolean   @default(false)
   signedUp          DateTime  @default(now())
   avatarPath        String?   @db.VarChar(255)
-  addressId         String    @unique // Ensure unique association
+  addressId         String    
 
   role           Role            @default(USER)
   businessSector BusinessSector?
