@@ -9,13 +9,12 @@ import {
 import { Badge } from '@/components/ui/badge';
 import UserAvatar from '@/components/helpers/UserAvatarcComponent';
 import { Customer } from '@prisma/client';
-import { Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import DeleteUser from '@/components/forms/panel/DeleteUser';
+import RestoreUser from '@/components/forms/panel/RestoreUser';
 
 export function UserTable({ users }: { users: Customer[] }) {
   return (
-    <Table>
+    <Table className='w-full'>
       <TableHeader>
         <TableRow>
           <TableHead className='w-[100px]'>Avatar</TableHead>
@@ -42,8 +41,9 @@ export function UserTable({ users }: { users: Customer[] }) {
                 {user.deleted ? 'Deleted' : 'Active'}
               </Badge>
             </TableCell>
-            <TableCell className='text-right'>
+            <TableCell className='text-right flex'>
               <DeleteUser customerReference={user.customerReference} />
+              <RestoreUser customerReference={user.customerReference} />
             </TableCell>
           </TableRow>
         ))}
