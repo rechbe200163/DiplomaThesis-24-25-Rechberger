@@ -1,5 +1,6 @@
 import { auth } from '@/auth';
 import SignOutComponent from '@/components/auth/signOut';
+import UserAvatar from '@/components/helpers/UserAvatarcComponent';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DialogContent,
@@ -16,31 +17,20 @@ import { fetchUserAvatarPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
 import { User2Icon } from 'lucide-react';
 import React from 'react';
-async function UserAvatar() {
-  const session = await auth();
-  const { avatarPath } = await fetchUserAvatarPath(
-    session?.user.customerReference!
-  );
-  const imageURL = await getSignedURL(avatarPath);
-  return (
-    <>
-      <Avatar className='cursor-pointer'>
-        <AvatarImage src={imageURL!} />
-        <AvatarFallback>
-          <User2Icon />
-        </AvatarFallback>
-      </Avatar>
-      <span>{session?.user.email}</span>
-    </>
-  );
-}
 
 async function DashboardFooter() {
+  const session = await auth();
+  const customerReference = session?.user.customerReference;
+  if (customerReference === undefined) {
+    throw new Error('Customer reference is undefined');
+  }
+  const { avatarPath } = await fetchUserAvatarPath(customerReference);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuSubButton>
-          <UserAvatar /> {/* Wrapped in a single parent element */}
+          <UserAvatar avatarPath={avatarPath} />{' '}
+          {/* Wrapped in a single parent element */}
           <SignOutComponent />
         </SidebarMenuSubButton>
       </SidebarMenuItem>
