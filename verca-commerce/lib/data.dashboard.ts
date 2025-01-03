@@ -112,3 +112,18 @@ export async function getRevenueStats(): Promise<{
     throw new Error('Failed to fetch revenue stats');
   }
 }
+
+export async function getAvarageOrderValueStats(): Promise<{
+  currentMonthAIV: number;
+  lastMonthAIV: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/invoices?q=AIVStats`, {
+      next: { tags: ['averageOrderValue'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch average order value stats');
+  }
+}

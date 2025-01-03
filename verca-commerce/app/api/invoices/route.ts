@@ -7,6 +7,80 @@ export async function GET(req: NextRequest) {
     const dop = req.nextUrl.searchParams.get('dop');
     const query = req.nextUrl.searchParams.get('q');
 
+    if (query === 'AIVStats') {
+      const now = new Date();
+      const startOfCurrentMonth = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        1
+      );
+      const startOfLastMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        1
+      );
+
+      // Current month's invoices
+      const currentMonthInvoices = await prisma.invoice.findMany({
+        where: {
+          deleted: false,
+          dateOfPayment: {
+            gte: startOfCurrentMonth,
+          },
+        },
+      });
+
+      // Last month's invoices
+      const lastMonthInvoices = await prisma.invoice.findMany({
+        where: {
+          deleted: false,
+          dateOfPayment: {
+            gte: startOfLastMonth,
+            lt: startOfCurrentMonth,
+          },
+        },
+      });
+
+      // Calculate AIV for the current month
+      const currentMonthTotalValue = currentMonthInvoices.reduce(
+        (acc, invoice) => acc + invoice.invoiceAmount,
+        0
+      );
+      const currentMonthTotalInvoices = currentMonthInvoices.length;
+      const currentMonthAIV =
+        currentMonthTotalInvoices > 0
+          ? currentMonthTotalValue / currentMonthTotalInvoices
+          : 0;
+
+      // Calculate AIV for the last month
+      const lastMonthTotalValue = lastMonthInvoices.reduce(
+        (acc, invoice) => acc + invoice.invoiceAmount,
+        0
+      );
+      const lastMonthTotalInvoices = lastMonthInvoices.length;
+      const lastMonthAIV =
+        lastMonthTotalInvoices > 0
+          ? lastMonthTotalValue / lastMonthTotalInvoices
+          : 0;
+
+      // Calculate percentage change
+      const percentageChange =
+        lastMonthAIV > 0
+          ? ((currentMonthAIV - lastMonthAIV) / lastMonthAIV) * 100
+          : currentMonthAIV > 0
+            ? 100
+            : 0;
+
+      return NextResponse.json(
+        {
+          currentMonthAIV: Math.round(currentMonthAIV * 100) / 100, // Rounded to 2 decimal places
+          lastMonthAIV: Math.round(lastMonthAIV * 100) / 100,
+          percentageChange: Math.round(percentageChange), // Rounded to nearest integer
+        },
+        { status: 200 }
+      );
+    }
+
     if (query === 'revenueStats') {
       const now = new Date();
       const startOfCurrentMonth = new Date(
