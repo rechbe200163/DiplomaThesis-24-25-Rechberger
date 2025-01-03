@@ -287,3 +287,46 @@ export async function updatePassword(
     };
   }
 }
+
+export async function deleteUser(
+  customerReference: number,
+  prevState: FormState
+): Promise<FormState> {
+  try {
+    // Fetch the customer record from the database using the provided customer reference
+    const customer = await prisma.customer.findUnique({
+      where: { customerReference },
+    });
+
+    if (!customer) {
+      // If no customer is found, return an error indicating this
+      return {
+        success: false,
+        errors: {
+          title: ['Customer not found'],
+        },
+      };
+    }
+
+    // soft Delete the customer's record from the database with deleted attribute cascade to cart
+    await prisma.customer.update({
+      where: { customerReference },
+      data: { deleted: true },
+    });
+
+    // Return a success response after the deletion operation completes successfully
+    revalidateTag('customersPaging');
+    return { success: true };
+  } catch (error) {
+    // Log the error for debugging purposes
+    console.error('error from deleteUser', error);
+
+    // Return a generic error response to the user
+    return {
+      success: false,
+      errors: {
+        title: ['An unexpected error occurred. Please try again later.'],
+      },
+    };
+  }
+}
