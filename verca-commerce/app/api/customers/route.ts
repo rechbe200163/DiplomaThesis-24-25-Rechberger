@@ -8,11 +8,7 @@ export async function GET(req: NextRequest) {
     const USERS_PER_PAGE = 5;
 
     if (query === 'count') {
-      const totalCustomers = await prisma.customer.count({
-        where: {
-          deleted: false,
-        },
-      });
+      const totalCustomers = await prisma.customer.count();
 
       return NextResponse.json({ totalCustomers }, { status: 200 });
     }
@@ -24,11 +20,7 @@ export async function GET(req: NextRequest) {
       const take = USERS_PER_PAGE;
 
       // Get total count of customers
-      const totalCustomers = await prisma.customer.count({
-        where: {
-          deleted: false,
-        },
-      });
+      const totalCustomers = await prisma.customer.count();
 
       // Check if the page number is too high
       if (skip >= totalCustomers) {
@@ -41,9 +33,6 @@ export async function GET(req: NextRequest) {
       const customers = await prisma.customer.findMany({
         skip,
         take,
-        where: {
-          deleted: false,
-        },
       });
 
       return NextResponse.json(customers, { status: 200 });
