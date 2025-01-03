@@ -1,4 +1,5 @@
 import { DashboardCard } from '@/components/cards/dashboard/adminPanel/DashboardCard';
+import AvarageOderValueCard from '@/components/cards/dashboard/adminPanel/InfoCards/AvarageOderValueCard';
 import CustomerInfoCard from '@/components/cards/dashboard/adminPanel/InfoCards/CustomerInfoCard';
 import RevenueInfoCard from '@/components/cards/dashboard/adminPanel/InfoCards/RevenueInfoCard';
 import SalesInfoCard from '@/components/cards/dashboard/adminPanel/InfoCards/SalesInfoCard';
@@ -7,30 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export default function DashboardPage() {
   return (
     <div className='flex-1 space-y-6 p-8 pt-6'>
-      <h1 className='text-3xl font-bold tracking-tight'>Dashboard</h1>
+      <h1 className='text-3xl font-bold tracking-tight'>Monthly Stats</h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
         <RevenueInfoCard />
         <CustomerInfoCard />
         <SalesInfoCard />
-        <DashboardCard
-          title='Active Now'
-          value='+573'
-          description='+201 since last hour'
-          icon={
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              className='h-4 w-4 text-muted-foreground'
-            >
-              <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
-            </svg>
-          }
-        />
+        <AvarageOderValueCard />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
         {/* <DashboardCard
