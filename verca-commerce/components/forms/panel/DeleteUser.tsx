@@ -16,7 +16,13 @@ const DeleteUser = ({ customerReference }: { customerReference: number }) => {
   );
   return (
     <form action={action} className='space-y-4'>
-      <Button type='submit' size='icon' disabled={isPending} variant='ghost'>
+      <Button
+        type='submit'
+        size='icon'
+        disabled={isPending}
+        variant='ghost'
+        className='hover:text-error'
+      >
         {isPending ? (
           <>
             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
