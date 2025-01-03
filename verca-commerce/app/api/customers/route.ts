@@ -26,9 +26,14 @@ export async function GET(req: NextRequest) {
         },
       });
 
-      const percentageChange = Math.round(
-        ((currentMonthSignUps - lastMontSignUps) / lastMontSignUps) * 100
-      );
+      let percentageChange = 0; // Default value if no meaningful calculation can be made
+      if (lastMontSignUps > 0) {
+        percentageChange = Math.round(
+          ((currentMonthSignUps - lastMontSignUps) / lastMontSignUps) * 100
+        );
+      } else if (lastMontSignUps === 0 && currentMonthSignUps > 0) {
+        percentageChange = 100; // Indicate a complete increase from zero
+      }
 
       return NextResponse.json(
         {

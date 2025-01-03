@@ -47,27 +47,24 @@ export async function GET(req: NextRequest) {
         },
       });
 
-      if (!currentMonthRevenue._sum.invoiceAmount) {
-        currentMonthRevenue._sum.invoiceAmount = 0;
-      }
-
-      if (!lastMonthRevenue._sum.invoiceAmount) {
-        lastMonthRevenue._sum.invoiceAmount = 0;
-      }
+      // Handle null revenue values
+      const currentRevenue = currentMonthRevenue._sum.invoiceAmount || 0;
+      const lastRevenue = lastMonthRevenue._sum.invoiceAmount || 0;
 
       // Calculate percentage change
-      const percentageChange =
-        lastMonthRevenue._sum.invoiceAmount > 0
-          ? ((currentMonthRevenue._sum.invoiceAmount -
-              lastMonthRevenue._sum.invoiceAmount) /
-              lastMonthRevenue._sum.invoiceAmount) *
-            100
-          : 0;
+      let percentageChange;
+      if (lastRevenue > 0) {
+        percentageChange = ((currentRevenue - lastRevenue) / lastRevenue) * 100;
+      } else if (currentRevenue > 0) {
+        percentageChange = 100; // Full increase from zero revenue last month
+      } else {
+        percentageChange = 0; // No revenue in either month
+      }
 
       return NextResponse.json(
         {
-          currentMonthRevenue: currentMonthRevenue._sum.invoiceAmount!,
-          lastMonthRevenue: lastMonthRevenue._sum.invoiceAmount!,
+          currentMonthRevenue: currentRevenue,
+          lastMonthRevenue: lastRevenue,
           percentageChange: Math.round(percentageChange),
         },
         { status: 200 }
@@ -109,10 +106,15 @@ export async function GET(req: NextRequest) {
       });
 
       // Calculate percentage change
-      const percentageChange =
-        lastMonthSales > 0
-          ? ((currentMonthSales - lastMonthSales) / lastMonthSales) * 100
-          : 0;
+      let percentageChange;
+      if (lastMonthSales > 0) {
+        percentageChange =
+          ((currentMonthSales - lastMonthSales) / lastMonthSales) * 100;
+      } else if (currentMonthSales > 0) {
+        percentageChange = 100; // Full increase from zero sales last month
+      } else {
+        percentageChange = 0; // No sales in either month
+      }
 
       return NextResponse.json(
         {
