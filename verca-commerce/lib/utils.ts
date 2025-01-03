@@ -45,6 +45,17 @@ export function formatDateTime(date: Date) {
   return formattedDate;
 }
 
+export function formatStatsChange(percentageChange: number): string {
+  // Determine the description
+  if (percentageChange === 0) {
+    return 'Equal to last month';
+  } else if (percentageChange > 0) {
+    return `${percentageChange}% increase from last month`;
+  } else {
+    return `${Math.abs(percentageChange)}% decrease from last month`;
+  }
+}
+
 export default async function checkUserAuthorization(): Promise<Role | null> {
   const session = await auth();
 

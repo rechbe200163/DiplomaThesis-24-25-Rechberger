@@ -1,15 +1,16 @@
 import React from 'react';
 import { DashboardCard } from '../DashboardCard';
 import { getCustomerStats } from '@/lib/data.dashboard';
+import { formatStatsChange } from '@/lib/utils';
 
 export default async function CustomerInfoCard() {
   const { currentMonthSignUps, percentageChange } = await getCustomerStats();
-  console.log(currentMonthSignUps, percentageChange);
+  const descriptionText = formatStatsChange(percentageChange);
   return (
     <DashboardCard
       title='New Customers'
       value={currentMonthSignUps}
-      description={`${percentageChange}% from last month`}
+      description={descriptionText}
       icon={
         <svg
           xmlns='http://www.w3.org/2000/svg'
