@@ -1,5 +1,5 @@
 'server only';
-import { Address } from '@prisma/client';
+import { Address, Customer } from '@prisma/client';
 import { OrderDetails } from './types';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -37,6 +37,30 @@ export async function getTotalOrders(
     return response.json();
   } catch (error) {
     throw new Error('Failed to fetch orders count');
+  }
+}
+
+export async function getUsersPagination(
+  page: number = 0
+): Promise<Customer[]> {
+  try {
+    const response = await fetch(`${baseApiUrl}/customers?page=${page}`, {
+      next: { tags: ['customersPaging'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch customers');
+  }
+}
+
+export async function getTotalUsers(): Promise<{ totalCustomers: number }> {
+  try {
+    const response = await fetch(`${baseApiUrl}/customers?q=count`, {
+      next: { tags: ['customersCount'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch customers count');
   }
 }
 

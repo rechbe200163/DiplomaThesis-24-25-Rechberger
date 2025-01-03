@@ -46,13 +46,12 @@ export function formatDateTime(date: Date) {
 }
 
 export function formatStatsChange(percentageChange: number): string {
-  // Determine the description
   if (percentageChange === 0) {
     return 'Equal to last month';
   } else if (percentageChange > 0) {
-    return `${percentageChange}% increase from last month`;
+    return 'increase from last month';
   } else {
-    return `${Math.abs(percentageChange)}% decrease from last month`;
+    return 'decrease from last month';
   }
 }
 
