@@ -3,6 +3,51 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     const query = req.nextUrl.searchParams.get('q') || '';
+    const page = Number(req.nextUrl.searchParams.get('page'));
+
+    const USERS_PER_PAGE = 5;
+
+    if (query === 'count') {
+      const totalCustomers = await prisma.customer.count({
+        where: {
+          deleted: false,
+        },
+      });
+
+      return NextResponse.json({ totalCustomers }, { status: 200 });
+    }
+
+    if (page) {
+      // Calculate skip
+      const skip = (page - 1) * USERS_PER_PAGE;
+      // Calculate take
+      const take = USERS_PER_PAGE;
+
+      // Get total count of customers
+      const totalCustomers = await prisma.customer.count({
+        where: {
+          deleted: false,
+        },
+      });
+
+      // Check if the page number is too high
+      if (skip >= totalCustomers) {
+        return NextResponse.json(
+          { error: 'Page number is too high for the total user count' },
+          { status: 400 }
+        );
+      }
+
+      const customers = await prisma.customer.findMany({
+        skip,
+        take,
+        where: {
+          deleted: false,
+        },
+      });
+
+      return NextResponse.json(customers, { status: 200 });
+    }
 
     if (query === 'customerStats') {
       const currentMonthSignUps = await prisma.customer.count({
