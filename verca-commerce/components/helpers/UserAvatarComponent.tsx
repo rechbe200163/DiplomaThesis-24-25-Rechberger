@@ -1,10 +1,9 @@
 import { auth } from '@/auth';
-import { fetchUserAvatarPath } from '@/lib/data.dashboard';
 import { getSignedURL } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { User2Icon } from 'lucide-react';
 
-export default async function UserAvatar({
+export default async function UserAvatarComponent({
   avatarPath,
 }: {
   avatarPath: string;
@@ -12,14 +11,11 @@ export default async function UserAvatar({
   const session = await auth();
   const imageURL = await getSignedURL(avatarPath);
   return (
-    <>
-      <Avatar className='cursor-pointer'>
-        <AvatarImage src={imageURL!} />
-        <AvatarFallback>
-          <User2Icon />
-        </AvatarFallback>
-      </Avatar>
-      <span>{session?.user.email}</span>
-    </>
+    <Avatar>
+      <AvatarImage src={imageURL!} />
+      <AvatarFallback>
+        <User2Icon />
+      </AvatarFallback>
+    </Avatar>
   );
 }

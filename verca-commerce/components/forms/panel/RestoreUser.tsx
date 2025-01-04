@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { restoreUser } from '@/lib/actions/user.actions';
-import { ArchiveRestore, Loader2, Trash2 } from 'lucide-react';
+import { ArchiveRestore, Loader2, RotateCcw, Trash2 } from 'lucide-react';
 import React, { useActionState } from 'react';
 
 const RestoreUser = ({ customerReference }: { customerReference: number }) => {
@@ -18,18 +18,20 @@ const RestoreUser = ({ customerReference }: { customerReference: number }) => {
     <form action={action} className='space-y-4'>
       <Button
         type='submit'
-        size='icon'
         disabled={isPending}
-        variant='ghost'
-        className='hover:text-green-500'
+        variant='outline'
+        size='sm'
+        className={`flex items-center ${
+          isPending ? 'border border-blue-500 bg-transparent' : ''
+        }`}
       >
         {isPending ? (
           <>
-            <Loader2 className='mr-2 h-4 w-4 animate-spin ' />
+            <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Restoring
           </>
         ) : (
           <>
-            <ArchiveRestore className='mr-2 h-4 w-4 ' />
+            <RotateCcw className='h-4 w-4 mr-2' /> Restore
           </>
         )}
       </Button>

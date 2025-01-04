@@ -26,7 +26,7 @@ import { Badge } from '@/components/ui/badge';
 import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
 import { orderState } from '@prisma/client';
-import CopyOrderId from '@/components/helpers/CopyOrderId';
+import CopyToClipboard from '@/components/helpers/CopyOrderId';
 import InvoicePdfLink from '@/components/helpers/InvoicePdfLink';
 
 function OrderCard({ order }: { order: OrderDetails }) {
@@ -44,7 +44,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
                 <p className='text-lg font-bold min-w-6 text-clip'>
                   {order.orderId}
                 </p>
-                <CopyOrderId orderId={order.orderId} />
+                <CopyToClipboard orderId={order.orderId} />
               </div>
             </div>
             <Separator orientation='vertical' className='h-10' />

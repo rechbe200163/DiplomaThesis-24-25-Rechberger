@@ -18,18 +18,21 @@ const DeleteUser = ({ customerReference }: { customerReference: number }) => {
     <form action={action} className='space-y-4'>
       <Button
         type='submit'
-        size='icon'
         disabled={isPending}
-        variant='ghost'
-        className='hover:text-error'
+        variant='outline'
+        size='sm'
+        className={`flex items-center text-red-600 hover:text-red-700 ${
+          isPending ? 'border border-red-600 bg-transparent' : ''
+        }`}
       >
         {isPending ? (
           <>
-            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+            <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Deleting
           </>
         ) : (
           <>
             <Trash2 className='mr-2 h-4 w-4' />
+            Delete
           </>
         )}
       </Button>
