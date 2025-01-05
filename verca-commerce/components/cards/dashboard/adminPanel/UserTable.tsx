@@ -15,10 +15,11 @@ import { Copy, RotateCcw, Trash2 } from 'lucide-react';
 import CopyToClipboard from '@/components/helpers/CopyOrderId';
 import { Button } from '@/components/ui/button';
 import UserAvatarComponent from '@/components/helpers/UserAvatarComponent';
+import { formatPhoneNumber } from '@/lib/utils';
 
 export function UserTable({ users }: { users: Customer[] }) {
   return (
-    <div className='overflow-x-auto rounded-lg border border-gray-200 shadow-sm'>
+    <div className='overflow-x-auto rounded-lg border border-gray-200 shadow-sm w-full'>
       <Table className='w-full'>
         <TableHeader>
           <TableRow className='bg-gray-50'>
@@ -32,7 +33,16 @@ export function UserTable({ users }: { users: Customer[] }) {
               Email
             </TableHead>
             <TableHead className='py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+              Phone
+            </TableHead>
+            <TableHead className='py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
               Customer Reference
+            </TableHead>
+            <TableHead className='py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+              Role
+            </TableHead>
+            <TableHead className='py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+              Business Sector
             </TableHead>
             <TableHead className='py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
               Status
@@ -58,10 +68,19 @@ export function UserTable({ users }: { users: Customer[] }) {
                 {user.email}
               </TableCell>
               <TableCell className='py-4 px-4 text-gray-500'>
+                {formatPhoneNumber(user.phoneNumber)}
+              </TableCell>
+              <TableCell className='py-4 px-4 text-gray-500'>
                 <div className='flex items-center justify-between'>
                   <span>{user.customerReference}</span>
                   <CopyToClipboard value={user.customerReference + ''} />
                 </div>
+              </TableCell>
+              <TableCell className='py-4 px-4 text-gray-500'>
+                {user.role}
+              </TableCell>
+              <TableCell className='py-4 px-4 text-gray-500'>
+                {user.businessSector || 'N/A'}
               </TableCell>
               <TableCell className='py-4 px-4'>
                 <Badge
