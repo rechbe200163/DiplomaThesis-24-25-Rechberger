@@ -1,7 +1,10 @@
 import { auth } from '@/auth';
 import { UserTable } from '@/components/cards/dashboard/adminPanel/UserTable';
 import PaginationComponent from '@/components/pagination/PaginationComponent';
+import { Button } from '@/components/ui/button';
 import { getTotalUsers, getUsersPagination } from '@/lib/data.dashboard';
+import { PlusCircle } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 
 async function AdminPanelUsersPage(props: {
@@ -21,16 +24,25 @@ async function AdminPanelUsersPage(props: {
   const totalPages = Math.ceil(totalCustomers / USERS_PER_PAGE);
 
   return (
-    <div className='space-y-4'>
-      <h2 className='text-3xl font-bold tracking-tight'>Your Orders</h2>
-      <div className='flex flex-col gap-4'>
+    <div className='container mx-auto px-4 py-8'>
+      <div className='flex justify-between items-center mb-6'>
+        <h2 className='text-3xl font-bold tracking-tight'>User Management</h2>
+        <Button asChild>
+          <Link href='/dashboard/customers/add'>
+            <PlusCircle className='mr-2 h-4 w-4' /> Add Customer
+          </Link>
+        </Button>
+      </div>
+      <div className='bg-white rounded-lg shadow-md p-6'>
         {users.length > 0 ? (
           <UserTable users={users} />
         ) : (
-          <div className='col-span-full text-center'>No orders yet</div>
+          <div className='text-center py-8 text-gray-500'>No users found</div>
         )}
       </div>
-      <PaginationComponent totalPages={totalPages} />
+      <div className='mt-6'>
+        <PaginationComponent totalPages={totalPages} />
+      </div>
     </div>
   );
 }
