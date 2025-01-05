@@ -33,6 +33,15 @@ export function formatDate(date: Date) {
   return formattedDate;
 }
 
+export function formatPhoneNumber(phoneNumber: string) {
+  const formattedPhoneNumber = phoneNumber.replace(
+    /(\d{3})(\d{3})(\d{3})(\d{3})/,
+    '$1 $2 $3 $4'
+  );
+
+  return formattedPhoneNumber;
+}
+
 export function formatDateTime(date: Date) {
   const formattedDate = new Date(date).toLocaleDateString('de-AT', {
     day: 'numeric',

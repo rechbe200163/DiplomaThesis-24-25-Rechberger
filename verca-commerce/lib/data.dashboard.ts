@@ -7,6 +7,17 @@ interface Avatar {
   avatarPath: string;
 }
 
+export async function getAddresses(): Promise<Address[]> {
+  try {
+    const response = await fetch(`${baseApiUrl}/address`, {
+      next: { tags: ['addresses'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch addresses');
+  }
+}
+
 export async function getOrdersByCustomerPagination(
   customerReferance: number,
   page: number = 0
