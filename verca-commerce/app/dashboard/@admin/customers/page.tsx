@@ -6,7 +6,14 @@ import { getTotalUsers, getUsersPagination } from '@/lib/data.dashboard';
 import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 async function AdminPanelUsersPage(props: {
   searchParams?: Promise<{
     page?: string;
@@ -25,6 +32,17 @@ async function AdminPanelUsersPage(props: {
 
   return (
     <div className='container mx-auto px-4 py-8'>
+      <Breadcrumb className='mb-6'>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href='/dashboard'>Dashboard</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Customers</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <div className='flex justify-between items-center mb-6'>
         <h2 className='text-3xl font-bold tracking-tight'>User Management</h2>
         <Button asChild>
