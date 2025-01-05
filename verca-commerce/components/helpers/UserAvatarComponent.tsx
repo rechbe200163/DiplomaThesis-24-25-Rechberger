@@ -12,7 +12,7 @@ export default async function UserAvatarComponent({
   const imageURL = await getSignedURL(avatarPath);
   return (
     <Avatar>
-      <AvatarImage src={imageURL!} />
+      <AvatarImage src={imageURL!} className='w-10 h-10 rounded-full' />
       <AvatarFallback>
         <User2Icon />
       </AvatarFallback>

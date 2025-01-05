@@ -44,7 +44,10 @@ export function UserTable({ users }: { users: Customer[] }) {
         </TableHeader>
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.customerReference} className='hover:bg-gray-50'>
+            <TableRow
+              key={user.customerReference}
+              className='hover:bg-gray-100'
+            >
               <TableCell className='py-4 px-4'>
                 <UserAvatarComponent avatarPath={user.avatarPath!} />
               </TableCell>
