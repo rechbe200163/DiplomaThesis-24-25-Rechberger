@@ -6,7 +6,7 @@ interface Avatar {
   avatarPath: string;
 }
 
-const baseApiUrl = loadEnvVariable('NEXT_PUBLIC_API_URL');
+const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getUsersPagination(
   page: number = 0
@@ -59,5 +59,21 @@ export async function getCustomerStats(): Promise<{
     return response.json();
   } catch (error) {
     throw new Error('Failed to fetch customer stats');
+  }
+}
+
+export async function fetchUser(customerReference: number): Promise<Customer> {
+  try {
+    const res = await fetch(
+      `https://localhost:3000/api/customers/${customerReference}`,
+      {
+        next: { tags: ['customer'] },
+      }
+    );
+
+    const user = await res.json();
+    return user;
+  } catch (error) {
+    throw new Error('Failed to fetch user');
   }
 }

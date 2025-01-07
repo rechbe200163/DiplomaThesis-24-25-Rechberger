@@ -1,6 +1,6 @@
 'server only';
 
-const baseApiUrl = loadEnvVariable('NEXT_PUBLIC_API_URL');
+const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getSalesStats(): Promise<{
   currentMonthSales: number;

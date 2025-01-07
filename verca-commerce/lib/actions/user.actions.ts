@@ -8,13 +8,14 @@ import {
   formatDateTime,
   generateCustomerRefercenceNumber,
   hashUserPassword,
+  newCustomerFormSchema,
   passwordFormSchema,
   sendNotificationEmail,
 } from '../utils';
 import { processImage } from '../services/user.services';
 import { auth } from '@/auth';
 import { revalidateTag } from 'next/cache';
-import { BusinessSector } from '@prisma/client';
+import { BusinessSector, Role } from '@prisma/client';
 
 export async function signUp(
   email: string,
@@ -369,6 +370,126 @@ export async function restoreUser(
       success: false,
       errors: {
         title: ['An unexpected error occurred. Please try again later.'],
+      },
+    };
+  }
+}
+
+export async function addCustomer(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const session = await auth();
+    if (!session) {
+      return {
+        success: false,
+        errors: {
+          title: ['Not authenticated'],
+        },
+      };
+    }
+
+    console.log('formData', formData);
+
+    const validData = newCustomerFormSchema.safeParse({
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      phoneNumber: formData.get('phoneNumber') as string,
+      businessSector: formData.get('businessSector') as BusinessSector,
+      companyNumber: formData.get('companyNumber') as string,
+      address: formData.get('addressId') as string,
+      role: formData.get('role') as Role,
+    });
+
+    if (!validData.success) {
+      return {
+        success: false,
+        errors: {
+          title: ['Invalid form data'],
+        },
+      };
+    }
+
+    const customerReference = generateCustomerRefercenceNumber();
+
+    // check for customer with same customer
+
+    const checkForExistingEmail = await prisma.customer.findUnique({
+      where: {
+        email: validData.data.email,
+      },
+    });
+
+    if (checkForExistingEmail) {
+      return {
+        success: false,
+        errors: {
+          title: ['Email already exists'],
+        },
+      };
+    }
+
+    const hashPwd = await hashUserPassword('password');
+
+    console.log('Prisma create input:', {
+      email: validData.data.email,
+      password: hashPwd,
+      firstName: validData.data.firstName,
+      lastName: validData.data.lastName,
+      companyNumber: validData.data.companyNumber,
+      phoneNumber: validData.data.phoneNumber,
+      customerReference,
+      businessSector: validData.data.businessSector,
+      address: {
+        connect: formData.get('addressId') as string,
+      },
+      cart: { create: {} },
+    });
+
+    const customer = await prisma.customer.create({
+      data: {
+        email: validData.data.email,
+        password: hashPwd,
+        firstName: validData.data.firstName,
+        lastName: validData.data.lastName,
+        companyNumber: validData.data.companyNumber,
+        phoneNumber: validData.data.phoneNumber,
+        customerReference: customerReference,
+        businessSector: validData.data.businessSector,
+        address: {
+          connect: {
+            addressId: formData.get('addressId') as string,
+          },
+        },
+        cart: {
+          create: {},
+        },
+      },
+    });
+
+    if (!customer) {
+      return {
+        success: false,
+        errors: {
+          title: ['Failed to add customer'],
+        },
+      };
+    }
+
+    console.log('customercustomer', customer);
+
+    return {
+      success: true,
+      message: `Customer ${customer.firstName} ${customer.lastName} added successfully`,
+    };
+  } catch (error) {
+    console.log('error from addCustomer', error);
+    return {
+      success: false,
+      errors: {
+        title: ['Something went wrong', error + ''],
       },
     };
   }

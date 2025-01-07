@@ -269,3 +269,39 @@ export const addressFormSchema = z.object({
     message: 'Country is required.',
   }),
 });
+
+export const newCustomerFormSchema = z.object({
+  firstName: z.string().min(1, {
+    message: 'First name is required.',
+  }),
+  lastName: z.string().min(1, {
+    message: 'Last name is required.',
+  }),
+  email: z.string().email({
+    message: 'Please enter a valid email address.',
+  }),
+  phoneNumber: z.string().min(1, {
+    message: 'Phone number is required.',
+  }),
+  businessSector: z
+    .enum([
+      BusinessSector.AGRICULTURE,
+      BusinessSector.CONSTRUCTION,
+      BusinessSector.EDUCATION,
+      BusinessSector.FINANCE,
+      BusinessSector.HEALTH,
+      BusinessSector.HOSPITALITY,
+      BusinessSector.MANUFACTURING,
+      BusinessSector.RETAIL,
+      BusinessSector.TECHNOLOGY,
+      BusinessSector.TRANSPORTATION,
+    ])
+    .optional()
+    .nullable()
+    .default(null),
+  role: z.enum([Role.ADMIN, Role.USER, Role.SUPPLIER, Role.EMPLOYEE]),
+  companyNumber: z.string().optional().nullable().default(null),
+  address: z.string().min(1, {
+    message: 'Address is required.',
+  }),
+});
