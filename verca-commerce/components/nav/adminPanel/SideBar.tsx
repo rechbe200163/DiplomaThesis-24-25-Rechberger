@@ -19,7 +19,7 @@ import NavLinksProfile from '../dashboard/NavLinksProfile';
 import CompanyIconComponent from '../dashboard/CompanyIconComponent';
 import NavLinksAdminPanel from './NavLinksAdminPanel';
 
-export function AdminPabelSidebar() {
+export function AdminPanelSidebar() {
   return (
     <Sidebar collapsible='offcanvas' variant='floating'>
       <SidebarHeader>
@@ -37,23 +37,7 @@ export function AdminPabelSidebar() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <NavLinksAdminPanel linkType='administration' />
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-        <Collapsible className='group/collapsible'>
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                <UserCog className='mr-1' />
-                Account
-                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <NavLinksAdminPanel linkType='account' />
+                <NavLinksAdminPanel />
               </SidebarGroupContent>
             </CollapsibleContent>
           </SidebarGroup>

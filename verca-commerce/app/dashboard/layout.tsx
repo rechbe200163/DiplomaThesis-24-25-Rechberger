@@ -4,7 +4,7 @@ import { DashboardSidebar } from '@/components/nav/dashboard/SideNav';
 import { DashboardHeader } from '@/components/header/DashboardHeader';
 import { auth } from '@/auth';
 import Link from 'next/link';
-import { AdminPabelSidebar } from '@/components/nav/adminPanel/SideBar';
+import { AdminPanelSidebar } from '@/components/nav/adminPanel/SideBar';
 import cehckUserRole from '@/lib/utils';
 import checkUserAuthorization from '@/lib/utils';
 
@@ -34,7 +34,7 @@ export default async function DashboardLayout({
         <div className='flex flex-1 overflow-hidden'>
           {
             // Conditional rendering of the sidebar based on role
-            role === 'USER' ? <DashboardSidebar /> : <AdminPabelSidebar />
+            role === 'USER' ? <DashboardSidebar /> : <AdminPanelSidebar />
           }
           <div className='flex-1 flex flex-col overflow-hidden'>
             <DashboardHeader />

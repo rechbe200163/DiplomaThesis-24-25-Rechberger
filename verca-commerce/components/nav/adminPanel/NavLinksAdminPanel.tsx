@@ -22,13 +22,8 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { PiAddressBook } from 'react-icons/pi';
 
-const accountLinks = [
-  { name: 'Account', href: '/dashboard', icon: HomeIcon },
-  { name: 'Addresses', href: '/dashboard/address', icon: MapPinIcon },
-];
-
-const administration = [
-  { name: 'Dashboard', href: '/dashboard/', icon: Box },
+const links = [
+  { name: 'Dashboard', href: '/dashboard', icon: Box },
   { name: 'Customers', href: '/dashboard/customers', icon: Users },
   {
     name: 'Addresses',
@@ -41,22 +36,12 @@ const administration = [
   { name: 'Routes', href: '/dashboard/routes', icon: Truck },
   { name: 'Settings', href: '/dashboard/site-config', icon: Settings },
 ];
-// Objekt zur Zuordnung der linkTypes zu den jeweiligen Link-Arrays
-const linksMap = {
-  account: accountLinks,
-  administration: administration,
-};
 
-type LinkType = 'administration' | 'account';
-
-export default function NavLinksAdminPanel({
-  linkType,
-}: {
-  linkType: LinkType;
-}) {
+export default function NavLinksAdminPanel() {
   // Das passende Array basierend auf linkType auswählen
   const pathname = usePathname();
-  const links = linksMap[linkType] || [];
+
+  console.log('pathname: ', pathname);
 
   return (
     <SidebarMenu>
