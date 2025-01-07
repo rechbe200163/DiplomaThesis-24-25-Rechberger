@@ -1,21 +1,12 @@
 import { auth } from '@/auth';
 import SignOutComponent from '@/components/auth/signOut';
 import UserEmailComponent from '@/components/helpers/UserEmailComponent';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
-import { fetchUserAvatarPath } from '@/lib/data.dashboard';
-import { getSignedURL } from '@/lib/utils';
-import { User2Icon } from 'lucide-react';
+import { fetchUserAvatarPath } from '@/lib/data/data.customer';
 import React from 'react';
 
 async function DashboardFooter() {

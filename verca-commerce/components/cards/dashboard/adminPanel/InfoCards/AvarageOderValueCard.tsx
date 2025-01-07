@@ -1,8 +1,9 @@
 import React from 'react';
 import { DashboardCard } from '../DashboardCard';
 import { formatPrice, formatStatsChange } from '@/lib/utils';
-import { getAvarageOrderValueStats } from '@/lib/data.dashboard';
+
 import { ChartBarDecreasing } from 'lucide-react';
+import { getAvarageOrderValueStats } from '@/lib/data/data.invoices';
 
 export default async function AvarageOderValueCard() {
   const { currentMonthAIV, lastMonthAIV, percentageChange } =

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useActionState, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,161 +11,117 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import Link from 'next/link';
 import { Card } from '@/components/ui/card';
-import { Address, Role } from '@prisma/client';
-import AddressSelectComponent from '@/components/helpers/AddressSelectComponent';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+import { FormState } from '@/lib/form.types';
+import { Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
-interface AddUserFormProps {
-  addresses: Address[];
+interface SelectConfig {
+  name: string;
+  label: string;
+  options: { value: string; label: string }[];
 }
 
-export default function AddUserForm({ addresses }: AddUserFormProps) {
+interface Field {
+  name: string;
+  label: string;
+  placeholder?: string;
+  type: string; // e.g., 'text', 'email', 'password'
+  required?: boolean;
+  disabled?: boolean;
+}
+
+interface AddUserFormProps {
+  fields: Field[];
+  selectConfigs?: SelectConfig[]; // Array of select configurations
+  serverAction: (
+    prevState: FormState,
+    formData: FormData
+  ) => Promise<FormState>; // Function to handle form submission}
+}
+
+export default function AddUserForm({
+  fields,
+  selectConfigs = [], // Default to an empty array if not provided
+  serverAction,
+}: AddUserFormProps) {
+  const [formState, action, isPending] = useActionState(serverAction, {
+    success: false,
+    errors: {
+      title: [''],
+    },
+  });
+
+  const { toast } = useToast();
+
+  // Handle form submission feedback
+  React.useEffect(() => {
+    if (formState.success) {
+      toast({
+        title: 'Success',
+        description: 'The user was successfully added!',
+        variant: 'success',
+      });
+    } else if (formState.errors?.title[0]) {
+      toast({
+        title: 'Error',
+        description: formState.errors.title[0],
+        variant: 'destructive',
+      });
+    }
+  }, [formState, toast]);
+
   return (
-    <div className='container mx-auto px-4 py-8'>
-      <Breadcrumb className='mb-6'>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/dashboard'>Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/dashboard/customers'>
-              Customers
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Add New</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <h2 className='text-3xl font-bold tracking-tight mb-6'>
-        Add New Customer
-      </h2>
-
-      <Card className='bg-white shadow-md p-6'>
-        <form className='space-y-6'>
-          <div className='grid md:grid-cols-2 gap-6'>
-            {/* Customer Details Section */}
-            <div className='space-y-4'>
-              <h3 className='text-xl font-semibold mb-4'>Customer Details</h3>
-              <div className='grid grid-cols-1 xl:grid-cols-2 gap-6'>
-                <div>
-                  <Label htmlFor='firstName'>First Name</Label>
-                  <Input
-                    id='firstName'
-                    name='firstName'
-                    placeholder='Enter first name'
-                  />
-                </div>
-                <div>
-                  <Label htmlFor='lastName'>Last Name</Label>
-                  <Input
-                    id='lastName'
-                    name='lastName'
-                    placeholder='Enter last name'
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor='email'>Email</Label>
-                <Input
-                  id='email'
-                  name='email'
-                  type='email'
-                  placeholder='Enter email address'
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor='phoneNumber'>Phone Number</Label>
-                <Input
-                  id='phoneNumber'
-                  name='phoneNumber'
-                  placeholder='Enter phone number'
-                  required
-                />
-              </div>
-              <div>
-                <div className='flex justify-between items-center'>
-                  <Label htmlFor='password'>Password</Label>
-                  <span className='text-sm text-gray-500'>
-                    Will be auto-generated and sent to the customer via email
-                  </span>
-                </div>
-                <Input
-                  id='password'
-                  name='password'
-                  type='password'
-                  placeholder='Will be auto-generated'
-                  disabled={true}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor='address'>Address</Label>
-                <AddressSelectComponent addresses={addresses} />
-              </div>
+    <Card className='bg-white shadow-md p-6'>
+      <form className='space-y-6' action={action}>
+        <div className='grid md:grid-cols-2 gap-6'>
+          {/* Render input fields dynamically */}
+          {fields.map((field) => (
+            <div key={field.name} className='space-y-2'>
+              <Label htmlFor={field.name}>{field.label}</Label>
+              <Input
+                id={field.name}
+                name={field.name}
+                type={field.type}
+                placeholder={field.placeholder}
+                required={field.required}
+                disabled={field.disabled}
+              />
             </div>
+          ))}
 
-            {/* Business Customer Information Section */}
-            <div className='space-y-4'>
-              <h3 className='text-xl font-semibold mb-4'>
-                Business Customer Information
-              </h3>
-              <div>
-                <Label htmlFor='companyNumber'>Company Number</Label>
-                <Input
-                  id='companyNumber'
-                  name='companyNumber'
-                  placeholder='Enter company number'
-                />
-              </div>
-              <div>
-                <Label htmlFor='role'>Role</Label>
-                <Select name='role'>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select a role' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.keys(Role).map((role) => (
-                      <SelectItem key={role} value={role}>
-                        {role}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor='businessSector'>Business Sector</Label>
-                <Input
-                  id='businessSector'
-                  name='businessSector'
-                  placeholder='Enter business sector'
-                />
-              </div>
+          {/* Render multiple Select components */}
+          {selectConfigs.map((config) => (
+            <div key={config.name} className='space-y-2'>
+              <Label htmlFor={config.name}>{config.label}</Label>
+              <Select name={config.name}>
+                <SelectTrigger>
+                  <SelectValue placeholder={`Select ${config.label}`} />
+                </SelectTrigger>
+                <SelectContent>
+                  {config.options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className='flex justify-end space-x-2 pt-4'>
-            <Button variant='outline' asChild>
-              <Link href='/dashboard/admin/users'>Cancel</Link>
-            </Button>
-            <Button type='submit'>Add Customer</Button>
-          </div>
-        </form>
-      </Card>
-    </div>
+        <div className='flex justify-end space-x-2 pt-4'>
+          <Button variant='outline' type='button'>
+            Cancel
+          </Button>
+          <Button type='submit'>
+            {isPending ? <Loader2 className='w-6 h-6' /> : 'Save'}
+          </Button>
+        </div>
+      </form>
+      {formState.errors?.title[0] && (
+        <p className='text-red-500 text-sm mt-4'>{formState.errors.title[0]}</p>
+      )}
+    </Card>
   );
 }

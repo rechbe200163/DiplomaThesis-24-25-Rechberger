@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { Suspense } from 'react';
-import { getSiteConfig } from '@/lib/data.shop';
+
 import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
+import { getSiteConfig } from '@/lib/data/data.siteConfig';
 
 async function CompanyIconComponent() {
   const siteConfig = await getSiteConfig();

@@ -1,8 +1,9 @@
 import React from 'react';
 import { DashboardCard } from '../DashboardCard';
-import { getCustomerStats } from '@/lib/data.dashboard';
+
 import { formatStatsChange } from '@/lib/utils';
 import { Users } from 'lucide-react';
+import { getCustomerStats } from '@/lib/data/data.customer';
 
 export default async function CustomerInfoCard() {
   const { currentMonthSignUps, percentageChange } = await getCustomerStats();

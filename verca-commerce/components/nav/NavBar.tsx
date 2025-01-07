@@ -10,9 +10,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import CartIconComponent from './CartIconComponent';
 import { Search } from 'lucide-react';
 import SearchComponent from '../search/SearchComponent';
-import { fetchUserAvatarPath as fetchUserAvatarPath } from '@/lib/data.dashboard';
+
 import { getSignedURL } from '@/lib/utils';
 import { string } from 'zod';
+import { fetchUserAvatarPath } from '@/lib/data/data.customer';
 
 async function NavBar() {
   let imageURL: string | null = null;

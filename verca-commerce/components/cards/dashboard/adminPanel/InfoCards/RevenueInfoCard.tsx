@@ -1,8 +1,9 @@
 import React from 'react';
 import { DashboardCard } from '../DashboardCard';
-import { getRevenueStats } from '@/lib/data.dashboard';
+
 import { formatPrice, formatStatsChange } from '@/lib/utils';
 import { EuroIcon } from 'lucide-react';
+import { getRevenueStats } from '@/lib/data/data.invoices';
 
 export default async function RevenueInfoCard() {
   const { currentMonthRevenue, lastMonthRevenue, percentageChange } =
