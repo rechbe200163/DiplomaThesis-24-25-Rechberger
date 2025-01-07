@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { UserTable } from '@/components/cards/dashboard/adminPanel/UserTable';
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { Button } from '@/components/ui/button';
-import { getTotalUsers, getUsersPagination } from '@/lib/data.dashboard';
+
 import { PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
@@ -14,6 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { getTotalUsers, getUsersPagination } from '@/lib/data/data.customer';
 async function AdminPanelUsersPage(props: {
   searchParams?: Promise<{
     page?: string;
