@@ -1,7 +1,5 @@
 import React from 'react';
 import { auth } from '@/auth';
-import { getCustomerAddress } from '@/lib/data.dashboard';
-
 import { AddressForm } from '@/components/forms/dashboard/AddressForm';
 import {
   Card,
@@ -11,6 +9,7 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { MapPin } from 'lucide-react';
+import { getCustomerAddress } from '@/lib/data/data.address';
 
 async function UserAddressPage() {
   const session = await auth();

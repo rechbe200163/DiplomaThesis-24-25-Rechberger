@@ -1,6 +1,7 @@
 import CartSummaryCard from '@/components/cards/CartSummaryCard';
 import ProductsCartCard from '@/components/cards/ProductsCartCard';
-import { getCartByCustomerReference } from '@/lib/data.shop';
+import { getCartByCustomerReference } from '@/lib/data/data.cart';
+
 import React from 'react';
 
 async function CartPage(props: {

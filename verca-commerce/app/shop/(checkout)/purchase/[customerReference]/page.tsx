@@ -1,9 +1,9 @@
-import { getCartByCustomerReference } from '@/lib/data.shop';
 import React from 'react';
 import { Product } from '@prisma/client';
 import { stripe } from '@/lib/stripeClient';
 import CheckOutForm from '@/components/payment/CheckOutForm';
 import { ExtendedProduct } from '@/lib/interfaces';
+import { getCartByCustomerReference } from '@/lib/data/data.cart';
 
 export default async function PurchasePage(props: {
   params: Promise<{ customerReference: number }>;

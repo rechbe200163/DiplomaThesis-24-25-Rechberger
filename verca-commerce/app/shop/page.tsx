@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import ProductCard from '@/components/cards/ProductCard';
-import { getAllProducts } from '@/lib/data.shop';
+import { getAllProducts } from '@/lib/data/data.products';
+
 import React from 'react';
 
 const dynamic = 'force-dynamic';

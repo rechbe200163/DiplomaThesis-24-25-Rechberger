@@ -15,7 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
 import AddToCartForm from '@/components/forms/cart/addToCard';
 import ImageComponent from '@/components/images/ImageComponent';
-import { getProductById } from '@/lib/data.shop';
+import { getProductById } from '@/lib/data/data.products';
 
 interface ProductDetailsPageProps {
   params: Promise<{

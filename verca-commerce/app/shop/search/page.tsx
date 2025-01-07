@@ -1,5 +1,5 @@
 import ProductCard from '@/components/cards/ProductCard';
-import { getFilterdProducts } from '@/lib/data.shop';
+import { getFilterdProducts } from '@/lib/data/data.products';
 
 export default async function SearchPage(props: {
   searchParams?: Promise<{

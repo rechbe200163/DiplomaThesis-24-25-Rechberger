@@ -1,13 +1,13 @@
 import React from 'react';
 import { auth } from '@/auth';
-import {
-  getOrdersByCustomerPagination,
-  getTotalOrders,
-} from '@/lib/data.dashboard';
 
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { console } from 'inspector';
 import OrderCart from '@/components/cards/dashboard/OrderCart';
+import {
+  getOrdersByCustomerPagination,
+  getTotalOrders,
+} from '@/lib/data/data.orders';
 
 async function UserOrdersPage(props: {
   searchParams?: Promise<{

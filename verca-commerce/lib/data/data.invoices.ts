@@ -1,0 +1,48 @@
+'server only';
+
+const baseApiUrl = loadEnvVariable('NEXT_PUBLIC_API_URL');
+
+export async function getSalesStats(): Promise<{
+  currentMonthSales: number;
+  lastMonthSales: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/invoices?q=salesStats`, {
+      next: { tags: ['salesStats'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch sales stats');
+  }
+}
+
+export async function getRevenueStats(): Promise<{
+  currentMonthRevenue: number;
+  lastMonthRevenue: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/invoices?q=revenueStats`, {
+      next: { tags: ['revenueStats'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch revenue stats');
+  }
+}
+
+export async function getAvarageOrderValueStats(): Promise<{
+  currentMonthAIV: number;
+  lastMonthAIV: number;
+  percentageChange: number;
+}> {
+  try {
+    const response = await fetch(`${baseApiUrl}/invoices?q=AIVStats`, {
+      next: { tags: ['averageOrderValue'] },
+    });
+    return response.json();
+  } catch (error) {
+    throw new Error('Failed to fetch average order value stats');
+  }
+}
