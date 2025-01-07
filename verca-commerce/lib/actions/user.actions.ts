@@ -393,15 +393,18 @@ export async function addCustomer(
     console.log('formData', formData);
 
     const validData = newCustomerFormSchema.safeParse({
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      email: formData.get('email') as string,
-      phoneNumber: formData.get('phoneNumber') as string,
-      businessSector: formData.get('businessSector') as BusinessSector,
-      companyNumber: formData.get('companyNumber') as string,
-      address: formData.get('addressId') as string,
-      role: formData.get('role') as Role,
+      firstName: formData.get('firstName')?.toString() || null,
+      lastName: formData.get('lastName')?.toString() || null,
+      email: formData.get('email')?.toString() || null,
+      phoneNumber: formData.get('phoneNumber')?.toString() || null,
+      businessSector:
+        (formData.get('businessSector') as BusinessSector) || null,
+      companyNumber: formData.get('companyNumber')?.toString() || null,
+      address: formData.get('addressId')?.toString() || null,
+      role: (formData.get('role') as Role) || null,
     });
+
+    console.log('validData', validData.error?.flatten());
 
     if (!validData.success) {
       return {

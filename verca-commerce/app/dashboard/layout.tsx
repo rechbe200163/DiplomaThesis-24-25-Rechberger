@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { AdminPanelSidebar } from '@/components/nav/adminPanel/SideBar';
 import cehckUserRole from '@/lib/utils';
 import checkUserAuthorization from '@/lib/utils';
+import { Role } from '@prisma/client';
 
 export default async function DashboardLayout({
   user,
@@ -34,7 +35,11 @@ export default async function DashboardLayout({
         <div className='flex flex-1 overflow-hidden'>
           {
             // Conditional rendering of the sidebar based on role
-            role === 'USER' ? <DashboardSidebar /> : <AdminPanelSidebar />
+            role === Role.CUSTOMER ? (
+              <DashboardSidebar />
+            ) : (
+              <AdminPanelSidebar />
+            )
           }
           <div className='flex-1 flex flex-col overflow-hidden'>
             <DashboardHeader />

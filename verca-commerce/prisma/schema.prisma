@@ -14,7 +14,7 @@ datasource db {
 }
 
 enum Role {
-  USER
+  CUSTOMER
   ADMIN
   SUPPLIER
   EMPLOYEE
@@ -58,7 +58,7 @@ model Customer {
   avatarPath        String?   @db.VarChar(255)
   addressId         String    
 
-  role           Role            @default(USER)
+  role           Role            @default(CUSTOMER)
   businessSector BusinessSector?
   address        Address         @relation(fields: [addressId], references: [addressId]) // Corrected reference  
   cart           Cart?

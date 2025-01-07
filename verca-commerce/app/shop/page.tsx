@@ -4,8 +4,6 @@ import { getAllProducts } from '@/lib/data/data.products';
 
 import React from 'react';
 
-const dynamic = 'force-dynamic';
-
 async function ShopPage() {
   const products = await getAllProducts();
   return (

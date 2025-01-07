@@ -29,6 +29,17 @@ async function main() {
     },
   });
 
+  const employee = await prisma.employees.upsert({
+    where: { email: 'admin@admin' },
+    update: {},
+    create: {
+      firstName: 'Admin',
+      lastname: 'Admin',
+      email: 'admin@admin',
+      password: password,
+    },
+  });
+
   // Product seeding
   const product = await prisma.product.upsert({
     where: { name: 'Test Product' },

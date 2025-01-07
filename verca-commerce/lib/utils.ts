@@ -296,10 +296,8 @@ export const newCustomerFormSchema = z.object({
       BusinessSector.TECHNOLOGY,
       BusinessSector.TRANSPORTATION,
     ])
-    .optional()
-    .nullable()
-    .default(null),
-  role: z.enum([Role.ADMIN, Role.USER, Role.SUPPLIER, Role.EMPLOYEE]),
+    .optional(),
+  role: z.enum([Role.ADMIN, Role.CUSTOMER, Role.SUPPLIER, Role.EMPLOYEE]),
   companyNumber: z.string().optional().nullable().default(null),
   address: z.string().min(1, {
     message: 'Address is required.',
