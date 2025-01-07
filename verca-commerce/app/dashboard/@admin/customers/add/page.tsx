@@ -1,4 +1,4 @@
-import AddUserForm from '@/components/forms/dashboard/AddUserForm';
+import GenericCreateForm from '@/components/forms/dashboard/AddUserForm';
 import { getAddresses } from '@/lib/data/data.address';
 import {
   Breadcrumb,
@@ -113,7 +113,7 @@ export default async function AddUserPage() {
       </h2>
 
       {/* Pass dynamic props to AddUserForm */}
-      <AddUserForm
+      <GenericCreateForm
         fields={fields}
         selectConfigs={selectConfigs}
         serverAction={addCustomer}

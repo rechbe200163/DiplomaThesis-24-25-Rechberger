@@ -40,7 +40,7 @@ interface AddUserFormProps {
   ) => Promise<FormState>; // Function to handle form submission}
 }
 
-export default function AddUserForm({
+export default function GenericCreateForm({
   fields,
   selectConfigs = [], // Default to an empty array if not provided
   serverAction,
