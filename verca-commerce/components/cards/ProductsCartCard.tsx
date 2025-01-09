@@ -21,7 +21,7 @@ import { ProductCartQuantity } from '../helpers/ProductCartQuantity';
 
 function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
   return (
-    <ScrollArea className='h-[calc(100vh-12rem)]'>
+    <ScrollArea className='h-[calc(100vh-12rem)] overflow-y-auto flex-1'>
       <div className='space-y-4 pr-4'>
         {cart.products.map((item) => (
           <Card

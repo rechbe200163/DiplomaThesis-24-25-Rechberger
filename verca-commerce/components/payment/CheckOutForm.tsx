@@ -49,33 +49,6 @@ export const CheckOutForm = ({
 
   return (
     <div className='max-w-5xl w-full mx-auto space-y-8 p-10'>
-      {products.map((product) => (
-        <div
-          key={product.productId}
-          className='flex items-center justify-between'
-        >
-          <div className='flex items-center space-x-4'>
-            <div className='aspect-video flex-shrink-0 w-1/3 relative'>
-              <Suspense fallback={<ImageSkeleton />}>
-                <ImageComponent
-                  imagePath={product.imagePath!}
-                  alt={product.name}
-                  width={400}
-                  height={400}
-                  classname='w-full rounded-t-xl'
-                />
-              </Suspense>
-            </div>
-            <div>
-              <h2 className='text-lg font-semibold'>{product.name}</h2>
-              <p>
-                {formatPrice(product.price)} x {product.quantity} ={' '}
-                {formatPrice(product.price * product.quantity)}
-              </p>
-            </div>
-          </div>
-        </div>
-      ))}
       <Elements
         options={{
           clientSecret,
