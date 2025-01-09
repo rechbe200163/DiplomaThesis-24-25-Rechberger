@@ -1,8 +1,8 @@
-import { getCartByCustomerReference } from '@/lib/data.shop';
 import { formatPrice } from '@/lib/utils';
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
+import { getCartByCustomerReference } from '@/lib/data/data.cart';
 
 async function CartSummaryCard({
   customerReference,

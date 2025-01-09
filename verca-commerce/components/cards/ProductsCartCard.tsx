@@ -1,4 +1,3 @@
-import { getCartByCustomerReference } from '@/lib/data.shop';
 import Image from 'next/image';
 import React, { Suspense } from 'react';
 import RemoveFromCart from '../forms/cart/removeFromCart';
@@ -13,10 +12,12 @@ import ImageComponent from '../images/ImageComponent';
 import ImageSkeleton from '../images/ImageSkeleton';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
+
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
-import ProductCartQuantity from '../helpers/ProductCartQuantity';
+
 import { CartWithProducts } from '@/lib/types';
+import { ProductCartQuantity } from '../helpers/ProductCartQuantity';
 
 function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
   return (
