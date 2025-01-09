@@ -45,7 +45,7 @@ async function CartSummaryCard({
           Total: {formatPrice(subtotal + tax + shipping)}
         </div>
         <div className='pt-4'>
-          <Button disabled={subtotal === 0}>
+          <Button disabled={subtotal === 0} asChild>
             <Link href={`/shop/purchase/${customerReference}`}>
               Proceed to Checkout
             </Link>
