@@ -1,10 +1,15 @@
 import React from 'react';
 import DecreaseProductQuantity from '../forms/cart/decreaseProductQuantity';
 import IncreaseProductQuantity from '../forms/cart/increaseProductQuantity';
-import { getProductCartInformationById } from '@/lib/data.shop';
+import { getProductCartInformationById } from '@/lib/data/data.cart';
 
-const ProductCartQuantity = async ({ productId }: { productId: string }) => {
+export const ProductCartQuantity = async ({
+  productId,
+}: {
+  productId: string;
+}) => {
   const product = await getProductCartInformationById(productId);
+  console.log(product);
   return (
     <div className='flex items-center rounded-lg border bg-background'>
       <DecreaseProductQuantity
@@ -22,5 +27,3 @@ const ProductCartQuantity = async ({ productId }: { productId: string }) => {
     </div>
   );
 };
-
-export default ProductCartQuantity;
