@@ -1,6 +1,7 @@
 'server only';
 
-import { CartCount, CartWithProducts } from '../types';
+import { auth } from '@/auth';
+import { CartCount, CartProductDetails, CartWithProducts } from '../types';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 export async function getCartByCustomerReference(
@@ -28,6 +29,29 @@ export async function fetchProductsInCart(
   try {
     const res = await fetch(
       `https://localhost:3000/api/cart/${customerReference}?q=count`,
+      {
+        next: { tags: ['cartCount'] },
+      }
+    );
+
+    const productsCount = await res.json();
+    return productsCount;
+  } catch (error) {
+    throw new Error('Failed to fetch products count in cart');
+  }
+}
+
+export async function getProductCartInformationById(
+  productId: string
+): Promise<CartProductDetails> {
+  const session = await auth();
+  if (!session) {
+    throw new Error('Not authenticated');
+  }
+  const cr = session.user.customerReference;
+  try {
+    const res = await fetch(
+      `https://localhost:3000/api/products/${productId}?q=info&cr=${cr}`,
       {
         next: { tags: ['cartCount'] },
       }
