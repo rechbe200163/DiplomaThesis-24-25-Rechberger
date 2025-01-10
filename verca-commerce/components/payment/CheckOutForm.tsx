@@ -94,7 +94,7 @@ function Form({
         .confirmPayment({
           elements,
           confirmParams: {
-            return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/shop/checkout-success/${cartId}`,
+            return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout-success/${cartId}`,
           },
         })
         .then(({ error }) => {
