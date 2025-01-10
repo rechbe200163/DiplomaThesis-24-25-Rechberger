@@ -1,8 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { cn, getSignedURL } from '@/lib/utils';
-import { AspectRatio } from '../ui/aspect-ratio';
-import { Package2 } from 'lucide-react';
+import { getSignedURL } from '@/lib/utils';
+import { ImageOff } from 'lucide-react';
 
 interface ImagesComponentProps {
   imagePath: string;
@@ -32,7 +31,7 @@ async function ImageComponent({
     // Placeholder image with dynamic Tailwind styling
     return (
       <div className='w-full h-full bg-muted flex items-center justify-center'>
-        <Package2 className='h-8 w-8 text-muted-foreground/50' />
+        <ImageOff className='h-8 w-8 text-muted-foreground/50' />
       </div>
     );
   }
