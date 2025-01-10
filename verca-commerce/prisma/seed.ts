@@ -4,16 +4,16 @@ import { hash } from 'bcryptjs';
 
 async function main() {
   const password = await hash('password', 10);
-  const customerReference = Number(1234567890);
+  const customerReference = 123456789;
   // Customer seeding
   const customer = await prisma.customer.upsert({
-    where: { email: 'test@test.com' },
+    where: { email: 'customer@test.com' },
     update: {},
     create: {
       customerReference,
       firstName: 'Test',
       lastName: 'User',
-      email: 'test@test.com',
+      email: 'customer@test.com',
       password: password,
       phoneNumber: '+43 123 456 789',
       address: {
@@ -26,6 +26,34 @@ async function main() {
           streetNumber: '123',
         },
       },
+      cart: {},
+    },
+  });
+
+  const customerReferenceAdmin = 298765443;
+
+  await prisma.customer.upsert({
+    where: { email: 'admin@test.com' },
+    update: {},
+    create: {
+      customerReference: customerReferenceAdmin,
+      firstName: 'Admin',
+      lastName: 'User',
+      email: 'admin@test.com',
+      password: password,
+      phoneNumber: '+43 123 456 789',
+      address: {
+        create: {
+          city: 'Admin City',
+          postcode: '54321',
+          state: 'Admin State',
+          country: 'Admin Country',
+          streetName: 'Admin Street',
+          streetNumber: '321',
+        },
+      },
+      role: 'ADMIN',
+      cart: {},
     },
   });
 
@@ -109,63 +137,10 @@ async function main() {
     },
   });
 
-  // Order seeding
-  const order = await prisma.order.create({
-    data: {
-      customerReference: customer.customerReference,
-      products: {
-        create: [
-          {
-            productId: product.productId,
-            productAmount: 2,
-          },
-        ],
-      },
-    },
-  });
-
-  const order2 = await prisma.order.create({
-    data: {
-      customerReference: customer.customerReference,
-      products: {
-        create: [
-          {
-            productId: product1.productId,
-            productAmount: 1,
-          },
-        ],
-      },
-    },
-  });
-
-  // Invoice seeding
-  await prisma.invoice.create({
-    data: {
-      orderId: order.orderId,
-      invoiceAmount: 1998, // 2 * 999
-      pdfUrl: 'invoice.pdf',
-    },
-  });
-  await prisma.invoice.create({
-    data: {
-      orderId: order2.orderId,
-      invoiceAmount: product1.price,
-      pdfUrl: 'invoice.pdf',
-    },
-  });
-
   // Route seeding
   const route = await prisma.route.create({
     data: {
       name: 'Test Route',
-    },
-  });
-
-  // Route on Product seeding
-  await prisma.routesOnOrders.create({
-    data: {
-      routeId: route.routeId,
-      orderId: order.orderId,
     },
   });
 
