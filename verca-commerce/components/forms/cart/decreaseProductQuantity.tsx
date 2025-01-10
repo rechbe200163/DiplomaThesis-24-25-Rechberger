@@ -8,9 +8,11 @@ import { Minus, MinusIcon } from 'lucide-react';
 function DecreaseProductQuantity({
   productId,
   quantity,
+  stock,
 }: {
   productId: string;
   quantity: number;
+  stock: number;
 }) {
   // Bind updateQuantity to productId
   const decreaseProductQuantity = updateQuantity.bind(null, productId);
@@ -31,7 +33,7 @@ function DecreaseProductQuantity({
         size='icon'
         className='h-8 w-8 rounded-r-none'
         type='submit'
-        disabled={quantity <= 1 || isPending}
+        disabled={stock === 0 || quantity <= 1 || isPending}
       >
         <Minus className='h-3 w-3' />
         <input type='hidden' name='quantity' value={-1} />

@@ -42,7 +42,7 @@ function IncreaseProductQuantity({
         size='icon'
         className='h-8 w-8 rounded-l-none'
         type='submit'
-        disabled={quantity >= stock || isPending}
+        disabled={stock === 0 || quantity >= stock || isPending}
       >
         <Plus className='h-3 w-3' />
         <input type='hidden' name='quantity' value={1} />
