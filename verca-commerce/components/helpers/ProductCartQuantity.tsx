@@ -8,21 +8,22 @@ export const ProductCartQuantity = async ({
 }: {
   productId: string;
 }) => {
-  const product = await getProductCartInformationById(productId);
-  console.log(product);
+  const resp = await getProductCartInformationById(productId);
+  console.log(resp);
   return (
     <div className='flex items-center rounded-lg border bg-background'>
       <DecreaseProductQuantity
-        productId={product.productId}
-        quantity={product.quantity}
+        productId={resp.productId}
+        quantity={resp.quantity}
+        stock={resp.product.stock}
       />
       <div className='px-3 h-8 flex items-center text-center min-w-[2rem]'>
-        <span className='text-sm'>{product.quantity}</span>
+        <span className='text-sm'>{resp.quantity}</span>
       </div>
       <IncreaseProductQuantity
-        productId={product.productId}
-        quantity={product.quantity}
-        stock={product.product.stock}
+        productId={resp.productId}
+        quantity={resp.quantity}
+        stock={resp.product.stock}
       />
     </div>
   );
