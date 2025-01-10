@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { cn, getSignedURL } from '@/lib/utils';
 import { AspectRatio } from '../ui/aspect-ratio';
+import { Package2 } from 'lucide-react';
 
 interface ImagesComponentProps {
   imagePath: string;
@@ -30,18 +31,8 @@ async function ImageComponent({
   if (!imageURL) {
     // Placeholder image with dynamic Tailwind styling
     return (
-      <div
-        className={cn(
-          'bg-gray-300',
-          'flex',
-          'items-center',
-          'justify-center',
-          'rounded-md',
-          'overflow-hidden',
-          classname
-        )}
-      >
-        <p className='text-gray-500 text-sm'>Image not found</p>
+      <div className='w-full h-full bg-muted flex items-center justify-center'>
+        <Package2 className='h-8 w-8 text-muted-foreground/50' />
       </div>
     );
   }
