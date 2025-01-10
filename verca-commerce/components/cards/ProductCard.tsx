@@ -1,10 +1,9 @@
-import React from 'react';
-import Image from 'next/image';
+import React, { Suspense } from 'react';
 import { ProductWithCategoryNames } from '@/lib/types';
 import Link from 'next/link';
 import ImageComponent from '../images/ImageComponent';
 import { Badge } from '../ui/badge';
-import { Card } from '../ui/card';
+import ImageSkeleton from '../images/ImageSkeleton';
 
 const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   const isAddedLast7Days =
@@ -17,13 +16,15 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
       className='group bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1'
     >
       <div className='relative aspect-square'>
-        <ImageComponent
-          imagePath={product.imagePath!}
-          alt={product.name}
-          fill
-          style={{ objectFit: 'cover' }}
-          classname='transition-transform duration-300 rounded-lg'
-        />
+        <Suspense fallback={<ImageSkeleton />}>
+          <ImageComponent
+            imagePath={product.imagePath!}
+            alt={product.name}
+            fill
+            style={{ objectFit: 'cover' }}
+            classname='transition-transform duration-300 rounded-lg'
+          />
+        </Suspense>
         {isAddedLast7Days && (
           <Badge className='absolute top-2 right-2'>NEW</Badge>
         )}

@@ -1,23 +1,13 @@
-import Image from 'next/image';
 import React, { Suspense } from 'react';
 import RemoveFromCart from '../forms/cart/removeFromCart';
-
-import { formatPrice } from '@/lib/utils';
-import IncreaseProductQuantity from '../forms/cart/increaseProductQuantity';
-import DecreaseProductQuantity from '../forms/cart/decreaseProductQuantity';
-import { GenericActionForm } from '../forms/cart/genericForm';
-import { removeFromCart, updateQuantity } from '@/lib/actions/product.actions';
-import { Minus, MinusIcon, Package2, Plus, Trash2 } from 'lucide-react';
+import { cn, formatPrice } from '@/lib/utils';
 import ImageComponent from '../images/ImageComponent';
-import ImageSkeleton from '../images/ImageSkeleton';
 import { Card, CardContent } from '../ui/card';
-import { Button } from '../ui/button';
-
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
-
 import { CartWithProducts } from '@/lib/types';
 import { ProductCartQuantity } from '../helpers/ProductCartQuantity';
+import ImageSkeleton from '../images/ImageSkeleton';
 
 function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
   return (
@@ -26,18 +16,18 @@ function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
         {cart.products.map((item) => (
           <Card
             key={item.product.productId}
-            className='overflow-hidden transition-all duration-200 hover:shadow-lg'
+            aria-disabled={item.product.stock === 0}
+            className={cn(
+              'overflow-hidden transition-all duration-200 hover:shadow-lg',
+              {
+                'bg-gray-50': item.product.stock === 0,
+              }
+            )}
           >
             <CardContent className='p-0'>
               <div className='flex flex-col sm:flex-row'>
                 <div className='relative w-full sm:w-48 aspect-square sm:aspect-[4/3]'>
-                  <Suspense
-                    fallback={
-                      <div className='w-full h-full animate-pulse bg-muted flex items-center justify-center'>
-                        <Package2 className='h-8 w-8 text-muted-foreground/50' />
-                      </div>
-                    }
-                  >
+                  <Suspense fallback={<ImageSkeleton />}>
                     <ImageComponent
                       imagePath={item.product.imagePath!}
                       alt={item.product.name}
@@ -61,7 +51,11 @@ function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
                       <RemoveFromCart productId={item.product.productId} />
                     </div>
                     <div className='flex items-center gap-2'>
-                      {item.product.stock <= 5 ? (
+                      {item.product.stock === 0 ? (
+                        <Badge variant='destructive' className='text-xs'>
+                          Out of Stock
+                        </Badge>
+                      ) : item.product.stock <= 5 ? (
                         <Badge variant='destructive' className='text-xs'>
                           Only {item.product.stock} left
                         </Badge>
