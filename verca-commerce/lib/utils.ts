@@ -95,15 +95,19 @@ export async function checkUserRole() {
 }
 
 export async function getSignedURL(imagePath: string): Promise<string | null> {
-  const bucket = process.env.SUPABASE_IMAGE_BUCKET;
-  const { data, error } = await supabaseClient.storage
-    .from(bucket!)
-    .createSignedUrl(imagePath, 315000000);
-  if (error) {
+  try {
+    const bucket = process.env.SUPABASE_IMAGE_BUCKET;
+    const { data, error } = await supabaseClient.storage
+      .from(bucket!)
+      .createSignedUrl(imagePath, 315000000);
+    if (error) {
+      return null;
+    }
+    return data.signedUrl;
+  } catch (error) {
     console.error('Error Generating Signed URL', error);
     return null;
   }
-  return data.signedUrl;
 }
 
 export async function getInvoicePdfUrl(pdfPath: string): Promise<string> {
