@@ -11,11 +11,9 @@ import {
 } from '@/components/ui/pagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-function PaginationComponent({ totalPages }: { totalPages: number }) {
+const PaginationComponent = ({ totalPages }: { totalPages: number }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  // function to set page number as seahr params
   function generateUrl(page: number) {
     const params = new URLSearchParams(searchParams);
 
@@ -67,6 +65,6 @@ function PaginationComponent({ totalPages }: { totalPages: number }) {
       </Pagination>
     </div>
   );
-}
+};
 
 export default PaginationComponent;

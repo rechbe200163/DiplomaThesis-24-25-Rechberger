@@ -26,6 +26,7 @@ interface ProductDetailsPageProps {
 async function ProductDetailsPage(props: ProductDetailsPageProps) {
   const params = await props.params;
   const product = await getProductById(params.productId);
+  console.log(product.categories[0].category.name);
 
   return (
     <div className='container mx-auto px-4 py-8'>
@@ -35,9 +36,12 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
           Shop
         </Link>
         <ChevronRight className='h-4 w-4' />
-        {/* <Link href='#' className='hover:text-primary transition-colors'>
+        <Link
+          href={`/shop/search?q=${product.categories[0].category.name}`}
+          className='hover:text-primary transition-colors'
+        >
           {product.categories[0].category.name}
-        </Link> */}
+        </Link>
         <ChevronRight className='h-4 w-4' />
         <span className='text-foreground font-medium'>{product.name}</span>
       </nav>

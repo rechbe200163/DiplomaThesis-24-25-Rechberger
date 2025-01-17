@@ -1,32 +1,55 @@
 'server only';
 
-import { ProductWithCategoryNames } from '../types';
+import { GetAllProductsResponse, ProductWithCategoryNames } from '../types';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export async function getAllProducts(): Promise<ProductWithCategoryNames[]> {
+export async function getAllProducts(
+  page: number,
+  limit: number
+): Promise<GetAllProductsResponse> {
   try {
-    const res = await fetch(`${baseApiUrl}/products`, {
-      cache: 'no-store',
-    });
+    const res = await fetch(
+      `${baseApiUrl}/products?page=${page}&limit=${limit}`,
+      {
+        cache: 'no-store',
+      }
+    );
 
-    const products = await res.json();
-    return products;
+    const {
+      products,
+      totalPages,
+    }: { products: ProductWithCategoryNames[]; totalPages: number } =
+      await res.json();
+    // Return both products and totalPages as part of an object
+    return { products, totalPages };
   } catch (error) {
     throw new Error('Failed to fetch products');
   }
 }
 
 export async function getFilterdProducts(
-  query: string
-): Promise<ProductWithCategoryNames[]> {
+  query: string,
+  page: number,
+  limit: number
+): Promise<GetAllProductsResponse> {
+  // Return a single object, not an array
   try {
-    const res = await fetch(`${baseApiUrl}/products?q=${query}`, {
-      cache: 'no-store',
-    });
+    const res = await fetch(
+      `${baseApiUrl}/products?q=${query}&page=${page}&limit=${limit}`,
+      {
+        cache: 'no-store',
+      }
+    );
 
-    const products = await res.json();
-    return products;
+    // Destructure products and totalPages from the response
+    const {
+      products,
+      totalPages,
+    }: { products: ProductWithCategoryNames[]; totalPages: number } =
+      await res.json();
+    // Return both products and totalPages as part of an object
+    return { products, totalPages };
   } catch (error) {
     throw new Error('Failed to fetch products');
   }

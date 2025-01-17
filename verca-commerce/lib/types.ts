@@ -2,7 +2,6 @@ import { Prisma } from '@prisma/client';
 import { Eye } from 'lucide-react';
 
 //! SHOP
-
 const productWithCategoryNames = Prisma.validator<Prisma.ProductDefaultArgs>()({
   include: {
     categories: {
@@ -20,6 +19,12 @@ const productWithCategoryNames = Prisma.validator<Prisma.ProductDefaultArgs>()({
 export type ProductWithCategoryNames = Prisma.ProductGetPayload<
   typeof productWithCategoryNames
 >;
+
+// Define the response type for `getAllProducts`
+export type GetAllProductsResponse = {
+  products: ProductWithCategoryNames[];
+  totalPages: number;
+};
 
 const siteConfigWithAddress = Prisma.validator<Prisma.SiteConfigDefaultArgs>()({
   include: {

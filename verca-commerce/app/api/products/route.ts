@@ -1,16 +1,60 @@
 import prisma from '@/prisma/client';
+import { console } from 'inspector';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const search = req.nextUrl.searchParams.get('q');
-    const category = req.nextUrl.searchParams.get('category');
+    const search = req.nextUrl.searchParams.get('search');
     const sort = req.nextUrl.searchParams.get('sort');
+    const query = req.nextUrl.searchParams.get('q');
+    const page = req.nextUrl.searchParams.get('page');
+    const limit = req.nextUrl.searchParams.get('limit');
 
-    // Construct the base query
-    let query: any = {
-      where: {},
-    };
+    const skip = (Number(page) - 1) * Number(limit);
+    const take = Number(limit);
+
+    if (limit && query !== null) {
+      const products = await prisma.product.findMany({
+        skip: skip,
+        take: take,
+        where: {
+          deleted: false,
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+        orderBy: {
+          createdAt: 'asc',
+        },
+        include: {
+          categories: {
+            select: {
+              category: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      console.log(products);
+      const totalProducts = await prisma.product.count({
+        where: {
+          deleted: false,
+          name: {
+            contains: query,
+          },
+        },
+      });
+
+      console.log(products, totalProducts);
+
+      const totalPages = Math.ceil(totalProducts / Number(limit));
+
+      return NextResponse.json({ products, totalPages }, { status: 200 });
+    }
 
     // Add name search condition if present
     if (search) {
@@ -43,42 +87,38 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(filterdPoducts, { status: 200 });
     }
 
-    // Add sort condition based on the value of 'sort'
-    if (sort === 'latest') {
-      query.orderBy = {
-        createdAt: 'desc',
-      };
-    } else if (sort === 'price-asc') {
-      query.orderBy = {
-        price: 'asc',
-      };
-    } else if (sort === 'price-desc') {
-      query.orderBy = {
-        price: 'desc',
-      };
-    }
-
-    const sortedProducts = await prisma.product.findMany({
-      where: {
-        deleted: false,
-      },
-      ...query,
-      include: {
-        categories: {
-          select: {
-            category: {
-              select: {
-                name: true,
+    if (limit && page) {
+      const products = await prisma.product.findMany({
+        skip: skip,
+        take: take,
+        where: {
+          deleted: false,
+        },
+        include: {
+          categories: {
+            select: {
+              category: {
+                select: {
+                  name: true,
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    // Execute the query
+      console.log(products);
 
-    return NextResponse.json(sortedProducts, { status: 200 });
+      const totalProducts = await prisma.product.count({
+        where: {
+          deleted: false,
+        },
+      });
+
+      const totalPages = Math.ceil(totalProducts / Number(limit));
+
+      return NextResponse.json({ products, totalPages }, { status: 200 });
+    }
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal Server Error' },

@@ -7,8 +7,8 @@ export async function GET(
   props: { params: Promise<{ productId: string }> }
 ) {
   const params = await props.params;
-  const query = req.nextUrl.searchParams.get('q');
   const customerReference = req.nextUrl.searchParams.get('cr');
+  const query = req.nextUrl.searchParams.get('q');
 
   try {
     // Execute the query
@@ -52,6 +52,17 @@ export async function GET(
         deleted: false,
         productId: params.productId,
       },
+      include: {
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return NextResponse.json(products, { status: 200 });
@@ -62,4 +73,17 @@ export async function GET(
       { status: 500 }
     );
   }
+}
+
+function calcSkipTakeAndPageNumber(
+  page: number,
+  limit: number,
+  totalItems: number
+): { skip: number; take: number; totalPages: number } {
+  const skip = page * limit;
+  const take = limit;
+
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return { skip, take, totalPages };
 }
