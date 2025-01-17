@@ -93,7 +93,7 @@ export async function signUp(
           create: {
             city: city,
             country: country,
-            postcode: postCode,
+            postCode: postCode,
             state: state,
             streetName: streetName,
             streetNumber: streetNumber,
