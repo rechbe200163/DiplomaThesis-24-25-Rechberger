@@ -164,7 +164,7 @@ model Route {
 
 //* Emplyee model
 model Employees {
-  employeeId String  @id @default(uuid())
+  employeeId String  @id @default(uuid()) @db.Uuid
   email      String  @unique @db.VarChar(255)
   password   String  @db.VarChar(255)
   firstName  String  @db.VarChar(255)
