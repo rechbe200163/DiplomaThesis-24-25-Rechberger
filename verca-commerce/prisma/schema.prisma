@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_DEV")
 }
 
 enum Role {
@@ -20,11 +20,12 @@ enum Role {
   EMPLOYEE
 }
 
-enum orderState {
-  order_placed
-  order_in_progress
-  dispatched
-  delivered
+enum OrderState {
+  ORDER_PLACED
+  IN_PROGRESS
+  DISPATCHED
+  DELIVERED
+  ORDER_COLLECTED
 }
 
 enum BusinessSector {
@@ -56,7 +57,7 @@ model Customer {
   deleted           Boolean   @default(false)
   signedUp          DateTime  @default(now())
   avatarPath        String?   @db.VarChar(255)
-  addressId         String    
+  addressId         String    @db.Uuid
 
   role           Role            @default(CUSTOMER)
   businessSector BusinessSector?
@@ -68,10 +69,10 @@ model Customer {
 }
 
 model Address {
-  addressId    String    @id @default(uuid()) // Unique ID for easier referencing
+  addressId    String    @id @default(uuid()) @db.Uuid // Unique ID for easier referencing
   city         String    @db.VarChar(100)
   country      String    @db.VarChar(40)
-  postcode     String    @db.VarChar(10)
+  postCode     String    @db.VarChar(10)
   state        String    @db.VarChar(40)
   streetName   String    @db.VarChar(100)
   streetNumber String    @db.VarChar(30)
@@ -85,7 +86,7 @@ model Address {
 }
 
 model Cart {
-  cartId            String           @id @default(uuid())
+  cartId            String           @id @default(uuid()) @db.Uuid
   customerReference Int              @unique
   customer          Customer         @relation(fields: [customerReference], references: [customerReference]) // not in the database model
   products          CartOnProducts[]
@@ -94,7 +95,7 @@ model Cart {
 }
 
 model Product {
-  productId   String    @id @default(uuid())
+  productId   String    @id @default(uuid()) @db.Uuid
   name        String    @unique @db.VarChar(255)
   price       Int
   description String    @db.Text
@@ -113,7 +114,7 @@ model Product {
 }
 
 model Category {
-  categoryId String  @id @default(uuid())
+  categoryId String  @id @default(uuid()) @db.Uuid
   name       String  @unique @db.VarChar(255)
   imagePath  String? @db.VarChar(255) // probably should be paths for multiple images
   deleted    Boolean @default(false)
@@ -124,12 +125,12 @@ model Category {
 }
 
 model Order {
-  orderId           String     @id @default(uuid())
+  orderId           String     @id @default(uuid()) @db.Uuid
   customerReference Int
-  date              DateTime   @default(now())
-  deliveryDate      DateTime   @default(now())
+  orderDate         DateTime   @default(now())
+  deliveryDate      DateTime?
   deleted           Boolean    @default(false)
-  orderStatus       orderState @default(order_placed)
+  orderState        OrderState @default(ORDER_PLACED)
   selfCollect       Boolean    @default(false)
 
   customer Customer          @relation(fields: [customerReference], references: [customerReference])
@@ -141,11 +142,11 @@ model Order {
 }
 
 model Invoice {
-  invoiceId     String   @id @default(uuid())
-  orderId       String   @unique
+  invoiceId     String    @id @default(uuid()) @db.Uuid
+  orderId       String    @unique @db.Uuid
   invoiceAmount Int //price in cents
-  dateOfPayment DateTime @default(now())
-  pdfUrl        String   @db.VarChar(255)
+  paymentDate   DateTime?
+  pdfUrl        String    @db.VarChar(255)
 
   deleted Boolean @default(false)
   order   Order   @relation(fields: [orderId], references: [orderId])
@@ -154,7 +155,7 @@ model Invoice {
 }
 
 model Route {
-  routeId String           @id @default(uuid())
+  routeId String           @id @default(uuid()) @db.Uuid
   name    String           @db.VarChar(255)
   deleted Boolean          @default(false)
   order   RoutesOnOrders[]
@@ -168,7 +169,7 @@ model Employees {
   email      String  @unique
   password   String  @db.VarChar(255)
   firstName  String  @db.VarChar(255)
-  lastname   String  @db.VarChar(255)
+  lastName   String  @db.VarChar(255)
   deleted    Boolean @default(false)
   role       Role    @default(EMPLOYEE)
 
@@ -177,7 +178,7 @@ model Employees {
 
 //* model for the site configuration
 model SiteConfig {
-  siteConfigId String @id @default(uuid())
+  siteConfigId String @id @default(uuid()) @db.Uuid
   companyName  String @db.VarChar(255)
   //? should probably also have a slogan or a short description field
   //? should probalby also have a relation to a socialMedia model with links to social media
@@ -187,52 +188,53 @@ model SiteConfig {
   phoneNumber   String    @db.VarChar(15)
   iban          String    @db.VarChar(30)
   companyNumber String    @db.VarChar(30)
-  addressId     String
+  addressId     String    @db.Uuid
   modifiedAt    DateTime? @updatedAt
   deleted       Boolean   @default(false)
   address       Address   @relation(fields: [addressId], references: [addressId])
 
-  @@map("siteConfig")
+  @@map("siteConfigs")
 }
 
 // realtion models
 model CategoriesOnProducts {
-  productId  String
+  productId  String   @db.Uuid
   product    Product  @relation(fields: [productId], references: [productId])
-  categoryId String
+  categoryId String   @db.Uuid
   category   Category @relation(fields: [categoryId], references: [categoryId])
 
   @@id([productId, categoryId])
-  @@map("categoriesOnProducts")
+  @@map("categoriesProducts")
 }
 
 model CartOnProducts {
-  cartId    String
+  cartId    String  @db.Uuid
   cart      Cart    @relation(fields: [cartId], references: [cartId])
-  productId String
+  productId String  @db.Uuid
   product   Product @relation(fields: [productId], references: [productId])
   quantity  Int     @default(1) @map("productAmount")
 
   @@id([cartId, productId])
-  @@map("cartOnProducts")
+  @@map("cartsProducts")
 }
 
 model OrderOnProducts {
-  orderId       String
+  orderId       String  @db.Uuid
   order         Order   @relation(fields: [orderId], references: [orderId])
-  productId     String
+  productId     String  @db.Uuid
   product       Product @relation(fields: [productId], references: [productId])
   productAmount Int     @default(1)
 
   @@id([orderId, productId])
-  @@map("orderOnProducts")
+  @@map("ordersProducts")
 }
 
 model RoutesOnOrders {
-  routeId String @id
+  routeId String @db.Uuid
   route   Route  @relation(fields: [routeId], references: [routeId])
-  orderId String
+  orderId String @db.Uuid
   order   Order  @relation(fields: [orderId], references: [orderId])
 
-  @@map("routesOnOrders")
+  @@id([routeId, orderId])
+  @@map("routesOrders")
 }
