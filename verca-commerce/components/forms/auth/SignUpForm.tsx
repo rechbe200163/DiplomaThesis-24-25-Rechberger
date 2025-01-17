@@ -29,10 +29,10 @@ import { useState } from 'react';
 import { FormState } from '@/lib/form.types';
 import { useToast } from '@/hooks/use-toast';
 
-// Enhancements
 export function SignUpForm() {
   const FormSchema = authSignUpFormSchema();
   const [message, setMessage] = useState<FormState | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -56,7 +56,8 @@ export function SignUpForm() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const response = signUp(
+    setIsSubmitting(true);
+    signUp(
       data.email,
       data.password,
       data.confirmPassword,
@@ -71,28 +72,37 @@ export function SignUpForm() {
       data.state,
       data.streetName,
       data.streetNumber
-    );
-    if (response) {
-      response.then((res) => {
+    )
+      .then((res) => {
         setMessage(res);
+        toast({
+          title: res.success ? 'Success' : 'Error',
+          description: res.success
+            ? res.message
+            : res.errors?.title || 'An error occurred',
+          variant: res.success ? 'success' : 'destructive',
+        });
+      })
+      .catch((error) => {
+        console.error('Error during sign up:', error);
+        toast({
+          title: 'Error',
+          description: 'An unexpected error occurred. Please try again.',
+          variant: 'destructive',
+        });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
-    }
-    toast({
-      title: message?.success ? 'Success' : 'Error',
-      description: message?.success
-        ? message?.message
-        : message?.errors?.title || 'An error occurred',
-      variant: message?.success ? 'success' : 'destructive',
-    });
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         {/* Personal Information Section */}
-        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+        <div className='border rounded-lg p-4 mb-6 shadow-md bg-white'>
           <h2 className='text-xl font-bold mb-4'>Personal Information</h2>
-          <div className={'flex flex-col md:flex-row gap-5'}>
+          <div className='flex flex-col md:flex-row gap-5'>
             <FormField
               control={form.control}
               name='firstName'
@@ -123,7 +133,7 @@ export function SignUpForm() {
         </div>
 
         {/* Contact Information Section */}
-        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+        <div className='border rounded-lg p-4 mb-6 shadow-md bg-white'>
           <h2 className='text-xl font-bold mb-4'>Contact Information</h2>
           <FormField
             control={form.control}
@@ -159,7 +169,7 @@ export function SignUpForm() {
         </div>
 
         {/* Business Information Section */}
-        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+        <div className='border rounded-lg p-4 mb-6 shadow-md bg-white'>
           <h2 className='text-xl font-bold mb-4'>Business Information</h2>
           <FormField
             control={form.control}
@@ -204,9 +214,9 @@ export function SignUpForm() {
         </div>
 
         {/* Address Section */}
-        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+        <div className='border rounded-lg p-4 mb-6 shadow-md bg-white'>
           <h2 className='text-xl font-bold mb-4'>Address</h2>
-          <div className={'flex flex-col md:flex-row gap-5'}>
+          <div className='flex flex-col md:flex-row gap-5'>
             <FormField
               control={form.control}
               name='country'
@@ -248,7 +258,7 @@ export function SignUpForm() {
               )}
             />
           </div>
-          <div className={'flex flex-col md:flex-row gap-5'}>
+          <div className='flex flex-col md:flex-row gap-5'>
             <FormField
               control={form.control}
               name='city'
@@ -276,7 +286,7 @@ export function SignUpForm() {
               )}
             />
           </div>
-          <div className={'flex flex-col md:flex-row gap-5'}>
+          <div className='flex flex-col md:flex-row gap-5'>
             <FormField
               control={form.control}
               name='streetName'
@@ -313,54 +323,53 @@ export function SignUpForm() {
         </div>
 
         {/* Account Details Section */}
-        <div className={'border rounded-lg p-4 mb-6 shadow-md bg-white'}>
+        <div className='border rounded-lg p-4 mb-6 shadow-md bg-white'>
           <h2 className='text-xl font-bold mb-4'>Account Details</h2>
-          <div className={'flex flex-col md:flex-row gap-5'}>
-            <FormField
-              control={form.control}
-              name='password'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='Enter your password'
-                      {...field}
-                      type='password'
-                      autoComplete='new-password'
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='confirmPassword'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Your Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='Confirm Your Password'
-                      {...field}
-                      type='password'
-                      autoComplete='new-password'
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='********'
+                    {...field}
+                    type='password'
+                    autoComplete='new-password'
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='confirmPassword'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='********'
+                    {...field}
+                    type='password'
+                    autoComplete='new-password'
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         {/* Submit Button */}
         <Button
           className='w-full mt-6 py-3 text-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg'
           type='submit'
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
     </Form>

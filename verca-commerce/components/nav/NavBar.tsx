@@ -45,7 +45,8 @@ async function NavBar() {
             <Avatar>
               <AvatarImage src={imageURL!} className='object-cover' />
               <AvatarFallback className='bg-success-600 text-black'>
-                {session.user.lastName[0] + session.user.firstName![0]}
+                {session.user.lastName[0] +
+                  (session.user.firstName ? session.user.firstName[0] : '')}
               </AvatarFallback>
             </Avatar>
           </Link>
