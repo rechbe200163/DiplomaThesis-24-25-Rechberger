@@ -57,6 +57,7 @@ export async function GET(
           select: {
             category: {
               select: {
+                categoryId: true,
                 name: true,
               },
             },
