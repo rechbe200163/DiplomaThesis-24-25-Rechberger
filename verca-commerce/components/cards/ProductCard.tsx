@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ImageComponent from '../images/ImageComponent';
 import { Badge } from '../ui/badge';
 import ImageSkeleton from '../images/ImageSkeleton';
+import { formatPrice } from '@/lib/utils';
 
 const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
   const isAddedLast7Days =
@@ -41,7 +42,7 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
         </div>
         <div className='flex justify-between items-center'>
           <span className='text-lg font-bold text-primary'>
-            ${product.price.toFixed(2)}
+            {formatPrice(product.price)}
           </span>
           {product.stock > 0 && product.stock <= 5 ? (
             <Badge>Only {product.stock} left</Badge>
