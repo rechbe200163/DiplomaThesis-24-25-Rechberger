@@ -37,7 +37,7 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
         </Link>
         <ChevronRight className='h-4 w-4' />
         <Link
-          href={`/shop/search?q=${product.categories[0].category.name}`}
+          href={`/shop/search?filter=${product.categories[0].category.categoryId}`}
           className='hover:text-primary transition-colors'
         >
           {product.categories[0].category.name}
