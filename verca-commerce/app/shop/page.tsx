@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import ProductCard from '@/components/cards/ProductCard';
 import PaginationComponent from '@/components/pagination/PaginationComponent';
+import { CategoryFilter } from '@/components/search/filters/CategoryFilter';
 import { Pagination } from '@/components/ui/pagination';
 import { getAllProducts } from '@/lib/data/data.products';
 
@@ -18,6 +19,7 @@ async function ShopPage(props: {
   const { products, totalPages } = await getAllProducts(page, limit);
   return (
     <>
+      <CategoryFilter />
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4 p-4'>
         {products.length > 0 ? (
           products.map((product) => (
