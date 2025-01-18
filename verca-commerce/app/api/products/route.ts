@@ -66,6 +66,9 @@ export async function GET(req: NextRequest) {
             mode: 'insensitive',
           },
         },
+        orderBy: {
+          createdAt: 'asc',
+        },
         include: {
           categories: {
             select: {
