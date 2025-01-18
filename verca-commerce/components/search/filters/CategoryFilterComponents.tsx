@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -17,34 +17,35 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Manage a single selected category
-
   function handleSearch(value: string) {
     const params = new URLSearchParams(searchParams);
+    const selectedFilter = searchParams.get('filter');
 
-    if (value) {
+    if (selectedFilter === value) {
+      params.delete('filter');
+    } else if (value) {
       params.set('filter', value);
     } else {
       params.delete('filter');
     }
 
-    // Check if the current pathname already contains '/search'
-    const newPath = pathname.includes('/search')
-      ? pathname
-      : `${pathname}/search`;
-
-    replace(`${newPath}?${params.toString()}`);
-
-    // Update the selected category
-    setSelectedCategory(
-      (prevSelected) => (prevSelected === value ? null : value) // Toggle the selection
-    );
+    if (!params.toString()) {
+      // No other search params, return to /shop
+      replace('/shop');
+    } else if (params.has('filter')) {
+      // Keep other search params, update filter
+      const newPath = pathname.includes('/search')
+        ? pathname
+        : `${pathname}/search`;
+      replace(`${newPath}?${params.toString()}`);
+    } else {
+      // Remove filter, keep other search params
+      replace(`${pathname}?${params.toString()}`);
+    }
   }
 
-  // Get the selected category name
-  const selectedCategoryName = categories.find(
-    (category) => category.categoryId === selectedCategory
-  )?.name;
+  // Get the currently selected filter from the URL
+  const selectedFilter = searchParams.get('filter');
 
   return (
     <div>
@@ -54,7 +55,7 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
             <Badge
               key={category.categoryId}
               variant={
-                selectedCategory === category.categoryId ? 'default' : 'outline'
+                selectedFilter === category.categoryId ? 'default' : 'outline'
               }
               className='cursor-pointer'
               onClick={() => handleSearch(category.categoryId)}
@@ -67,12 +68,16 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
       </ScrollArea>
 
       {/* Render selected category below */}
-      {/* {selectedCategoryName && (
+      {selectedFilter && (
         <div className='mt-4'>
           <h3 className='text-sm font-semibold'>Selected Category:</h3>
-          <Badge variant='default'>{selectedCategoryName}</Badge>
+          <Badge variant='default'>
+            {categories.find(
+              (category) => category.categoryId === selectedFilter
+            )?.name || 'Unknown'}
+          </Badge>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

@@ -28,20 +28,35 @@ export async function getAllProducts(
   }
 }
 
-export async function getFilterdProducts(
+export async function getFilteredProducts(
   query: string,
   page: number,
   limit: number,
-  filter: string | null
+  filter?: string
 ): Promise<GetAllProductsResponse> {
-  // Return a single object, not an array
   try {
-    const res = await fetch(
-      `${baseApiUrl}/products?q=${query}&page=${page}&limit=${limit}&filter=${filter}`,
-      {
-        cache: 'no-store',
-      }
-    );
+    // Build query parameters
+    const params = new URLSearchParams({
+      page: String(page),
+      limit: String(limit),
+    });
+
+    if (query) {
+      params.append('q', query);
+    }
+
+    console.log('params:', params);
+
+    if (filter) {
+      params.append('filter', filter);
+    }
+
+    // Fetch data from the API
+    const res = await fetch(`${baseApiUrl}/products?${params.toString()}`, {
+      cache: 'no-store',
+    });
+
+    console.log('res:', res);
 
     // Destructure products and totalPages from the response
     const {
@@ -49,7 +64,8 @@ export async function getFilterdProducts(
       totalPages,
     }: { products: ProductWithCategoryNames[]; totalPages: number } =
       await res.json();
-    // Return both products and totalPages as part of an object
+
+    // Return the response object
     return { products, totalPages };
   } catch (error) {
     throw new Error('Failed to fetch products');

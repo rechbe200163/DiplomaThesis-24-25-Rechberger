@@ -1,138 +1,96 @@
 import prisma from '@/prisma/client';
-import { console } from 'inspector';
+import { Prisma } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const search = req.nextUrl.searchParams.get('search');
-    const filter = req.nextUrl.searchParams.get('filter') || null;
-    const query = req.nextUrl.searchParams.get('q');
-    const page = req.nextUrl.searchParams.get('page');
-    const limit = req.nextUrl.searchParams.get('limit');
+    const filter = req.nextUrl.searchParams.get('filter') || undefined;
+    const query = req.nextUrl.searchParams.get('q') || undefined;
+    const page = parseInt(req.nextUrl.searchParams.get('page') || '1', 10);
+    const limit = parseInt(req.nextUrl.searchParams.get('limit') || '10', 10);
 
-    const skip = (Number(page) - 1) * Number(limit);
-    const take = Number(limit);
+    // Pagination: Calculate skip and take values
+    const skip = (page - 1) * limit;
 
-    if (limit && query !== null) {
-      const products = await prisma.product.findMany({
-        skip: skip,
-        take: take,
-        where: {
-          deleted: false,
-          name: {
-            contains: query,
-            mode: 'insensitive',
-          },
-          categories: {
-            some: {
-              categoryId: filter!,
-            },
-          },
+    console.log('filter:', filter);
+
+    if (isNaN(skip) || isNaN(limit)) {
+      return NextResponse.json(
+        { error: 'Invalid pagination values' },
+        { status: 400 }
+      );
+    }
+
+    if (page < 1 || limit < 1) {
+      return NextResponse.json(
+        { error: 'Invalid page or limit values' },
+        { status: 400 }
+      );
+    }
+
+    // Common filter options
+    const baseWhereClause: Prisma.ProductWhereInput = {
+      deleted: false,
+    };
+
+    if (query !== undefined) {
+      baseWhereClause.name = {
+        contains: query,
+        mode: 'insensitive',
+      };
+    }
+
+    if (filter !== null) {
+      baseWhereClause.categories = {
+        some: {
+          categoryId: filter,
         },
-        orderBy: {
-          createdAt: 'asc',
-        },
-        include: {
-          categories: {
-            select: {
-              category: {
-                select: {
-                  name: true,
-                },
+      };
+    }
+
+    console.log('baseWhereClause:', baseWhereClause);
+
+    // Fetch products and total count
+    const products = await prisma.product.findMany({
+      skip,
+      take: limit,
+      where: baseWhereClause,
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        categories: {
+          select: {
+            category: {
+              select: {
+                categoryId: true,
+                name: true,
               },
             },
           },
         },
-      });
-      console.log(products);
-      const totalProducts = await prisma.product.count({
-        where: {
-          deleted: false,
-          name: {
-            contains: query,
-          },
-        },
-      });
+      },
+    });
 
-      console.log(products, totalProducts);
+    const totalProducts = await prisma.product.count({
+      where: baseWhereClause,
+    });
 
-      const totalPages = Math.ceil(totalProducts / Number(limit));
+    const totalPages = Math.ceil(totalProducts / limit);
 
-      return NextResponse.json({ products, totalPages }, { status: 200 });
-    }
+    console.log('totalPages:', totalPages);
+    console.log('totalProducts:', totalProducts);
 
-    // Add name search condition if present
-    if (search) {
-      const filterdPoducts = await prisma.product.findMany({
-        where: {
-          deleted: false,
-          name: {
-            contains: search,
-            mode: 'insensitive',
-          },
-          categories: {
-            some: {
-              categoryId: filter!,
-            },
-          },
-        },
-        orderBy: {
-          createdAt: 'asc',
-        },
-        include: {
-          categories: {
-            select: {
-              category: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      });
-      if (filterdPoducts.length === 0) {
-        return NextResponse.json(
-          { error: 'No products found' },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json(filterdPoducts, { status: 200 });
-    }
-
-    if (limit && page) {
-      const products = await prisma.product.findMany({
-        skip: skip,
-        take: take,
-        where: {
-          deleted: false,
-        },
-        include: {
-          categories: {
-            select: {
-              category: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      });
-
-      console.log(products);
-
-      const totalProducts = await prisma.product.count({
-        where: {
-          deleted: false,
-        },
-      });
-
-      const totalPages = Math.ceil(totalProducts / Number(limit));
-
-      return NextResponse.json({ products, totalPages }, { status: 200 });
-    }
+    return NextResponse.json({ products, totalPages }, { status: 200 });
   } catch (error) {
+    // Enhanced error response for debugging
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: error.message, stack: error.stack },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }

@@ -1,8 +1,7 @@
 import ProductCard from '@/components/cards/ProductCard';
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { CategoryFilter } from '@/components/search/filters/CategoryFilter';
-import { getFilterdProducts } from '@/lib/data/data.products';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { getFilteredProducts } from '@/lib/data/data.products';
 
 export default async function SearchPage(props: {
   searchParams?: Promise<{
@@ -16,9 +15,9 @@ export default async function SearchPage(props: {
   const query = searchParams?.query || '';
   const page = Number(searchParams?.page) || 1;
   const limit = Number(searchParams?.limit) || 20;
-  const filter = searchParams?.filter || null;
+  const filter = searchParams?.filter || undefined;
 
-  const { products, totalPages } = await getFilterdProducts(
+  const { products, totalPages } = await getFilteredProducts(
     query,
     page,
     limit,

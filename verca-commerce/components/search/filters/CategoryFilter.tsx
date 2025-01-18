@@ -3,8 +3,6 @@ import CategoryFilterComponent from './CategoryFilterComponents';
 
 export async function CategoryFilter() {
   const categories = await getCategories();
-  console.log(categories);
-
   return (
     <div>
       <CategoryFilterComponent categories={categories} />
