@@ -13,9 +13,6 @@ export async function GET(req: NextRequest) {
     const skip = (Number(page) - 1) * Number(limit);
     const take = Number(limit);
 
-    if (filter) {
-    }
-
     if (limit && query !== null) {
       const products = await prisma.product.findMany({
         skip: skip,
