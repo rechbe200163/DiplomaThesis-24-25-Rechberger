@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -17,7 +17,7 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const selectedCategories: string[] = []; // Define selectedCategories
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Manage a single selected category
 
   function handleSearch(value: string) {
     const params = new URLSearchParams(searchParams);
@@ -34,12 +34,17 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
       : `${pathname}/search`;
 
     replace(`${newPath}?${params.toString()}`);
+
+    // Update the selected category
+    setSelectedCategory(
+      (prevSelected) => (prevSelected === value ? null : value) // Toggle the selection
+    );
   }
 
-  // Get selected category names
-  const selectedCategoryNames = categories
-    .filter((category) => selectedCategories.includes(category.categoryId))
-    .map((category) => category.name);
+  // Get the selected category name
+  const selectedCategoryName = categories.find(
+    (category) => category.categoryId === selectedCategory
+  )?.name;
 
   return (
     <div>
@@ -49,9 +54,7 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
             <Badge
               key={category.categoryId}
               variant={
-                selectedCategories.includes(category.categoryId)
-                  ? 'default'
-                  : 'outline'
+                selectedCategory === category.categoryId ? 'default' : 'outline'
               }
               className='cursor-pointer'
               onClick={() => handleSearch(category.categoryId)}
@@ -63,19 +66,13 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
         <ScrollBar orientation='horizontal' />
       </ScrollArea>
 
-      {/* Render selected categories below */}
-      {selectedCategoryNames.length > 0 && (
+      {/* Render selected category below */}
+      {/* {selectedCategoryName && (
         <div className='mt-4'>
-          <h3 className='text-sm font-semibold'>Selected Categories:</h3>
-          <div className='mt-2 flex flex-wrap gap-2'>
-            {selectedCategoryNames.map((name, index) => (
-              <Badge key={index} variant='default'>
-                {name}
-              </Badge>
-            ))}
-          </div>
+          <h3 className='text-sm font-semibold'>Selected Category:</h3>
+          <Badge variant='default'>{selectedCategoryName}</Badge>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

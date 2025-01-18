@@ -31,12 +31,13 @@ export async function getAllProducts(
 export async function getFilterdProducts(
   query: string,
   page: number,
-  limit: number
+  limit: number,
+  filter: string | null
 ): Promise<GetAllProductsResponse> {
   // Return a single object, not an array
   try {
     const res = await fetch(
-      `${baseApiUrl}/products?q=${query}&page=${page}&limit=${limit}`,
+      `${baseApiUrl}/products?q=${query}&page=${page}&limit=${limit}&filter=${filter}`,
       {
         cache: 'no-store',
       }
