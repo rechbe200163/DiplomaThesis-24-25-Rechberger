@@ -5,13 +5,16 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     const search = req.nextUrl.searchParams.get('search');
-    const sort = req.nextUrl.searchParams.get('sort');
+    const filter = req.nextUrl.searchParams.get('filter') || null;
     const query = req.nextUrl.searchParams.get('q');
     const page = req.nextUrl.searchParams.get('page');
     const limit = req.nextUrl.searchParams.get('limit');
 
     const skip = (Number(page) - 1) * Number(limit);
     const take = Number(limit);
+
+    if (filter) {
+    }
 
     if (limit && query !== null) {
       const products = await prisma.product.findMany({
@@ -22,6 +25,11 @@ export async function GET(req: NextRequest) {
           name: {
             contains: query,
             mode: 'insensitive',
+          },
+          categories: {
+            some: {
+              categoryId: filter!,
+            },
           },
         },
         orderBy: {
@@ -64,6 +72,11 @@ export async function GET(req: NextRequest) {
           name: {
             contains: search,
             mode: 'insensitive',
+          },
+          categories: {
+            some: {
+              categoryId: filter!,
+            },
           },
         },
         orderBy: {
