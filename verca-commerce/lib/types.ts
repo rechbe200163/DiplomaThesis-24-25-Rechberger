@@ -8,6 +8,7 @@ const productWithCategoryNames = Prisma.validator<Prisma.ProductDefaultArgs>()({
       select: {
         category: {
           select: {
+            categoryId: true,
             name: true,
           },
         },
