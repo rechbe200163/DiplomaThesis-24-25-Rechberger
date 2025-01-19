@@ -45,9 +45,6 @@ export async function GET(req: NextRequest) {
         },
       };
     }
-
-    console.log('baseWhereClause:', baseWhereClause);
-
     // Fetch products and total count
     const products = await prisma.product.findMany({
       skip,
@@ -75,9 +72,6 @@ export async function GET(req: NextRequest) {
     });
 
     const totalPages = Math.ceil(totalProducts / limit);
-
-    console.log('totalPages:', totalPages);
-    console.log('totalProducts:', totalProducts);
 
     return NextResponse.json({ products, totalPages }, { status: 200 });
   } catch (error) {
