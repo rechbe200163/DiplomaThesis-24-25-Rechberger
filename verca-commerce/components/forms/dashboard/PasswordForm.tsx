@@ -35,7 +35,7 @@ export function PasswordForm() {
         variant: 'destructive',
       });
     }
-  }, [formState.errors?.title]);
+  }, [formState.errors]); // Updated the dependency array
 
   return (
     <form action={action} className='space-y-8'>

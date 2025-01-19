@@ -83,7 +83,7 @@ export function AccountForm({
           defaultValue={customer.email}
         />
         <p className='text-sm text-muted-foreground'>
-          We'll send you a confirmation email if changed.
+          We&apos;ll send you a confirmation email if changed.
         </p>
       </div>
 

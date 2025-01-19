@@ -51,7 +51,7 @@ export const NotificationEmail = ({
           </Section>
           <Hr style={hr} />
           <Text style={footer}>
-            If you have any questions, please don't hesitate to{' '}
+            If you have any questions, please don&apos;t hesitate to{' '}
             <Link href='mailto:support@your-app.com' style={link}>
               contact us
             </Link>
