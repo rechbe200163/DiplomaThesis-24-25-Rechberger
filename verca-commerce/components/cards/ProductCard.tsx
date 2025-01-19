@@ -30,26 +30,38 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
           <Badge className='absolute top-2 right-2'>NEW</Badge>
         )}
       </div>
-      <div className='pt-4 px-4 pb-6'>
-        <h2 className='text-lg font-semibold mb-2 truncate'>{product.name}</h2>
-        <p className='text-sm text-gray-600 mb-3 h-12 overflow-hidden'>
+      <div className='p-3 space-y-2'>
+        <h2 className='text-sm font-semibold mb-1 truncate'>{product.name}</h2>
+        <p className='text-xs text-gray-600 mb-2 h-8 overflow-hidden'>
           {product.description}
         </p>
         <div className='flex flex-wrap gap-1 mb-2'>
           {product.categories.map((category) => (
-            <Badge key={category.category.name}>{category.category.name}</Badge>
+            <Badge
+              key={category.category.name}
+              variant='default'
+              className='text-xs'
+            >
+              {category.category.name}
+            </Badge>
           ))}
         </div>
         <div className='flex justify-between items-center'>
-          <span className='text-lg font-bold text-primary'>
+          <span className='text-sm font-bold text-primary'>
             {formatPrice(product.price)}
           </span>
           {product.stock > 0 && product.stock <= 5 ? (
-            <Badge>Only {product.stock} left</Badge>
+            <Badge variant='outline' className='text-xs'>
+              Only {product.stock} left
+            </Badge>
           ) : product.stock === 0 ? (
-            <Badge>Sold out</Badge>
+            <Badge variant='outline' className='text-xs'>
+              Sold out
+            </Badge>
           ) : (
-            <Badge>In stock</Badge>
+            <Badge variant='outline' className='text-xs'>
+              In stock
+            </Badge>
           )}
         </div>
       </div>

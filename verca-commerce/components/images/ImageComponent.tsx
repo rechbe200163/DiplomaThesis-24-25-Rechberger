@@ -37,16 +37,30 @@ async function ImageComponent({
   }
 
   return (
-    <Image
-      src={imageURL}
-      alt={alt}
-      width={width}
-      fill={fill}
-      style={style}
-      height={height}
-      sizes={sizes}
-      className={classname}
-    />
+    <div
+      className='overflow-hidden rounded-md' // Ensures alignment with card borders
+      style={{
+        position: 'relative',
+        width: width || '100%',
+        height: height || '100%',
+      }}
+    >
+      <Image
+        src={imageURL}
+        alt={alt}
+        width={width}
+        fill={fill}
+        style={{
+          ...style,
+          objectFit: 'contain', // Ensures the image fills the container while aligning with edges
+          objectPosition: 'center', // Keeps the image centered
+          margin: '-4px', // Slightly enlarges the image to cover the edges of the card
+        }}
+        height={height}
+        sizes={sizes}
+        className={classname}
+      />
+    </div>
   );
 }
 

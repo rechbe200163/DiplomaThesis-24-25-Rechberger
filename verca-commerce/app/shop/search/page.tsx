@@ -24,24 +24,23 @@ export default async function SearchPage(props: {
     filter
   );
   return (
-    <>
+    <div className='m-2 px-6'>
       <CategoryFilter />
-      <div className='p-4'>
-        {products.length > 0 ? (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4'>
-            {products.map((product) => (
-              <ProductCard key={product.productId} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className='text-center my-10'>
-            <p className='text-gray-600 text-lg font-medium'>
-              Sorry! it seems we don&apos;t have what you&apos;re looking for.
-            </p>
-          </div>
-        )}
-      </div>
+      {products.length > 0 ? (
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 py-4'>
+          {products.map((product) => (
+            <ProductCard key={product.productId} product={product} />
+          ))}
+        </div>
+      ) : (
+        <div className='text-center my-10'>
+          <p className='text-gray-600 text-lg font-medium'>
+            Sorry! it seems we don&apos;t have what you&apos;re looking for.
+          </p>
+        </div>
+      )}
+
       <PaginationComponent totalPages={totalPages} />
-    </>
+    </div>
   );
 }

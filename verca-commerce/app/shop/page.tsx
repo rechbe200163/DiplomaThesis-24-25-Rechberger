@@ -18,9 +18,10 @@ async function ShopPage(props: {
   const limit = searchParams?.limit || 20;
   const { products, totalPages } = await getAllProducts(page, limit);
   return (
-    <>
-      <CategoryFilter />
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4 p-4'>
+    <div className='m-2 px-6'>
+      {/* Increased horizontal padding */} <CategoryFilter />
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 py-4'>
+        {/* Adjusted grid layout */}
         {products.length > 0 ? (
           products.map((product) => (
             <ProductCard key={product.productId} product={product} />
@@ -33,7 +34,7 @@ async function ShopPage(props: {
         )}
       </div>
       <PaginationComponent totalPages={totalPages} />
-    </>
+    </div>
   );
 }
 
