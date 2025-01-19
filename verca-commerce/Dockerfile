@@ -1,32 +1,41 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
+FROM node:20-slim AS base
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+FROM base AS builder
 
-# Copy package.json and package-lock.json/yarn.lock
-COPY package*.json ./
-# If you're using yarn:
-# COPY yarn.lock ./
+WORKDIR /app
 
-# Install dependencies
+COPY package.json package-lock.json* ./
 RUN npm install --force
-# If you're using yarn:
-# RUN yarn install
-
-# Copy the rest of the application code
 COPY . .
 
-# genrerate prisma client
-RUN npx prisma generate
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
-# Expose the port the app runs on
+RUN npm run build
+
+FROM base AS runner
+WORKDIR /app
+
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
 EXPOSE 3000
 
-# Set the environment variable to development
-ENV NODE_ENV=development
+ENV PORT=3000
 
-# Start the Next.js app in development mode
-CMD ["npm", "run", "dev"]
-# If you're using yarn:
-# CMD ["yarn", "dev"]
+ARG HOSTNAME
+
+CMD node server.js
