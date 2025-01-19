@@ -17,7 +17,6 @@ async function UserOrdersPage(props: {
   const session = await auth();
   if (!session) return null;
   const customerReference = session?.user?.customerReference;
-  console.log(customerReference);
 
   const searchParams = await props.searchParams;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;

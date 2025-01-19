@@ -41,8 +41,6 @@ export default function NavLinksAdminPanel() {
   // Das passende Array basierend auf linkType auswählen
   const pathname = usePathname();
 
-  console.log('pathname: ', pathname);
-
   return (
     <SidebarMenu>
       {links.map((link) => {

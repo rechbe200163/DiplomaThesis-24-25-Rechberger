@@ -9,7 +9,6 @@ export const ProductCartQuantity = async ({
   productId: string;
 }) => {
   const resp = await getProductCartInformationById(productId);
-  console.log(resp);
   return (
     <div className='flex items-center rounded-lg border bg-background'>
       <DecreaseProductQuantity

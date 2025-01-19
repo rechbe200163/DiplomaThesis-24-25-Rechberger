@@ -26,7 +26,6 @@ interface ProductDetailsPageProps {
 async function ProductDetailsPage(props: ProductDetailsPageProps) {
   const params = await props.params;
   const product = await getProductById(params.productId);
-  console.log(product.categories[0].category.name);
 
   return (
     <div className='container mx-auto px-4 py-8'>

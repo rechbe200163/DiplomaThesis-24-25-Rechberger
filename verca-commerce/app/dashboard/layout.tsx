@@ -27,8 +27,6 @@ export default async function DashboardLayout({
     );
   }
 
-  console.log(role);
-
   return (
     <SidebarProvider>
       <div className='flex flex-col h-screen '>

@@ -135,8 +135,6 @@ export async function sendNotificationEmail(
       subject: `${type.charAt(0).toUpperCase() + type.slice(1)} Change Notification`,
       react: NotificationEmail({ type, username, changeTime }),
     });
-
-    console.log('Email sent successfully:', data);
   } catch (error) {
     console.error('Error sending email:', error);
   }

@@ -12,8 +12,6 @@ export async function GET(req: NextRequest) {
     // Pagination: Calculate skip and take values
     const skip = (page - 1) * limit;
 
-    console.log('filter:', filter);
-
     if (isNaN(skip) || isNaN(limit)) {
       return NextResponse.json(
         { error: 'Invalid pagination values' },

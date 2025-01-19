@@ -45,8 +45,6 @@ export async function getFilteredProducts(
       params.append('q', query);
     }
 
-    console.log('params:', params);
-
     if (filter) {
       params.append('filter', filter);
     }
@@ -55,8 +53,6 @@ export async function getFilteredProducts(
     const res = await fetch(`${baseApiUrl}/products?${params.toString()}`, {
       cache: 'no-store',
     });
-
-    console.log('res:', res);
 
     // Destructure products and totalPages from the response
     const {

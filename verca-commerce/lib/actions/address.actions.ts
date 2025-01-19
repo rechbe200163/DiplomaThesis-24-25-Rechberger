@@ -78,7 +78,7 @@ export async function updateAddress(
         streetName: validData.data.streetName,
         city: validData.data.city,
         state: validData.data.state,
-        postcode: validData.data.postcode,
+        postCode: validData.data.postcode,
         country: validData.data.country,
         customers: {
           connect: {
