@@ -1,4 +1,5 @@
 import prisma from '@/prisma/client';
+import { Invoice } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
       const currentMonthInvoices = await prisma.invoice.findMany({
         where: {
           deleted: false,
-          dateOfPayment: {
+          paymentDate: {
             gte: startOfCurrentMonth,
           },
         },
@@ -34,7 +35,7 @@ export async function GET(req: NextRequest) {
       const lastMonthInvoices = await prisma.invoice.findMany({
         where: {
           deleted: false,
-          dateOfPayment: {
+          paymentDate: {
             gte: startOfLastMonth,
             lt: startOfCurrentMonth,
           },
@@ -43,7 +44,7 @@ export async function GET(req: NextRequest) {
 
       // Calculate AIV for the current month
       const currentMonthTotalValue = currentMonthInvoices.reduce(
-        (acc, invoice) => acc + invoice.invoiceAmount,
+        (acc: number, invoice: Invoice) => acc + invoice.invoiceAmount,
         0
       );
       const currentMonthTotalInvoices = currentMonthInvoices.length;
@@ -101,7 +102,7 @@ export async function GET(req: NextRequest) {
         },
         where: {
           deleted: false,
-          dateOfPayment: {
+          paymentDate: {
             gte: startOfCurrentMonth,
           },
         },
@@ -114,7 +115,7 @@ export async function GET(req: NextRequest) {
         },
         where: {
           deleted: false,
-          dateOfPayment: {
+          paymentDate: {
             gte: startOfLastMonth,
             lt: startOfCurrentMonth,
           },
@@ -162,7 +163,7 @@ export async function GET(req: NextRequest) {
       const currentMonthSales = await prisma.invoice.count({
         where: {
           deleted: false,
-          dateOfPayment: {
+          paymentDate: {
             gte: startOfCurrentMonth,
           },
         },
@@ -172,7 +173,7 @@ export async function GET(req: NextRequest) {
       const lastMonthSales = await prisma.invoice.count({
         where: {
           deleted: false,
-          dateOfPayment: {
+          paymentDate: {
             gte: startOfLastMonth,
             lt: startOfCurrentMonth,
           },
@@ -221,7 +222,7 @@ export async function GET(req: NextRequest) {
     if (search === 'paid') {
       const paidInvoices = await prisma.invoice.findMany({
         where: {
-          dateOfPayment: {
+          paymentDate: {
             not: undefined,
           },
         },
@@ -234,7 +235,7 @@ export async function GET(req: NextRequest) {
     if (search === 'unpaid') {
       const unpaidInvoices = await prisma.invoice.findMany({
         where: {
-          dateOfPayment: null!,
+          paymentDate: null!,
         },
       });
       return NextResponse.json(unpaidInvoices, {
@@ -245,7 +246,7 @@ export async function GET(req: NextRequest) {
     if (dop === 'asc' || dop === 'desc') {
       const invoices = await prisma.invoice.findMany({
         orderBy: {
-          dateOfPayment: dop,
+          paymentDate: dop,
         },
       });
       return NextResponse.json(invoices, {

@@ -264,7 +264,7 @@ export const addressFormSchema = z.object({
   state: z.string().min(1, {
     message: 'State is required.',
   }),
-  postcode: z.string().min(1, {
+  postCode: z.string().min(1, {
     message: 'Postal code is required.',
   }),
   country: z.string().min(1, {

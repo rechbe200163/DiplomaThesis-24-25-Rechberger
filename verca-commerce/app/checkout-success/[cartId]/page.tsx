@@ -3,7 +3,8 @@ import { CheckCircle, ShoppingBag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-function CheckoutSuccessPage({ params }: { params: { cartId: string } }) {
+async function CheckoutSuccessPage(props: { params: Promise<{ cartId: string }> }) {
+  const params = await props.params;
   return (
     <div className='min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>

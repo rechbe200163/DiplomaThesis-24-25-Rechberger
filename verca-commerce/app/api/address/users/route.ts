@@ -4,14 +4,14 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     const url = req.nextUrl;
-    const postcode = url.searchParams.get('postcode');
+    const postCode = url.searchParams.get('postCode');
 
-    if (postcode) {
+    if (postCode) {
       const addressUsers = await prisma.customer.findMany({
         where: {
           address: {
-            postcode: {
-              contains: postcode,
+            postCode: {
+              contains: postCode,
               mode: 'insensitive',
             },
           },

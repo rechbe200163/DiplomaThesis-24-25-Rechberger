@@ -28,7 +28,7 @@ export default function AddressSelectComponent({
           {addresses.map((address) => (
             <SelectItem key={address.addressId} value={address.addressId}>
               {address.streetNumber} {address.streetName}, {address.city}{' '}
-              {address.postcode} {address.country}
+              {address.postCode} {address.country}
             </SelectItem>
           ))}
         </SelectGroup>

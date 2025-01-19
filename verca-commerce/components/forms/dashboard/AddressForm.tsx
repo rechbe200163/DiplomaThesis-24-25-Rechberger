@@ -65,10 +65,10 @@ export function AddressForm({ address }: { address: Address }) {
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         <div className='space-y-2'>
-          <Label htmlFor='postcode'>Postcode</Label>
+          <Label htmlFor='postCode'>postCode</Label>
           <Input
-            id='postcode'
-            name='postcode'
+            id='postCode'
+            name='postCode'
             defaultValue={address.postCode}
             className='transition-all duration-200 focus:ring-2 focus:ring-primary'
           />

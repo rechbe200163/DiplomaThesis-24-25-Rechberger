@@ -13,14 +13,14 @@ jest.mock('@/prisma/client', () => ({
 }));
 
 describe('GET /customers', () => {
-  it('should return customers filtered by postcode', async () => {
+  it('should return customers filtered by postCode', async () => {
     const mockCustomers = [
       {
         id: '1',
         firstName: 'John',
         lastName: 'Doe',
         address: {
-          postcode: '12345',
+          postCode: '12345',
           city: 'Sample City',
         },
       },
@@ -29,7 +29,7 @@ describe('GET /customers', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         address: {
-          postcode: '12345',
+          postCode: '12345',
           city: 'Another City',
         },
       },
@@ -40,7 +40,7 @@ describe('GET /customers', () => {
 
     const mockRequest = {
       nextUrl: {
-        searchParams: new URLSearchParams({ postcode: '12345' }),
+        searchParams: new URLSearchParams({ postCode: '12345' }),
       },
     } as unknown as NextRequest;
 
@@ -59,10 +59,10 @@ describe('GET /customers', () => {
           address: {
             type: 'object',
             properties: {
-              postcode: { type: 'string' },
+              postCode: { type: 'string' },
               city: { type: 'string' },
             },
-            required: ['postcode', 'city'],
+            required: ['postCode', 'city'],
           },
         },
         required: ['id', 'firstName', 'lastName', 'address'],
@@ -73,14 +73,14 @@ describe('GET /customers', () => {
     expect(response.status).toBe(200);
   });
 
-  it('should return all customers when no postcode is provided', async () => {
+  it('should return all customers when no postCode is provided', async () => {
     const mockCustomers = [
       {
         id: '1',
         firstName: 'John',
         lastName: 'Doe',
         address: {
-          postcode: '12345',
+          postCode: '12345',
           city: 'Sample City',
         },
       },
@@ -89,7 +89,7 @@ describe('GET /customers', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         address: {
-          postcode: '67890',
+          postCode: '67890',
           city: 'Another City',
         },
       },
@@ -119,10 +119,10 @@ describe('GET /customers', () => {
           address: {
             type: 'object',
             properties: {
-              postcode: { type: 'string' },
+              postCode: { type: 'string' },
               city: { type: 'string' },
             },
-            required: ['postcode', 'city'],
+            required: ['postCode', 'city'],
           },
         },
         required: ['id', 'firstName', 'lastName', 'address'],

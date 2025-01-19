@@ -24,7 +24,7 @@ describe('GET /customers/:customerReference', () => {
         street: '123 Main St',
         city: 'Anytown',
         state: 'CA',
-        postcode: '90210',
+        postCode: '90210',
         country: 'USA',
       },
     };
@@ -59,10 +59,10 @@ describe('GET /customers/:customerReference', () => {
             street: { type: 'string' },
             city: { type: 'string' },
             state: { type: 'string' },
-            postcode: { type: 'string' },
+            postCode: { type: 'string' },
             country: { type: 'string' },
           },
-          required: ['id', 'street', 'city', 'state', 'postcode', 'country'],
+          required: ['id', 'street', 'city', 'state', 'postCode', 'country'],
         },
       },
       required: [

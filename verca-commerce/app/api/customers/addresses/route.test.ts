@@ -20,7 +20,7 @@ describe('GET /addresses', () => {
         city: 'New York',
         state: 'NY',
         country: 'USA',
-        postcode: '10001',
+        postCode: '10001',
         customers: [{ id: 'customer1', firstName: 'Alice', lastName: 'Smith' }],
       },
       {
@@ -28,7 +28,7 @@ describe('GET /addresses', () => {
         city: 'New York',
         state: 'NY',
         country: 'USA',
-        postcode: '10002',
+        postCode: '10002',
         customers: [{ id: 'customer2', firstName: 'Bob', lastName: 'Brown' }],
       },
     ];
@@ -54,7 +54,7 @@ describe('GET /addresses', () => {
           city: { type: 'string' },
           state: { type: 'string' },
           country: { type: 'string' },
-          postcode: { type: 'string' },
+          postCode: { type: 'string' },
           customers: {
             type: 'array',
             items: {
@@ -68,21 +68,21 @@ describe('GET /addresses', () => {
             },
           },
         },
-        required: ['id', 'city', 'state', 'country', 'postcode', 'customers'],
+        required: ['id', 'city', 'state', 'country', 'postCode', 'customers'],
       },
     });
 
     expect(response.status).toBe(200);
   });
 
-  it('should return addresses matching the postcode query', async () => {
+  it('should return addresses matching the postCode query', async () => {
     const mockAddresses = [
       {
         id: 'address3',
         city: 'Los Angeles',
         state: 'CA',
         country: 'USA',
-        postcode: '90001',
+        postCode: '90001',
         customers: [],
       },
     ];
@@ -91,7 +91,7 @@ describe('GET /addresses', () => {
 
     const mockRequest = {
       nextUrl: {
-        searchParams: new URLSearchParams({ postcode: '90001' }),
+        searchParams: new URLSearchParams({ postCode: '90001' }),
       },
     } as unknown as NextRequest;
 
@@ -107,7 +107,7 @@ describe('GET /addresses', () => {
           city: { type: 'string' },
           state: { type: 'string' },
           country: { type: 'string' },
-          postcode: { type: 'string' },
+          postCode: { type: 'string' },
           customers: {
             type: 'array',
             items: {
@@ -121,7 +121,7 @@ describe('GET /addresses', () => {
             },
           },
         },
-        required: ['id', 'city', 'state', 'country', 'postcode', 'customers'],
+        required: ['id', 'city', 'state', 'country', 'postCode', 'customers'],
       },
     });
 
@@ -135,7 +135,7 @@ describe('GET /addresses', () => {
         city: 'Chicago',
         state: 'IL',
         country: 'USA',
-        postcode: '60601',
+        postCode: '60601',
         customers: [],
       },
     ];
@@ -160,7 +160,7 @@ describe('GET /addresses', () => {
           city: { type: 'string' },
           state: { type: 'string' },
           country: { type: 'string' },
-          postcode: { type: 'string' },
+          postCode: { type: 'string' },
           customers: {
             type: 'array',
             items: {
@@ -174,7 +174,7 @@ describe('GET /addresses', () => {
             },
           },
         },
-        required: ['id', 'city', 'state', 'country', 'postcode', 'customers'],
+        required: ['id', 'city', 'state', 'country', 'postCode', 'customers'],
       },
     });
 
@@ -188,7 +188,7 @@ describe('GET /addresses', () => {
         city: 'Toronto',
         state: 'ON',
         country: 'Canada',
-        postcode: 'M5H 2N2',
+        postCode: 'M5H 2N2',
         customers: [],
       },
     ];
@@ -213,7 +213,7 @@ describe('GET /addresses', () => {
           city: { type: 'string' },
           state: { type: 'string' },
           country: { type: 'string' },
-          postcode: { type: 'string' },
+          postCode: { type: 'string' },
           customers: {
             type: 'array',
             items: {
@@ -227,7 +227,7 @@ describe('GET /addresses', () => {
             },
           },
         },
-        required: ['id', 'city', 'state', 'country', 'postcode', 'customers'],
+        required: ['id', 'city', 'state', 'country', 'postCode', 'customers'],
       },
     });
 
@@ -241,7 +241,7 @@ describe('GET /addresses', () => {
         city: 'Seattle',
         state: 'WA',
         country: 'USA',
-        postcode: '98101',
+        postCode: '98101',
         customers: [],
       },
     ];
@@ -266,7 +266,7 @@ describe('GET /addresses', () => {
           city: { type: 'string' },
           state: { type: 'string' },
           country: { type: 'string' },
-          postcode: { type: 'string' },
+          postCode: { type: 'string' },
           customers: {
             type: 'array',
             items: {
@@ -280,7 +280,7 @@ describe('GET /addresses', () => {
             },
           },
         },
-        required: ['id', 'city', 'state', 'country', 'postcode', 'customers'],
+        required: ['id', 'city', 'state', 'country', 'postCode', 'customers'],
       },
     });
 

@@ -18,7 +18,7 @@ describe('GET /invoices', () => {
       {
         id: 'invoice1',
         amount: 100,
-        dateOfPayment: null,
+        paymentDate: null,
         order: {
           customer: { id: 'customer1', name: 'Customer 1' },
         },
@@ -26,7 +26,7 @@ describe('GET /invoices', () => {
       {
         id: 'invoice2',
         amount: 200,
-        dateOfPayment: null,
+        paymentDate: null,
         order: {
           customer: { id: 'customer2', name: 'Customer 2' },
         },
@@ -52,7 +52,7 @@ describe('GET /invoices', () => {
         properties: {
           id: { type: 'string' },
           amount: { type: 'number' },
-          dateOfPayment: { type: ['string', 'null'] },
+          paymentDate: { type: ['string', 'null'] },
           order: {
             type: 'object',
             properties: {
@@ -68,7 +68,7 @@ describe('GET /invoices', () => {
             required: ['customer'],
           },
         },
-        required: ['id', 'amount', 'dateOfPayment', 'order'],
+        required: ['id', 'amount', 'paymentDate', 'order'],
       },
     });
     expect(response.status).toBe(200);
@@ -79,12 +79,12 @@ describe('GET /invoices', () => {
       {
         id: 'invoice3',
         amount: 150,
-        dateOfPayment: '2024-01-01',
+        paymentDate: '2024-01-01',
       },
       {
         id: 'invoice4',
         amount: 250,
-        dateOfPayment: '2024-02-01',
+        paymentDate: '2024-02-01',
       },
     ];
 
@@ -106,9 +106,9 @@ describe('GET /invoices', () => {
         properties: {
           id: { type: 'string' },
           amount: { type: 'number' },
-          dateOfPayment: { type: 'string' },
+          paymentDate: { type: 'string' },
         },
-        required: ['id', 'amount', 'dateOfPayment'],
+        required: ['id', 'amount', 'paymentDate'],
       },
     });
     expect(response.status).toBe(200);
@@ -119,12 +119,12 @@ describe('GET /invoices', () => {
       {
         id: 'invoice5',
         amount: 300,
-        dateOfPayment: null,
+        paymentDate: null,
       },
       {
         id: 'invoice6',
         amount: 400,
-        dateOfPayment: null,
+        paymentDate: null,
       },
     ];
 
@@ -148,18 +148,18 @@ describe('GET /invoices', () => {
         properties: {
           id: { type: 'string' },
           amount: { type: 'number' },
-          dateOfPayment: { type: ['string', 'null'] },
+          paymentDate: { type: ['string', 'null'] },
         },
-        required: ['id', 'amount', 'dateOfPayment'],
+        required: ['id', 'amount', 'paymentDate'],
       },
     });
     expect(response.status).toBe(200);
   });
 
-  it('should return invoices ordered by dateOfPayment when dop is "asc"', async () => {
+  it('should return invoices ordered by paymentDate when dop is "asc"', async () => {
     const mockInvoices = [
-      { id: 'invoice7', amount: 50, dateOfPayment: '2024-01-01' },
-      { id: 'invoice8', amount: 75, dateOfPayment: '2024-02-01' },
+      { id: 'invoice7', amount: 50, paymentDate: '2024-01-01' },
+      { id: 'invoice8', amount: 75, paymentDate: '2024-02-01' },
     ];
 
     (prisma.invoice.findMany as jest.Mock).mockResolvedValue(mockInvoices);
@@ -180,18 +180,18 @@ describe('GET /invoices', () => {
         properties: {
           id: { type: 'string' },
           amount: { type: 'number' },
-          dateOfPayment: { type: 'string' },
+          paymentDate: { type: 'string' },
         },
-        required: ['id', 'amount', 'dateOfPayment'],
+        required: ['id', 'amount', 'paymentDate'],
       },
     });
     expect(response.status).toBe(200);
   });
 
-  it('should return invoices ordered by dateOfPayment when dop is "desc"', async () => {
+  it('should return invoices ordered by paymentDate when dop is "desc"', async () => {
     const mockInvoices = [
-      { id: 'invoice9', amount: 90, dateOfPayment: '2024-03-01' },
-      { id: 'invoice10', amount: 120, dateOfPayment: '2024-02-15' },
+      { id: 'invoice9', amount: 90, paymentDate: '2024-03-01' },
+      { id: 'invoice10', amount: 120, paymentDate: '2024-02-15' },
     ];
 
     (prisma.invoice.findMany as jest.Mock).mockResolvedValue(mockInvoices);
@@ -212,9 +212,9 @@ describe('GET /invoices', () => {
         properties: {
           id: { type: 'string' },
           amount: { type: 'number' },
-          dateOfPayment: { type: 'string' },
+          paymentDate: { type: 'string' },
         },
-        required: ['id', 'amount', 'dateOfPayment'],
+        required: ['id', 'amount', 'paymentDate'],
       },
     });
     expect(response.status).toBe(200);
@@ -222,8 +222,8 @@ describe('GET /invoices', () => {
 
   it('should return all invoices when no specific search or dop parameters are provided', async () => {
     const mockInvoices = [
-      { id: 'invoice11', amount: 60, dateOfPayment: null },
-      { id: 'invoice12', amount: 80, dateOfPayment: '2024-04-01' },
+      { id: 'invoice11', amount: 60, paymentDate: null },
+      { id: 'invoice12', amount: 80, paymentDate: '2024-04-01' },
     ];
 
     (prisma.invoice.findMany as jest.Mock).mockResolvedValue(mockInvoices);
@@ -244,9 +244,9 @@ describe('GET /invoices', () => {
         properties: {
           id: { type: 'string' },
           amount: { type: 'number' },
-          dateOfPayment: { type: ['string', 'null'] },
+          paymentDate: { type: ['string', 'null'] },
         },
-        required: ['id', 'amount', 'dateOfPayment'],
+        required: ['id', 'amount', 'paymentDate'],
       },
     });
     expect(response.status).toBe(200);

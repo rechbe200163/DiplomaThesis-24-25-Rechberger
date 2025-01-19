@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import { Input } from '@/components/ui/input';
-import { fetchUser } from '@/lib/data.shop';
+import { fetchUser } from '@/lib/data/data.customer';
+
 import React from 'react';
 
 async function UserDetailsCard() {

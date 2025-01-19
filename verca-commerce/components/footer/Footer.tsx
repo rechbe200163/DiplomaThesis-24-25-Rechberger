@@ -40,7 +40,7 @@ async function Footer() {
         <a>{siteConfig.address.country}</a>
         <a>{siteConfig.address.state}</a>
         <a>{siteConfig.address.city}</a>
-        <a>{siteConfig.address.postcode}</a>
+        <a>{siteConfig.address.postCode}</a>
         <a>{siteConfig.address.streetName}</a>
         <a>{siteConfig.address.streetNumber}</a>
       </nav>

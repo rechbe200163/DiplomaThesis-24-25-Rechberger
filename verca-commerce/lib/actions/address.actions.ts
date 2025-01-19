@@ -26,7 +26,7 @@ export async function updateAddress(
       streetName: formData.get('streetName') as string,
       city: formData.get('city') as string,
       state: formData.get('state') as string,
-      postcode: formData.get('postcode') as string,
+      postCode: formData.get('postCode') as string,
       country: formData.get('country') as string,
     });
 
@@ -78,7 +78,7 @@ export async function updateAddress(
         streetName: validData.data.streetName,
         city: validData.data.city,
         state: validData.data.state,
-        postCode: validData.data.postcode,
+        postCode: validData.data.postCode,
         country: validData.data.country,
         customers: {
           connect: {

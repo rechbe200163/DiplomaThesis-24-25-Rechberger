@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const url = req.nextUrl;
     const city = url.searchParams.get('city');
     const country = url.searchParams.get('country');
-    const postcode = url.searchParams.get('postcode');
+    const postCode = url.searchParams.get('postCode');
     const state = url.searchParams.get('state');
 
     if (city) {
@@ -24,11 +24,11 @@ export async function GET(req: NextRequest) {
       });
       return NextResponse.json(addressUsers, { status: 200 });
     }
-    if (postcode) {
+    if (postCode) {
       const addressUsers = await prisma.address.findMany({
         where: {
-          postcode: {
-            contains: postcode,
+          postCode: {
+            contains: postCode,
             mode: 'insensitive',
           },
           deleted: false,
