@@ -111,3 +111,8 @@ const orderDetails = Prisma.validator<Prisma.OrderDefaultArgs>()({
 });
 
 export type OrderDetails = Prisma.OrderGetPayload<typeof orderDetails>;
+
+export type GetAllOrdersResponse = {
+  orders: OrderDetails[];
+  totalPages: number;
+};

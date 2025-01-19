@@ -12,6 +12,7 @@ import {
 async function UserOrdersPage(props: {
   searchParams?: Promise<{
     page?: string;
+    limit?: string;
   }>;
 }) {
   const session = await auth();
@@ -20,11 +21,13 @@ async function UserOrdersPage(props: {
 
   const searchParams = await props.searchParams;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const limit = searchParams?.limit ? parseInt(searchParams.limit) : 5;
 
-  const orders = await getOrdersByCustomerPagination(customerReference!, page);
-  const { totalOrders } = await getTotalOrders(customerReference);
-  const ORDERS_PER_PAGE = 5;
-  const totalPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
+  const { orders, totalPages } = await getOrdersByCustomerPagination(
+    customerReference!,
+    page,
+    limit
+  );
 
   return (
     <div className='space-y-4'>

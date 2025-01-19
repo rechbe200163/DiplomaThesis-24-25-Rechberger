@@ -25,15 +25,15 @@ import { Download, ChevronDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
-import { orderState } from '@prisma/client';
 import CopyToClipboard from '@/components/helpers/CopyOrderId';
 import InvoicePdfLink from '@/components/helpers/InvoicePdfLink';
+import { OrderState } from '@prisma/client';
 
 function OrderCard({ order }: { order: OrderDetails }) {
   return (
     <Card
       key={order.orderId}
-      className='overflow-hidden transition-all hover:shadow-lg bg-gray-50'
+      className='overflow-hidden transition-all hover:shadow-lg '
     >
       <CardHeader className=''>
         <div className='flex flex-wrap items-center justify-between gap-4'>
@@ -44,13 +44,15 @@ function OrderCard({ order }: { order: OrderDetails }) {
                 <p className='text-lg font-bold min-w-6 text-clip'>
                   {order.orderId}
                 </p>
-                <CopyToClipboard orderId={order.orderId} />
+                <CopyToClipboard value={order.orderId} />
               </div>
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>
               <p className='text-sm font-medium'>Ordered On</p>
-              <p className='text-base'>{formatDate(new Date(order.date))}</p>
+              <p className='text-base'>
+                {formatDate(new Date(order.orderDate))}
+              </p>
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>
@@ -115,16 +117,16 @@ function OrderCard({ order }: { order: OrderDetails }) {
         <div>
           <p className='text-sm font-medium'>Payment Status</p>
           <Badge
-            variant={order.invoice?.dateOfPayment ? 'default' : 'destructive'}
+            variant={order.invoice?.paymentDate ? 'default' : 'destructive'}
           >
-            {order.invoice?.dateOfPayment ? 'Paid' : 'Pending'}
+            {order.invoice?.paymentDate ? 'Paid' : 'Pending'}
           </Badge>
         </div>
         <Accordion type='single' collapsible className='w-full'>
           <AccordionItem value='details'>
             <AccordionTrigger>View Order Status</AccordionTrigger>
             <AccordionContent>
-              <PaymentStatusProgressBar orderStatus={order.orderStatus} />
+              <PaymentStatusProgressBar orderState={order.orderState} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -133,11 +135,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
   );
 }
 
-function PaymentStatusProgressBar({
-  orderStatus,
-}: {
-  orderStatus: orderState;
-}) {
+function PaymentStatusProgressBar({ orderState }: { orderState: OrderState }) {
   const states = [
     'order_placed',
     'order_confirmed',
@@ -148,7 +146,7 @@ function PaymentStatusProgressBar({
   return (
     <div className='flex justify-between'>
       {states.map((state, index) => {
-        const isComplete = states.indexOf(orderStatus) >= index;
+        const isComplete = states.indexOf(orderState) >= index;
         return (
           <div key={state} className='flex flex-col items-center'>
             <div
