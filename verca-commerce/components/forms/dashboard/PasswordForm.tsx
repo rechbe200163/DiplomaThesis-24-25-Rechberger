@@ -28,30 +28,48 @@ export function PasswordForm() {
   }, [formState.success]);
 
   useEffect(() => {
-    if (formState.errors?.title && formState.errors !== undefined) {
+    if (
+      (formState.errors?.title?.length ?? 0) > 0 &&
+      formState.errors?.title[0] !== ''
+    ) {
       toast({
         title: 'Error!',
-        description: formState.errors.title.join(' '),
+        description: (formState.errors?.title ?? []).join(' '),
         variant: 'destructive',
       });
     }
-  }, [formState.errors]); // Updated the dependency array
+  }, [formState.errors]);
 
   return (
     <form action={action} className='space-y-8'>
       <div className='space-y-2'>
         <Label htmlFor='currentPassword'>Current Password</Label>
-        <Input type='password' name='currentPassword' placeholder='********' />
+        <Input
+          type='password'
+          name='currentPassword'
+          placeholder='********'
+          required
+        />
       </div>
 
       <div className='space-y-2'>
         <Label htmlFor='newPassword'>New Password</Label>
-        <Input type='password' name='newPassword' placeholder='********' />
+        <Input
+          type='password'
+          name='newPassword'
+          placeholder='********'
+          required
+        />
       </div>
 
       <div className='space-y-2'>
         <Label htmlFor='confirmPassword'>Confirm Password</Label>
-        <Input type='password' name='confirmPassword' placeholder='********' />
+        <Input
+          type='password'
+          name='confirmPassword'
+          placeholder='********'
+          required
+        />
       </div>
 
       <Button type='submit' disabled={isPending}>

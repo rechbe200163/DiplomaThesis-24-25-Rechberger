@@ -58,7 +58,7 @@ export function DashboardSidebar() {
             </CollapsibleContent>
           </SidebarGroup>
         </Collapsible>
-        <Collapsible defaultOpen className='group/collapsible'>
+        {/* <Collapsible defaultOpen className='group/collapsible'>
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
@@ -73,7 +73,7 @@ export function DashboardSidebar() {
               </SidebarGroupContent>
             </CollapsibleContent>
           </SidebarGroup>
-        </Collapsible>
+        </Collapsible> */}
       </SidebarContent>
       <SidebarFooter>
         <DashboardFooter />

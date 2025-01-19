@@ -19,12 +19,12 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 const accountLinks = [
-  { name: 'Account', href: '/dashboard', icon: HomeIcon },
+  { name: 'Account', href: '/dashboard/account', icon: HomeIcon },
   { name: 'Addresses', href: '/dashboard/address', icon: MapPinIcon },
 ];
 
 const shoppingLinks = [
-  { name: 'Orders', href: '/dashboard/orders', icon: LucideListOrdered },
+  { name: 'Orders', href: '/dashboard/', icon: LucideListOrdered },
 ];
 
 const supportLinks = [

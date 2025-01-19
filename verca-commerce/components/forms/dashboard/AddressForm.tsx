@@ -69,7 +69,7 @@ export function AddressForm({ address }: { address: Address }) {
           <Input
             id='postcode'
             name='postcode'
-            defaultValue={address.postcode}
+            defaultValue={address.postCode}
             className='transition-all duration-200 focus:ring-2 focus:ring-primary'
           />
         </div>
