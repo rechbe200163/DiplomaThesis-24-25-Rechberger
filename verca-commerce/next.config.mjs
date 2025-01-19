@@ -23,7 +23,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'supaapi.mrhost.uk',
+        hostname: 'supakong.mrhost.uk',
         port: '',
         pathname: '/**',
       },
