@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Category } from '@prisma/client';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
+import Breadcrumbs from '@/components/nav/BreadCrumps';
 
 interface CategoryFilterProps {
   categories: Category[];
@@ -30,34 +31,47 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
     }
 
     if (!params.toString()) {
-      // No other search params, return to /shop
       replace('/shop');
     } else if (params.has('filter')) {
-      // Keep other search params, update filter
       const newPath = pathname.includes('/search')
         ? pathname
         : `${pathname}/search`;
       replace(`${newPath}?${params.toString()}`);
     } else {
-      // Remove filter, keep other search params
       replace(`${pathname}?${params.toString()}`);
     }
   }
 
-  // Get the currently selected filter from the URL
   const selectedFilter = searchParams.get('filter');
 
+  // Generate breadcrumbs dynamically
+  const breadcrumbs = [
+    { label: 'Shop', href: '/shop' },
+    ...(selectedFilter
+      ? [
+          {
+            label:
+              categories.find((cat) => cat.categoryId === selectedFilter)
+                ?.name || '',
+            href: pathname,
+          },
+        ]
+      : []),
+  ];
+
   return (
-    <div>
-      <ScrollArea className='w-full whitespace-nowrap rounded-md border'>
-        <div className='flex w-max space-x-4 p-4'>
+    <div className='space-y-4'>
+      {/* Breadcrumbs component */}
+
+      <ScrollArea className='w-full rounded-md border border-gray-200 dark:border-gray-700'>
+        <div className='flex w-max space-x-2 p-4'>
           {categories.map((category) => (
             <Badge
               key={category.categoryId}
               variant={
                 selectedFilter === category.categoryId ? 'default' : 'outline'
               }
-              className='cursor-pointer'
+              className='cursor-pointer text-sm px-3 py-1 transition-colors duration-200'
               onClick={() => handleSearch(category.categoryId)}
             >
               {category.name}
@@ -66,18 +80,7 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
         </div>
         <ScrollBar orientation='horizontal' />
       </ScrollArea>
-
-      {/* Render selected category below */}
-      {selectedFilter && (
-        <div className='mt-4'>
-          <h3 className='text-sm font-semibold'>Selected Category:</h3>
-          <Badge variant='default'>
-            {categories.find(
-              (category) => category.categoryId === selectedFilter
-            )?.name || 'Unknown'}
-          </Badge>
-        </div>
-      )}
+      {/* <Breadcrumbs breadcrumbs={breadcrumbs} /> */}
     </div>
   );
 };
