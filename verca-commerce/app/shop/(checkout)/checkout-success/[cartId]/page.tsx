@@ -1,6 +1,7 @@
 import React from 'react';
 
-function CheckoutSuccessPage({ params }: { params: { cartId: string } }) {
+async function CheckoutSuccessPage(props: { params: Promise<{ cartId: string }> }) {
+  const params = await props.params;
   return (
     <div>
       <h1>Checkout Success</h1>
