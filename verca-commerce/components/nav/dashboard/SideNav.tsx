@@ -21,7 +21,7 @@ import CompanyIconComponent from './CompanyIconComponent';
 
 export function DashboardSidebar() {
   return (
-    <Sidebar collapsible='offcanvas' variant='floating'>
+    <Sidebar collapsible='offcanvas' variant='floating' className='w-auto'>
       <SidebarHeader>
         <CompanyIconComponent />
       </SidebarHeader>
@@ -58,22 +58,6 @@ export function DashboardSidebar() {
             </CollapsibleContent>
           </SidebarGroup>
         </Collapsible>
-        {/* <Collapsible defaultOpen className='group/collapsible'>
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                <HelpCircle className='mr-1' />
-                Help
-                <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <NavLinksProfile linkType='support' />
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible> */}
       </SidebarContent>
       <SidebarFooter>
         <DashboardFooter />

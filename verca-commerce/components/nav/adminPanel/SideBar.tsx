@@ -21,7 +21,7 @@ import NavLinksAdminPanel from './NavLinksAdminPanel';
 
 export function AdminPanelSidebar() {
   return (
-    <Sidebar collapsible='offcanvas' variant='floating'>
+    <Sidebar collapsible='offcanvas' variant='floating' className='bg-white'>
       <SidebarHeader>
         <CompanyIconComponent />
       </SidebarHeader>

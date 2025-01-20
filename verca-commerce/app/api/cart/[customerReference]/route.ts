@@ -11,7 +11,7 @@ export async function GET(
     const query = req.nextUrl.searchParams.get('q');
 
     if (query === 'count') {
-      const productsCount = await prisma.cart.findUnique({
+      const cart = await prisma.cart.findUnique({
         where: {
           customerReference: customerReference,
         },
@@ -30,14 +30,30 @@ export async function GET(
         },
       });
 
-      if (!productsCount) {
+      if (!cart) {
         return NextResponse.json(
           { message: 'Cart not found' },
           { status: 404 }
         );
       }
 
-      return NextResponse.json(productsCount, { status: 200 });
+      const totalCartValue = await prisma.product.aggregate({
+        _sum: {
+          price: true,
+        },
+        where: {
+          productId: {
+            in: cart.products.map((product) => product.productId),
+          },
+        },
+      });
+
+      console.log(totalCartValue);
+
+      return NextResponse.json(
+        { cart, sum: totalCartValue._sum.price },
+        { status: 200 }
+      );
     }
     const cartProducts = await prisma.cart.findUnique({
       where: {

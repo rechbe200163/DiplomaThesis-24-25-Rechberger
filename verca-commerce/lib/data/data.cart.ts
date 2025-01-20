@@ -1,7 +1,12 @@
 'server only';
 
 import { auth } from '@/auth';
-import { CartCount, CartProductDetails, CartWithProducts } from '../types';
+import {
+  CartCount,
+  CartCountWithTotal,
+  CartProductDetails,
+  CartWithProducts,
+} from '../types';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
 export async function getCartByCustomerReference(
@@ -22,14 +27,14 @@ export async function getCartByCustomerReference(
 
 export async function fetchProductsInCart(
   customerReference: number
-): Promise<CartCount> {
+): Promise<CartCountWithTotal> {
   try {
     const res = await fetch(`${baseApiUrl}/cart/${customerReference}?q=count`, {
       next: { tags: ['cartCount'] },
     });
 
-    const productsCount = await res.json();
-    return productsCount;
+    const { cart, sum }: { cart: CartCount; sum: number } = await res.json();
+    return { cart, sum };
   } catch (error) {
     throw new Error('Failed to fetch products count in cart');
   }

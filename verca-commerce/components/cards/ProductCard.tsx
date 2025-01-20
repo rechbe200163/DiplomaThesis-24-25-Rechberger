@@ -27,7 +27,7 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
           />
         </Suspense>
         {isAddedLast7Days && (
-          <Badge className='absolute top-2 right-2'>NEW</Badge>
+          <Badge className='absolute top-2 right-2'>NEU</Badge>
         )}
       </div>
       <div className='p-3 space-y-2'>

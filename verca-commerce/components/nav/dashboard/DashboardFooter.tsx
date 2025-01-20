@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import SignOutComponent from '@/components/auth/signOut';
-import UserEmailComponent from '@/components/helpers/UserEmailComponent';
+import UserAvatarComponent from '@/components/helpers/UserAvatarComponent';
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -20,7 +20,8 @@ async function DashboardFooter() {
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuSubButton>
-          <UserEmailComponent avatarPath={avatarPath} />{' '}
+          <UserAvatarComponent avatarPath={avatarPath} />
+          <span>{session?.user.email}</span>
           {/* Wrapped in a single parent element */}
           <SignOutComponent />
         </SidebarMenuSubButton>

@@ -73,6 +73,11 @@ const cartCount = Prisma.validator<Prisma.CartDefaultArgs>()({
 
 export type CartCount = Prisma.CartGetPayload<typeof cartCount>;
 
+export type CartCountWithTotal = {
+  sum: number;
+  cart: CartCount;
+};
+
 const cartProductInfo = Prisma.validator<Prisma.CartDefaultArgs>()({
   select: {
     products: {

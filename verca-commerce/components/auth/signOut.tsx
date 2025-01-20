@@ -14,7 +14,7 @@ export default function SignOutComponent() {
         await signOut();
       }}
     >
-      <SidebarMenuAction type='submit'>
+      <SidebarMenuAction type='submit' className='items-center gap-2'>
         <LogOut className='w-6 h-6' type='submit' />
       </SidebarMenuAction>
     </form>

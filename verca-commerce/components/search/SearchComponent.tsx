@@ -3,6 +3,7 @@
 import { PiMagnifyingGlass } from 'react-icons/pi';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
+import { Search } from 'lucide-react';
 
 export default function SearchComponent({
   placeholder,
@@ -41,7 +42,7 @@ export default function SearchComponent({
         }}
         defaultValue={searchParams.get('query')?.toString()}
       />
-      <PiMagnifyingGlass className='absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500' />
+      <Search className='absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500' />
     </div>
   );
 }
