@@ -8,12 +8,9 @@ export async function getCartByCustomerReference(
   customerReference: number
 ): Promise<CartWithProducts> {
   try {
-    const res = await fetch(
-      `https://localhost:3000/api/cart/${customerReference}`,
-      {
-        next: { tags: ['cart'] },
-      }
-    );
+    const res = await fetch(`${baseApiUrl}/cart/${customerReference}`, {
+      next: { tags: ['cart'] },
+    });
 
     const cart = await res.json();
 
@@ -27,12 +24,9 @@ export async function fetchProductsInCart(
   customerReference: number
 ): Promise<CartCount> {
   try {
-    const res = await fetch(
-      `https://localhost:3000/api/cart/${customerReference}?q=count`,
-      {
-        next: { tags: ['cartCount'] },
-      }
-    );
+    const res = await fetch(`${baseApiUrl}/cart/${customerReference}?q=count`, {
+      next: { tags: ['cartCount'] },
+    });
 
     const productsCount = await res.json();
     return productsCount;
@@ -51,7 +45,7 @@ export async function getProductCartInformationById(
   const cr = session.user.customerReference;
   try {
     const res = await fetch(
-      `https://localhost:3000/api/products/${productId}?q=info&cr=${cr}`,
+      `${baseApiUrl}/products/${productId}?q=info&cr=${cr}`,
       {
         next: { tags: ['cartCount'] },
       }

@@ -64,12 +64,9 @@ export async function getCustomerStats(): Promise<{
 
 export async function fetchUser(customerReference: number): Promise<Customer> {
   try {
-    const res = await fetch(
-      `https://localhost:3000/api/customers/${customerReference}`,
-      {
-        next: { tags: ['customer'] },
-      }
-    );
+    const res = await fetch(`${baseApiUrl}/customers/${customerReference}`, {
+      next: { tags: ['customer'] },
+    });
 
     const user = await res.json();
     return user;

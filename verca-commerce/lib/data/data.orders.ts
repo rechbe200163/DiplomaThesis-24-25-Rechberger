@@ -51,7 +51,7 @@ export async function getTotalOrders(
 export async function getOrdersByUserId(customerReference: string) {
   try {
     const res = await fetch(
-      `https://localhost:3000/api/orders?customerReference=${customerReference}`,
+      `${baseApiUrl}/orders?customerReference=${customerReference}`,
       {
         cache: 'no-store',
       }
