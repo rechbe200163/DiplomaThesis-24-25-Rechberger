@@ -87,7 +87,6 @@ export default async function PurchasePage(props: {
                 clientSecret={paymentIntent.client_secret}
                 paymentAmount={paymentIntent.amount}
               />
-              ;
             </div>
           </div>
         </div>

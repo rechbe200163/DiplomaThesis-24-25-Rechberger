@@ -3,8 +3,7 @@ import { CheckCircle, ShoppingBag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-async function CheckoutSuccessPage(props: { params: Promise<{ cartId: string }> }) {
-  const params = await props.params;
+const CheckSuccesPage = () => {
   return (
     <div className='min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
@@ -32,9 +31,6 @@ async function CheckoutSuccessPage(props: { params: Promise<{ cartId: string }> 
                   <h3 className='text-sm font-medium text-green-800'>
                     Order Details
                   </h3>
-                  <div className='mt-2 text-sm text-green-700'>
-                    <p>Order ID: {params.cartId}</p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -61,6 +57,6 @@ async function CheckoutSuccessPage(props: { params: Promise<{ cartId: string }> 
       </div>
     </div>
   );
-}
+};
 
-export default CheckoutSuccessPage;
+export default CheckSuccesPage;

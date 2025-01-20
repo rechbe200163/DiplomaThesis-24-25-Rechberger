@@ -22,10 +22,8 @@ export default function SearchComponent({
       params.delete('query');
     }
 
-    // Check if the current pathname already contains '/search'
-    const newPath = pathname.includes('/search')
-      ? pathname
-      : `${pathname}/search`;
+    // Reset the path to '/shop/search'
+    const newPath = '/shop/search';
 
     replace(`${newPath}?${params.toString()}`);
   }

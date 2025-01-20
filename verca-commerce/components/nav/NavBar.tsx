@@ -1,19 +1,17 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
 import NavLinks from './NavLinks';
-import { IoCartOutline, IoHomeOutline } from 'react-icons/io5';
 import HomeIcon from './HomeIcon';
 import { Skeleton } from '../ui/skeleton';
-// import SearchComponent from "../search/SearchComponent";
 import { auth } from '@/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import CartIconComponent from './CartIconComponent';
-import { Search } from 'lucide-react';
 import SearchComponent from '../search/SearchComponent';
-
 import { getSignedURL } from '@/lib/utils';
-import { string } from 'zod';
 import { fetchUserAvatarPath } from '@/lib/data/data.customer';
+import { Menu } from 'lucide-react';
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
+import { DialogTitle } from '@/components/ui/dialog';
 
 async function NavBar() {
   let imageURL: string | null = null;
@@ -28,17 +26,39 @@ async function NavBar() {
   }
 
   return (
-    <div className=' navbar bg-neutral-content space-x-20'>
-      <div className='flex-1 gap-7 flex'>
-        <Link href={'/shop'} className='text-xl font-bold'>
+    <div className='navbar bg-neutral-content'>
+      <div className='flex-1 items-center'>
+        <Drawer>
+          <DrawerTrigger asChild>
+            <button className='btn btn-ghost lg:hidden'>
+              <Menu />
+            </button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DialogTitle>
+              {/* <VisuallyHidden>Navigation Menu</VisuallyHidden> */}
+            </DialogTitle>
+            <div className='mt-4 mb-8 px-4'>
+              <NavLinks />
+              <div className='mt-4'>
+                <SearchComponent placeholder='Search for products...' />
+              </div>
+            </div>
+          </DrawerContent>
+        </Drawer>
+        <Link href={'/shop'} className='text-xl font-bold ml-2'>
           <Suspense fallback={<Skeleton className='w-20 h-4' />}>
             <HomeIcon />
           </Suspense>
         </Link>
-        <NavLinks />
+        <div className='hidden lg:flex ml-6'>
+          <NavLinks />
+        </div>
       </div>
-      <SearchComponent placeholder='Search for products...' />
-      <div className='flex items-center space-x-6 pr-5 w-fit'>
+      <div className='hidden lg:flex flex-1 justify-center'>
+        <SearchComponent placeholder='Search for products...' />
+      </div>
+      <div className='flex items-center space-x-4 pr-2'>
         <CartIconComponent />
         {session ? (
           <Link href='/dashboard'>
@@ -51,7 +71,9 @@ async function NavBar() {
             </Avatar>
           </Link>
         ) : (
-          <Link href='/auth/signin'>logIn</Link>
+          <Link href='/auth/signin' className='btn btn-ghost'>
+            Login
+          </Link>
         )}
       </div>
     </div>
