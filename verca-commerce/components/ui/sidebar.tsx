@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/tooltip';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -206,7 +207,13 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            <div className='flex h-full w-full flex-col'>{children}</div>
+            <div className='flex h-full w-full flex-col'>
+              {/* Add the DialogTitle with VisuallyHidden for accessibility */}
+              <DialogTitle className='m-2' />
+
+              {/* Children or any other content inside the dialog */}
+              {children}
+            </div>
           </SheetContent>
         </Sheet>
       );
