@@ -63,7 +63,7 @@ async function NavBar() {
               </SheetContent>
             </Sheet>
             <Link
-              href='/shop'
+              href='/'
               className='flex items-center text-xl font-semibold text-gray-800 hover:text-gray-600 transition-colors'
             >
               <Suspense fallback={<Skeleton className='w-8 h-8' />}>
@@ -114,7 +114,7 @@ async function NavBar() {
                 >
                   <DropdownMenuItem asChild>
                     <Link href='/dashboard' className='flex items-center'>
-                      <span>Dashboard</span>
+                      <span>Übersicht</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -122,7 +122,7 @@ async function NavBar() {
                       href='/dashboard/account'
                       className='flex items-center'
                     >
-                      <span>Account</span>
+                      <span>Profil</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

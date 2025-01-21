@@ -31,33 +31,15 @@ const CategoryFilterComponent: React.FC<CategoryFilterProps> = ({
     }
 
     if (!params.toString()) {
-      replace('/shop');
+      replace('/'); // Behalte nur den Root-Pfad
     } else if (params.has('filter')) {
-      const newPath = pathname.includes('/search')
-        ? pathname
-        : `${pathname}/search`;
-      replace(`${newPath}?${params.toString()}`);
+      const newPath = pathname.includes('/search') ? pathname : '/search';
+      replace(`${newPath}?${params.toString()}`); // Füge '/search' explizit hinzu
     } else {
-      replace(`${pathname}?${params.toString()}`);
+      replace(`${pathname}?${params.toString()}`); // Nutze den relativen Pfad
     }
   }
-
   const selectedFilter = searchParams.get('filter');
-
-  // Generate breadcrumbs dynamically
-  const breadcrumbs = [
-    { label: 'Shop', href: '/shop' },
-    ...(selectedFilter
-      ? [
-          {
-            label:
-              categories.find((cat) => cat.categoryId === selectedFilter)
-                ?.name || '',
-            href: pathname,
-          },
-        ]
-      : []),
-  ];
 
   return (
     <div className='space-y-4'>

@@ -7,8 +7,6 @@ import { IoHomeOutline } from 'react-icons/io5';
 async function HomeIcon() {
   const configName: SiteConfig = await prisma.siteConfig.findFirstOrThrow({});
 
-  // wait for 3 seconds
-
   return (
     <p className='flex-row flex gap-2 text-base-100'>
       <IoHomeOutline size={25} />

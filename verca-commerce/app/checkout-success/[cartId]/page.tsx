@@ -47,7 +47,7 @@ const CheckSuccesPage = () => {
 
           <div className='mt-6 text-center'>
             <Link
-              href='/shop'
+              href='/'
               className='text-sm font-medium text-blue-600 hover:text-blue-500'
             >
               Continue Shopping

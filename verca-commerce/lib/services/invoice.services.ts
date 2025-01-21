@@ -1,7 +1,6 @@
-import { formatPrice, getSignedURL } from '@/lib/utils';
-('server only');
+'server only';
+import { formatPrice } from '@/lib/utils';
 import { auth } from '@/auth';
-import { FormState } from '../form.types';
 import { ExtendedProduct } from '../interfaces';
 import prisma from '@/prisma/client';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'; // Import der pdf-lib-Bibliothek
@@ -15,7 +14,9 @@ export async function createInvoiceWithPDF(
 
   if (!session) {
     return {
-      errors: { title: ['You need to be logged in to create an invoice'] },
+      errors: {
+        title: ['Sie müssen eingeloggt sein, um eine Rechnung zu erstellen'],
+      },
       success: false,
     };
   }
@@ -73,28 +74,28 @@ async function generateInvoicePDF(
       address: true,
     },
   });
-  const logoUrl = await getSignedURL(companyInfo?.logoPath!);
-  if (!logoUrl) {
-    throw new Error('Logo URL is missing');
-  }
-  const logoImageBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
-  const logoImage = await pdfDoc.embedPng(logoImageBytes);
-  const logoDims = logoImage.scale(0.8);
+  // const logoUrl = await getSignedURL(companyInfo?.logoPath!);
+  // if (!logoUrl) {
+  //   throw new Error('Logo URL is missing');
+  // }
+  // const logoImageBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
+  // const logoImage = await pdfDoc.embedPng(logoImageBytes);
+  // const logoDims = logoImage.scale(0.8);
 
-  // Calculate position for the logo in the upper right corner
-  const logoX = 50; // 50 pixels from the left edge
-  const logoY = 50; // 50 pixels from the top edge
+  // // Calculate position for the logo in the upper right corner
+  // const logoX = 50; // 50 pixels from the left edge
+  // const logoY = 50; // 50 pixels from the top edge
 
-  page.drawImage(logoImage, {
-    x: logoX,
-    y: logoY,
-    width: logoDims.width,
-    height: logoDims.height,
-  });
+  // page.drawImage(logoImage, {
+  //   x: logoX,
+  //   y: logoY,
+  //   width: logoDims.width,
+  //   height: logoDims.height,
+  // });
 
-  drawText('INVOICE', 50, height - 50, boldFont, 24);
-  drawText(`Order ID: ${orderId}`, 50, height - 80);
-  drawText(`Date: ${new Date().toLocaleDateString()}`, 50, height - 100);
+  drawText('RECHNUNG', 50, height - 50, boldFont, 24);
+  drawText(`Bestelle Nummer: ${orderId}`, 50, height - 80);
+  drawText(`Datum: ${new Date().toLocaleDateString()}`, 50, height - 100);
 
   // Company Info (replace with your company's details)
   drawText(`${companyInfo?.companyName}`, 50, height - 130, boldFont);
@@ -119,16 +120,16 @@ async function generateInvoicePDF(
     color: rgb(0.9, 0.9, 0.9),
   });
 
-  drawText('Product', tableLeft + 5, tableTop - 15, boldFont);
-  drawText('Quantity', tableLeft + colWidths[0] + 5, tableTop - 15, boldFont);
+  drawText('Produkt', tableLeft + 5, tableTop - 15, boldFont);
+  drawText('Menge', tableLeft + colWidths[0] + 5, tableTop - 15, boldFont);
   drawText(
-    'Price',
+    'Preis',
     tableLeft + colWidths[0] + colWidths[1] + 5,
     tableTop - 15,
     boldFont
   );
   drawText(
-    'Total',
+    'Gesamte',
     tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + 5,
     tableTop - 15,
     boldFont
@@ -168,7 +169,7 @@ async function generateInvoicePDF(
   });
 
   drawText(
-    'Total Amount:',
+    'Gesamtbetrag:',
     tableLeft + colWidths[0] + colWidths[1] + 5,
     totalY,
     boldFont
@@ -182,9 +183,9 @@ async function generateInvoicePDF(
 
   // Footer
   const footerY = 50;
-  drawText('Thank you for your business!', 50, footerY, regularFont, 10);
+  drawText('Danke für Ihre Vertrauen', 50, footerY, regularFont, 10);
   drawText(
-    `Invoice generated on ${new Date().toLocaleString()}`,
+    `Rechnung erstellt am: ${new Date().toLocaleString()}`,
     50,
     footerY - 15,
     regularFont,
@@ -195,7 +196,7 @@ async function generateInvoicePDF(
   const totalPages = pdfDoc.getPageCount();
   for (let i = 0; i < totalPages; i++) {
     const page = pdfDoc.getPage(i);
-    page.drawText(`Page ${i + 1} of ${totalPages}`, {
+    page.drawText(`Seite ${i + 1} von ${totalPages}`, {
       x: 500,
       y: 15,
       size: 10,
@@ -217,7 +218,6 @@ async function uploadInvoicePDF(pdfBytes: Uint8Array, orderId: string) {
     });
 
   if (error) {
-    console.error('Error uploading invoice PDF:', error);
     throw new Error('Failed to upload invoice PDF');
   }
 

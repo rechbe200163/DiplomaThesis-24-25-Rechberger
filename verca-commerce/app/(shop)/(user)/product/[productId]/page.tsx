@@ -31,12 +31,12 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
     <div className='container mx-auto px-4 py-8'>
       {/* Breadcrumb */}
       <nav className='flex items-center space-x-2 text-sm text-muted-foreground mb-8'>
-        <Link href='/shop' className='hover:text-primary transition-colors'>
+        <Link href='/' className='hover:text-primary transition-colors'>
           Shop
         </Link>
         <ChevronRight className='h-4 w-4' />
         <Link
-          href={`/shop/search?filter=${product.categories[0].category.categoryId}`}
+          href={`/search?filter=${product.categories[0].category.categoryId}`}
           className='hover:text-primary transition-colors'
         >
           {product.categories[0].category.name}

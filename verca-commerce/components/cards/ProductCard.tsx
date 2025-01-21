@@ -13,56 +13,51 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
 
   return (
     <Link
-      href={`/shop/product/${product.productId}`}
-      className='group bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1'
+      href={`/product/${product.productId}`}
+      className='group flex flex-col h-full'
     >
-      <div className='relative aspect-square'>
+      <div className='relative aspect-square w-full bg-[#f5f5f5] rounded-lg overflow-hidden'>
         <Suspense fallback={<ImageSkeleton />}>
           <ImageComponent
             imagePath={product.imagePath!}
             alt={product.name}
             fill
-            style={{ objectFit: 'cover' }}
-            classname='transition-transform duration-300 rounded-lg'
+            sizes='(max-width: 768px) 100vw, 33vw'
           />
         </Suspense>
         {isAddedLast7Days && (
-          <Badge className='absolute top-2 right-2'>NEU</Badge>
+          <Badge className='absolute top-2 right-2 z-10' variant='secondary'>
+            NEU
+          </Badge>
         )}
       </div>
-      <div className='p-3 space-y-2'>
-        <h2 className='text-sm font-semibold mb-1 truncate'>{product.name}</h2>
-        <p className='text-xs text-gray-600 mb-2 h-8 overflow-hidden'>
-          {product.description}
-        </p>
-        <div className='flex flex-wrap gap-1 mb-2'>
+      <div className='mt-3 space-y-1 flex-1'>
+        <div className='flex gap-2 items-start flex-wrap'>
           {product.categories.map((category) => (
             <Badge
               key={category.category.name}
-              variant='default'
+              variant='secondary'
               className='text-xs'
             >
               {category.category.name}
             </Badge>
           ))}
         </div>
-        <div className='flex justify-between items-center'>
-          <span className='text-sm font-bold text-primary'>
+        <h2 className='text-lg font-medium line-clamp-1'>{product.name}</h2>
+        <p className='text-sm text-muted-foreground line-clamp-2'>
+          {product.description}
+        </p>
+        <div className='flex items-center justify-between pt-1'>
+          <span className='text-lg font-medium'>
             {formatPrice(product.price)}
           </span>
           {product.stock > 0 && product.stock <= 5 ? (
-            <Badge variant='outline' className='text-xs'>
+            <span className='text-sm text-muted-foreground'>
               Only {product.stock} left
-            </Badge>
+            </span>
           ) : product.stock === 0 ? (
-            <Badge variant='outline' className='text-xs'>
-              Sold out
-            </Badge>
-          ) : (
-            <Badge variant='outline' className='text-xs'>
-              In stock
-            </Badge>
-          )}
+            <span className='text-sm text-muted-foreground'>Sold out</span>
+          ) : null}
         </div>
       </div>
     </Link>

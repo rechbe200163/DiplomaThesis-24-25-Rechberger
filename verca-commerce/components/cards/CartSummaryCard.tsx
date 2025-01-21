@@ -51,7 +51,7 @@ async function CartSummaryCard({
         {/* Checkout Button */}
         <div className='pt-4'>
           <ButtonLink
-            href={`/shop/purchase/${customerReference}`}
+            href={`/purchase/${customerReference}`}
             disabled={subtotal === 0 || isProductSoldOut}
           >
             {subtotal === 0

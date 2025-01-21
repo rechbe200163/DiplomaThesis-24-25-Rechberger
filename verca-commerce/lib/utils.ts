@@ -105,7 +105,6 @@ export async function getSignedURL(imagePath: string): Promise<string | null> {
     }
     return data.signedUrl;
   } catch (error) {
-    console.error('Error Generating Signed URL', error);
     return null;
   }
 }
@@ -135,9 +134,7 @@ export async function sendNotificationEmail(
       subject: `${type.charAt(0).toUpperCase() + type.slice(1)} Change Notification`,
       react: NotificationEmail({ type, username, changeTime }),
     });
-  } catch (error) {
-    console.error('Error sending email:', error);
-  }
+  } catch (error) {}
 }
 
 export async function comparePasswords(

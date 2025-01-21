@@ -8,7 +8,7 @@ import React from 'react';
 function NavLinks() {
   const pathname = usePathname();
 
-  const links = [{ label: 'Alle Produkte', href: '/shop/search' }];
+  const links = [{ label: 'Alle Produkte', href: '/search' }];
 
   return (
     <nav>

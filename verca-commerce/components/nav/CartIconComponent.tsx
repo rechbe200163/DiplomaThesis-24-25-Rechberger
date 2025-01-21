@@ -25,13 +25,14 @@ async function CartIconComponent() {
     session.user.customerReference
   );
 
-  console.log(cart, sum);
-
   const totalItems = cart._count.products;
   const totalPrice = sum;
 
   return (
-    <Link href={`/shop/${customerReference}/cart`}>
+    <Link
+      href={`/${customerReference}/cart`}
+      className='relative inline-flex items-center justify-center p-2 text-gray-800 hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 rounded-md'
+    >
       <ShoppingBag className='h-6 w-6 text-foreground' />
       {totalItems > 0 && (
         <span className='absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-primary rounded-full'>

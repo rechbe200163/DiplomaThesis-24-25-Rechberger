@@ -100,7 +100,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return baseUrl + '/shop';
+      return baseUrl + '/';
     },
     async session({ session, token }) {
       if (token.sub && session.user) {

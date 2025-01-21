@@ -110,7 +110,6 @@ export async function signUp(
       message: `Welcome ${customer.firstName} ${customer.lastName} you can now login`,
     };
   } catch (error) {
-    console.error('error from signUp', error);
     return {
       errors: {
         title: ['Something went wrong'],
@@ -222,7 +221,6 @@ export async function updatePassword(
       newPassword: formData.get('newPassword') as string,
       confirmPassword: formData.get('confirmPassword') as string,
     });
-    console.log(validData.error?.message);
     if (!validData.success) {
       // Return an error if the validation fails
       return {
@@ -277,7 +275,6 @@ export async function updatePassword(
     return { success: true };
   } catch (error) {
     // Log the error for debugging purposes
-    console.error('error from updatePassword', error);
 
     // Return a generic error response to the user
     return {
@@ -320,7 +317,6 @@ export async function deleteUser(
     return { success: true };
   } catch (error) {
     // Log the error for debugging purposes
-    console.error('error from deleteUser', error);
 
     // Return a generic error response to the user
     return {
@@ -362,8 +358,7 @@ export async function restoreUser(
     revalidateTag('customersPaging');
     return { success: true };
   } catch (error) {
-    // Log the error for debugging purposes
-    console.error('error from restoreUser', error);
+    // Log the error for debugging purpose
 
     // Return a generic error response to the user
     return {
@@ -390,8 +385,6 @@ export async function addCustomer(
       };
     }
 
-    console.log('formData', formData);
-
     const validData = newCustomerFormSchema.safeParse({
       firstName: formData.get('firstName')?.toString() || null,
       lastName: formData.get('lastName')?.toString() || null,
@@ -403,8 +396,6 @@ export async function addCustomer(
       address: formData.get('addressId')?.toString() || null,
       role: (formData.get('role') as Role) || null,
     });
-
-    console.log('validData', validData.error?.flatten());
 
     if (!validData.success) {
       return {
@@ -436,21 +427,6 @@ export async function addCustomer(
 
     const hashPwd = await hashUserPassword('password');
 
-    console.log('Prisma create input:', {
-      email: validData.data.email,
-      password: hashPwd,
-      firstName: validData.data.firstName,
-      lastName: validData.data.lastName,
-      companyNumber: validData.data.companyNumber,
-      phoneNumber: validData.data.phoneNumber,
-      customerReference,
-      businessSector: validData.data.businessSector,
-      address: {
-        connect: formData.get('addressId') as string,
-      },
-      cart: { create: {} },
-    });
-
     const customer = await prisma.customer.create({
       data: {
         email: validData.data.email,
@@ -481,14 +457,11 @@ export async function addCustomer(
       };
     }
 
-    console.log('customercustomer', customer);
-
     return {
       success: true,
       message: `Customer ${customer.firstName} ${customer.lastName} added successfully`,
     };
   } catch (error) {
-    console.log('error from addCustomer', error);
     return {
       success: false,
       errors: {

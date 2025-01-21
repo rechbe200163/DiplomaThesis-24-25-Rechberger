@@ -48,8 +48,6 @@ export async function GET(
         },
       });
 
-      console.log(totalCartValue);
-
       return NextResponse.json(
         { cart, sum: totalCartValue._sum.price },
         { status: 200 }

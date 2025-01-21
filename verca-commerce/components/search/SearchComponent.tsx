@@ -23,8 +23,8 @@ export default function SearchComponent({
       params.delete('query');
     }
 
-    // Reset the path to '/shop/search'
-    const newPath = '/shop/search';
+    // Reset the path to '/search'
+    const newPath = '/search';
 
     replace(`${newPath}?${params.toString()}`);
   }

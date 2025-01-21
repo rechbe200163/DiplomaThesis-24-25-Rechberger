@@ -84,7 +84,6 @@ export function SignUpForm() {
         });
       })
       .catch((error) => {
-        console.error('Error during sign up:', error);
         toast({
           title: 'Error',
           description: 'An unexpected error occurred. Please try again.',

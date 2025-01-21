@@ -11,7 +11,7 @@ async function CompanyIconComponent() {
   return (
     <nav>
       <Link
-        href='/shop'
+        href='/'
         className='cursor-pointer flex items-center justify-center'
       >
         <Suspense fallback={<ImageSkeleton />}>

@@ -91,7 +91,6 @@ export async function updateAddress(
     revalidateTag(`address-${customerReference}`);
     return { success: true };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       errors: {

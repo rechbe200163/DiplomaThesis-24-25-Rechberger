@@ -110,7 +110,6 @@ export async function addToCart(
       success: true,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       errors: {
@@ -225,7 +224,6 @@ export async function updateQuantity(
       success: true,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       errors: {
@@ -298,7 +296,6 @@ export async function removeFromCart(
       success: true,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       errors: {
@@ -390,7 +387,6 @@ async function clearCart(cartId: string): Promise<FormState> {
       success: true,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       errors: {

@@ -20,7 +20,6 @@ export async function uploadAvatar(
     });
 
   if (error) {
-    console.error('Error uploading invoice PDF:', error);
     throw new Error('Failed to upload invoice PDF');
   }
 
@@ -41,7 +40,6 @@ async function updateUserData(customerReference: number, avatarPath: string) {
       },
     });
   } catch (error) {
-    console.error('Error updating user data:', error);
     throw new Error('Failed to update user data');
   }
 }
@@ -74,7 +72,6 @@ export async function processImage(file: File) {
     revalidateTag('avatar');
     return { success: true };
   } catch (error) {
-    console.error('error from uploadProfilePicture', error);
     return {
       success: false,
       errors: { title: ['Could not upload file', error as string] },

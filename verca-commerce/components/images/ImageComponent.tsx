@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import Image from 'next/image';
 import { getSignedURL } from '@/lib/utils';
 import { ImageOff } from 'lucide-react';
@@ -28,7 +28,6 @@ async function ImageComponent({
   const imageURL = await getSignedURL(imagePath);
 
   if (!imageURL) {
-    // Placeholder image with dynamic Tailwind styling
     return (
       <div className='w-full h-full bg-muted flex items-center justify-center'>
         <ImageOff className='h-8 w-8 text-muted-foreground/50' />
@@ -38,27 +37,15 @@ async function ImageComponent({
 
   return (
     <div
-      className='overflow-hidden rounded-md' // Ensures alignment with card borders
-      style={{
-        position: 'relative',
-        width: width || '100%',
-        height: height || '100%',
-      }}
+      className={`relative w-full h-full overflow-hidden rounded-lg ${classname}`}
     >
       <Image
-        src={imageURL}
+        src={imageURL || '/placeholder.svg'}
         alt={alt}
-        width={width}
-        fill={fill}
-        style={{
-          ...style,
-          objectFit: 'contain', // Ensures the image fills the container while aligning with edges
-          objectPosition: 'center', // Keeps the image centered
-          margin: '-4px', // Slightly enlarges the image to cover the edges of the card
-        }}
-        height={height}
-        sizes={sizes}
-        className={classname}
+        fill={true}
+        sizes={sizes || '(max-width: 768px) 100vw, 33vw'}
+        className='object-cover w-full h-full hover:scale-105 transition-transform duration-300'
+        priority
       />
     </div>
   );

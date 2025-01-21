@@ -142,15 +142,10 @@ async function main() {
       addressId: address.addressId,
     },
   });
-
-  console.log(
-    'Alle Tabellen erfolgreich mit mindestens einem Eintrag gefüllt!'
-  );
 }
 
 main()
   .catch((e) => {
-    console.error(e);
     process.exit(1);
   })
   .finally(async () => {
