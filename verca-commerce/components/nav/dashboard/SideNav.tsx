@@ -22,7 +22,7 @@ import CompanyIconComponent from './CompanyIconComponent';
 export function DashboardSidebar() {
   return (
     <Sidebar collapsible='offcanvas' variant='floating' className='w-auto'>
-      <SidebarHeader>
+      <SidebarHeader className='w-auto h-auto'>
         <CompanyIconComponent />
       </SidebarHeader>
       <SidebarContent>

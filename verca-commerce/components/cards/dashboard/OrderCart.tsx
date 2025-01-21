@@ -39,7 +39,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
         <div className='flex flex-wrap items-center justify-between gap-4'>
           <div className='flex flex-wrap items-center gap-4'>
             <div>
-              <p className='text-sm font-medium'>Order ID</p>
+              <p className='text-sm font-medium'>Bestell Nummer</p>
               <div className='flex items-center gap-2'>
                 <p className='text-lg font-bold min-w-6 text-clip'>
                   {order.orderId}
@@ -49,21 +49,21 @@ function OrderCard({ order }: { order: OrderDetails }) {
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>
-              <p className='text-sm font-medium'>Ordered On</p>
+              <p className='text-sm font-medium'>Bestellt am</p>
               <p className='text-base'>
                 {formatDate(new Date(order.orderDate))}
               </p>
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>
-              <p className='text-sm font-medium'>Total Items</p>
+              <p className='text-sm font-medium'>Artikel</p>
               <p className='text-base'>{order.products.length}</p>
             </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='outline'>
-                Download <ChevronDown className='ml-2 h-4 w-4' />
+                Herunterladen <ChevronDown className='ml-2 h-4 w-4' />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -109,22 +109,22 @@ function OrderCard({ order }: { order: OrderDetails }) {
       </CardContent>
       <CardFooter className='flex flex-wrap items-center justify-between gap-4 px-6 py-4'>
         <div>
-          <p className='text-sm font-medium'>Order Total</p>
+          <p className='text-sm font-medium'>Bestellung Gesamt</p>
           <p className='text-lg font-bold'>
             {formatPrice(Number(order.invoice?.invoiceAmount.toFixed(2)) || 0)}
           </p>
         </div>
         <div>
-          <p className='text-sm font-medium'>Payment Status</p>
+          <p className='text-sm font-medium'>Zahlstatus</p>
           <Badge
             variant={order.invoice?.paymentDate ? 'default' : 'destructive'}
           >
-            {order.invoice?.paymentDate ? 'Paid' : 'Pending'}
+            {order.invoice?.paymentDate ? 'Bezahlt' : 'Ausstehend'}
           </Badge>
         </div>
         <Accordion type='single' collapsible className='w-full'>
           <AccordionItem value='details'>
-            <AccordionTrigger>View Order Status</AccordionTrigger>
+            <AccordionTrigger>Bestelle Status</AccordionTrigger>
             <AccordionContent>
               <PaymentStatusProgressBar orderState={order.orderState} />
             </AccordionContent>
@@ -137,10 +137,11 @@ function OrderCard({ order }: { order: OrderDetails }) {
 
 function PaymentStatusProgressBar({ orderState }: { orderState: OrderState }) {
   const states = [
-    'order_placed',
-    'order_confirmed',
-    'order_shipped',
-    'order_delivered',
+    'ORDER_PLACED',
+    'IN_PROGRESS',
+    'DISPATCHED',
+    'DELIVERED',
+    'ORDER_COLLECTED',
   ];
 
   return (

@@ -145,7 +145,7 @@ model Invoice {
   invoiceId     String    @id @default(uuid()) @db.Uuid
   orderId       String    @unique @db.Uuid
   invoiceAmount Int //price in cents
-  paymentDate   DateTime?
+  paymentDate   DateTime? @default(now())
   pdfUrl        String    @db.VarChar(255)
   deleted Boolean @default(false)
 

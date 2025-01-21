@@ -12,7 +12,7 @@ export default async function InvoicePdfLink({
   return (
     <>
       <Download className='mr-2 h-4 w-4' />
-      <Link href={pdfUrl}> Invoice PDF</Link>
+      <Link href={pdfUrl}> Rechnungs-PDF</Link>
     </>
   );
 }

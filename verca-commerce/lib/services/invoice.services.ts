@@ -1,5 +1,5 @@
 'server only';
-import { formatPrice } from '@/lib/utils';
+import { formatDateTime, formatPrice } from '@/lib/utils';
 import { auth } from '@/auth';
 import { ExtendedProduct } from '../interfaces';
 import prisma from '@/prisma/client';
@@ -95,7 +95,7 @@ async function generateInvoicePDF(
 
   drawText('RECHNUNG', 50, height - 50, boldFont, 24);
   drawText(`Bestelle Nummer: ${orderId}`, 50, height - 80);
-  drawText(`Datum: ${new Date().toLocaleDateString()}`, 50, height - 100);
+  drawText(`Datum: ${formatDateTime(new Date())}`, 50, height - 100);
 
   // Company Info (replace with your company's details)
   drawText(`${companyInfo?.companyName}`, 50, height - 130, boldFont);
@@ -129,7 +129,7 @@ async function generateInvoicePDF(
     boldFont
   );
   drawText(
-    'Gesamte',
+    'Gesamt',
     tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + 5,
     tableTop - 15,
     boldFont
@@ -185,7 +185,7 @@ async function generateInvoicePDF(
   const footerY = 50;
   drawText('Danke für Ihre Vertrauen', 50, footerY, regularFont, 10);
   drawText(
-    `Rechnung erstellt am: ${new Date().toLocaleString()}`,
+    `Rechnung erstellt am: ${formatDateTime(new Date())}`,
     50,
     footerY - 15,
     regularFont,

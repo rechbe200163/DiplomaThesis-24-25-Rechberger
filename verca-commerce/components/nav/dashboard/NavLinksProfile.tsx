@@ -7,7 +7,6 @@ import {
   LucideListOrdered,
   MapPinIcon,
 } from 'lucide-react';
-import { PiInvoice } from 'react-icons/pi';
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -24,7 +23,7 @@ const accountLinks = [
 ];
 
 const shoppingLinks = [
-  { name: 'Orders', href: '/dashboard/', icon: LucideListOrdered },
+  { name: 'Orders', href: '/dashboard', icon: LucideListOrdered },
 ];
 
 const supportLinks = [
