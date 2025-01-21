@@ -357,7 +357,9 @@ export async function reduceStockofPurchasedProducts(
     await prisma.product.update({
       where: { productId: productId },
       data: {
-        stock: existingProduct.stock - product.quantity,
+        stock: {
+          decrement: product.quantity,
+        },
       },
     });
   }

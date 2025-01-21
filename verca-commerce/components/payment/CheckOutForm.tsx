@@ -1,8 +1,6 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
-
-import { Product } from '@prisma/client';
+import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import {
   Elements,
@@ -10,7 +8,6 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import Image from 'next/image';
 import { formatPrice } from '@/lib/utils';
 import {
   Card,
@@ -23,10 +20,8 @@ import {
 import { Button } from '../ui/button';
 import { FormState } from '@/lib/form.types';
 import { reduceStockofPurchasedProducts } from '@/lib/actions/product.actions';
-import { CartWithProducts } from '@/lib/types';
 import { ExtendedProduct } from '@/lib/interfaces';
-import ImageComponent from '../images/ImageComponent';
-import ImageSkeleton from '../images/ImageSkeleton';
+import { useRouter } from 'next/navigation';
 
 type CheckoutFromProps = {
   products: ExtendedProduct[];
@@ -45,8 +40,6 @@ export const CheckOutForm = ({
   cartId,
   paymentAmount,
 }: CheckoutFromProps) => {
-  const total = paymentAmount;
-
   return (
     <div className='max-w-5xl w-full mx-auto space-y-8 p-10'>
       <Elements
@@ -60,6 +53,7 @@ export const CheckOutForm = ({
     </div>
   );
 };
+
 export default CheckOutForm;
 
 function Form({
@@ -71,46 +65,43 @@ function Form({
   products: ExtendedProduct[];
   cartId: string;
 }) {
+  const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | FormState>();
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (stripe == null || elements == null) {
+
+    if (!stripe || !elements) {
+      console.log('Stripe oder Elemente sind nicht verfügbar.');
+      setErrorMessage('Stripe oder Elemente sind nicht verfügbar.');
       return;
     }
 
     setIsLoading(true);
-    reduceStockofPurchasedProducts(products, cartId).then((response) => {
-      if (!response.success) {
-        setErrorMessage(response.errors?.title[0]);
-        setIsLoading(false);
-        return;
-      }
 
-      stripe
-        .confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout-success/${cartId}`,
-          },
-        })
-        .then(({ error }) => {
-          if (
-            error.type === 'card_error' ||
-            error.type === 'validation_error'
-          ) {
-            setErrorMessage(error.message);
-          } else {
-            setErrorMessage('An error occurred');
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    });
+    try {
+      // Bestätigt die Zahlung
+      const { error } = await stripe.confirmPayment({
+        elements,
+        redirect: 'if_required',
+      });
+
+      // Wenn keine Fehler auftreten, reduziere den Bestand
+      if (!error) {
+        const resp = await reduceStockofPurchasedProducts(products, cartId);
+        router.push(`/checkout-success/${cartId}`);
+      } else {
+        setErrorMessage(error.message || 'Unbekannter Fehler');
+      }
+    } catch (error) {
+      console.error('Fehler im Zahlungsvorgang:', error);
+      setErrorMessage('Es ist ein unerwarteter Fehler aufgetreten.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

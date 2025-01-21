@@ -43,7 +43,13 @@ export function formatPhoneNumber(phoneNumber: string) {
 }
 
 export function formatDateTime(date: Date) {
-  const formattedDate = new Date(date).toLocaleDateString();
+  const formattedDate = new Date(date).toLocaleDateString('de-AT', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
 
   return formattedDate;
 }
