@@ -75,14 +75,16 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
               <span className='text-3xl font-bold'>
                 {formatPrice(product.price)}
               </span>
-              {product.stock > 0 && (
+              {product.stock > 0 ? (
                 <Badge
                   variant={product.stock <= 5 ? 'destructive' : 'secondary'}
                 >
                   {product.stock <= 5
-                    ? `Only ${product.stock} left`
-                    : 'In Stock'}
+                    ? `Nur ${product.stock} übrig`
+                    : 'Verfügbar'}
                 </Badge>
+              ) : (
+                <Badge variant='destructive'>Ausverkauft</Badge>
               )}
             </div>
           </div>

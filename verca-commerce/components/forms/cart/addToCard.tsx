@@ -78,12 +78,11 @@ export default function AddToCartForm({ productId }: AddToCartFormProps) {
         {isPending ? (
           <>
             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-            Adding to Cart...
           </>
         ) : (
           <>
             <ShoppingCart className='mr-2 h-4 w-4' />
-            Add to Cart
+            In den Einkaufswagen
           </>
         )}
       </Button>

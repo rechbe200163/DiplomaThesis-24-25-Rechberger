@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { removeFromCart } from '@/lib/actions/product.actions';
-import { Trash2 } from 'lucide-react';
+import { Loader2, Trash2 } from 'lucide-react';
 import { useActionState } from 'react';
 
 function RemoveFromCart({ productId }: { productId: string }) {
@@ -21,8 +21,16 @@ function RemoveFromCart({ productId }: { productId: string }) {
         size='icon'
         className='text-muted-foreground hover:text-destructive'
       >
-        <Trash2 className='h-4 w-4' />
-        <span className='sr-only'>Remove item</span>
+        {isPending ? (
+          <>
+            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+          </>
+        ) : (
+          <>
+            <Trash2 className='h-4 w-4' />
+            <span className='sr-only'>Remove item</span>
+          </>
+        )}
       </Button>
     </form>
   );

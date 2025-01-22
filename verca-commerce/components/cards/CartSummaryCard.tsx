@@ -2,6 +2,7 @@ import { formatPrice } from '@/lib/utils';
 import React from 'react';
 import { ButtonLink } from '../helpers/ButtonLink';
 import { getCartByCustomerReference } from '@/lib/data/data.cart';
+import ProceedToCheckOut from '../forms/cart/proceedToCheckOut';
 
 async function CartSummaryCard({
   customerReference,
@@ -10,6 +11,7 @@ async function CartSummaryCard({
 }) {
   const request = await getCartByCustomerReference(customerReference);
 
+  const cr = Number(customerReference);
   // Calculate subtotal
   const subtotal = request.products.reduce(
     (acc, product) => acc + product.product.price * product.quantity,
@@ -50,16 +52,7 @@ async function CartSummaryCard({
 
         {/* Checkout Button */}
         <div className='pt-4'>
-          <ButtonLink
-            href={`/purchase/${customerReference}`}
-            disabled={subtotal === 0 || isProductSoldOut}
-          >
-            {subtotal === 0
-              ? 'Kein Produkt im Warenkorb'
-              : isProductSoldOut
-                ? 'Einige Produkte im Warenkorb sind ausverkauft'
-                : 'Weiter zur Kasse'}
-          </ButtonLink>
+          <ProceedToCheckOut customerReference={cr} subtotal={subtotal} />
         </div>
       </div>
     </div>

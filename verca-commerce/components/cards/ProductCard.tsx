@@ -52,11 +52,9 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
             {formatPrice(product.price)}
           </span>
           {product.stock > 0 && product.stock <= 5 ? (
-            <span className='text-sm text-muted-foreground'>
-              Only {product.stock} left
-            </span>
+            <Badge variant={'outline'}>Nur {product.stock} übrig</Badge>
           ) : product.stock === 0 ? (
-            <span className='text-sm text-muted-foreground'>Sold out</span>
+            <Badge variant={'outline'}>Ausverkauft</Badge>
           ) : null}
         </div>
       </div>

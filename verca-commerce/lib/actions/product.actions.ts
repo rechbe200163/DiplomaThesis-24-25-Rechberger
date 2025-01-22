@@ -397,3 +397,72 @@ async function clearCart(cartId: string): Promise<FormState> {
     };
   }
 }
+
+export async function checkProductQuantityBeforeCheckout(
+  customerReference: number
+): Promise<FormState> {
+  try {
+    const cart = await prisma.cart.findUnique({
+      where: { customerReference },
+      include: { products: true },
+    });
+
+    // the product or products that are out of stock
+
+    if (!cart) {
+      return {
+        success: false,
+        errors: {
+          title: ['Cart not found'],
+        },
+      };
+    }
+
+    const outOfStockProducts: Product[] = [];
+
+    for (const product of cart?.products) {
+      const existingProduct = await prisma.product.findUnique({
+        where: { productId: product.productId },
+      });
+
+      if (!existingProduct) {
+        return {
+          success: false,
+          errors: {
+            title: ['Product not found'],
+          },
+        };
+      }
+
+      if (existingProduct.stock < 1) {
+        outOfStockProducts.push(existingProduct);
+      }
+
+      if (product.quantity > existingProduct.stock) {
+        outOfStockProducts.push(existingProduct);
+      }
+    }
+
+    if (outOfStockProducts.length > 0) {
+      return {
+        success: false,
+        errors: {
+          title: ['Some products are out of stock'],
+        },
+      };
+    }
+
+    revalidateTag('cart');
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      errors: {
+        title: ['Could not check product quantities'],
+      },
+    };
+  }
+}
