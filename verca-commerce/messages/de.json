@@ -116,11 +116,11 @@
     },
     "product": {
       "details": "Produktdetails",
-      "add_to_cart": "In den Warenkorb",
       "quantity": "Menge",
       "out_of_stock": "Nicht auf Lager",
-      "only_left": "Nur noch",
+      "only_left": "Nur",
       "in_stock": "Auf Lager",
+      "remain": "übrig",
       "available": "verfügbar",
       "related_products": "Ähnliche Produkte",
       "product_details": "Produktdetails",
@@ -132,7 +132,8 @@
       "subtotal": "Zwischensumme",
       "shipping": "Versand",
       "total": "Gesamt",
-      "summary": "Zusammenfassung"
+      "summary": "Zusammenfassung",
+      "add_to_cart": "In den Warenkorb"
     }
   },
   "Pagination": {
@@ -177,5 +178,10 @@
     "updated_cart": "Warenkorb wurde aktualisiert",
     "clipboard": "In die Zwischenablage kopiert",
     "error": "Ein Fehler ist aufgetreten"
+  },
+  "Search": {
+    "sr-only": "Suche nach Produkten",
+    "search_shop": "Suche nach Produkten",
+    "no_results": "Keine Ergebnisse gefunden"
   }
 }

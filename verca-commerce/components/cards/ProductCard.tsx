@@ -56,7 +56,7 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
           </span>
           {product.stock > 0 && product.stock <= 5 ? (
             <Badge variant={'outline'}>
-              {t('only_left')} {product.stock} {t('in_stock')}
+              {t('only_left')} {product.stock} {t('remain')}
             </Badge>
           ) : product.stock === 0 ? (
             <Badge variant={'outline'}>{t('out_of_stock')}</Badge>

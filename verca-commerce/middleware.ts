@@ -20,7 +20,6 @@ export async function middleware(req: NextRequest) {
   }
 
   const userLocale = await getUserLocale();
-  console.log('User locale:', userLocale);
 
   const response = NextResponse.next();
   response.headers.set('x-user-locale', userLocale);

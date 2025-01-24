@@ -26,6 +26,7 @@ import { getTranslations } from 'next-intl/server';
 
 async function NavBar() {
   const t = await getTranslations('Navbar');
+  const t_search = await getTranslations('Search');
   let imageURL: string | null = null;
   const session = await auth();
   if (session) {
@@ -60,7 +61,7 @@ async function NavBar() {
                 </VisuallyHidden>
                 <div className='mt-6 space-y-4'>
                   <NavLinks />
-                  <SearchComponent placeholder='Suche nach Produkten' />
+                  <SearchComponent placeholder={t_search('search_shop')} />
                 </div>
               </SheetContent>
             </Sheet>
@@ -78,7 +79,7 @@ async function NavBar() {
           <div className='hidden lg:flex items-center space-x-20'>
             <NavLinks />
             <div className='hidden lg:block w-64'>
-              <SearchComponent placeholder='Suche nach Produkten' />
+              <SearchComponent placeholder={t_search('search_shop')} />
             </div>
           </div>
 
@@ -100,7 +101,11 @@ async function NavBar() {
                     className='rounded-full focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2'
                   >
                     <Avatar>
-                      <AvatarImage src={imageURL!} />
+                      <AvatarImage
+                        src={imageURL!}
+                        alt='pb'
+                        className='object-cover w-10 h-10 rounded-full'
+                      />
                       <AvatarFallback className='bg-gray-200 text-gray-800'>
                         {session.user.lastName[0] +
                           (session.user.firstName

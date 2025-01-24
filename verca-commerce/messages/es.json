@@ -3,20 +3,20 @@
     "greeting": "Bienvenido de nuevo",
     "Account": {
       "title": "Información personal",
-      "desc": "Actualiza tu información de cuenta",
+      "desc": "Actualice su información de cuenta",
       "update_details": "Actualizar detalles de la cuenta",
       "update_profile_picture": "Actualizar foto de perfil",
       "first_name": "Nombre",
       "last_name": "Apellido",
       "email": "Correo electrónico",
-      "confirmation_email": "Te enviaremos un correo electrónico de confirmación cuando se realicen cambios",
+      "confirmation_email": "Le enviaremos un correo electrónico de confirmación cuando se realicen cambios",
       "phone": "Número de teléfono",
       "company_number": "Número de empresa",
       "business_sector": "Sector empresarial",
       "button": "Actualizar",
       "change_password": {
         "title": "Cambiar contraseña",
-        "ensure_security": "Asegúrate de que tu cuenta use una contraseña segura."
+        "ensure_security": "Asegúrese de que su cuenta use una contraseña segura."
       },
       "password": {
         "title": "Cambiar contraseña",
@@ -30,7 +30,7 @@
     },
     "Address": {
       "title": "Información de dirección",
-      "desc": "Actualiza tu dirección de envío",
+      "desc": "Actualice su dirección de envío",
       "address": {
         "street_number": "Número de casa",
         "street_name": "Calle",
@@ -45,12 +45,12 @@
     },
     "no_orders": {
       "title": "No hay pedidos",
-      "desc": "Aún no has realizado ningún pedido"
+      "desc": "Aún no ha realizado ningún pedido"
     }
   },
   "Orders": {
     "title": "Pedidos",
-    "desc": "Revisa tu historial de pedidos",
+    "desc": "Revise su historial de pedidos",
     "order": {
       "id": "Número de pedido",
       "ordered_on": "Pedido el",
@@ -72,7 +72,7 @@
       "first_name": "Nombre",
       "last_name": "Apellido",
       "email": "Correo electrónico",
-      "confirmation_email": "Te enviaremos un correo electrónico de confirmación cuando se realicen cambios",
+      "confirmation_email": "Le enviaremos un correo electrónico de confirmación cuando se realicen cambios",
       "phone": "Teléfono",
       "company_number": "Número de empresa",
       "business_sector": "Sector empresarial",
@@ -90,37 +90,37 @@
       "button": "Iniciar sesión"
     },
     "Error": {
-      "error": "Hubo un problema al intentar autenticar. Por favor contáctanos si este problema persiste. Código de error único:"
+      "error": "Hubo un problema al intentar autenticar. Por favor contáctenos si este problema persiste. Código de error único:"
     }
   },
   "Check_Out_Success": {
     "title": "Compra exitosa",
-    "message": "Tu pedido se ha realizado con éxito",
+    "message": "Su pedido se ha realizado con éxito",
     "details": "Detalles del pedido",
     "order_history": "Historial de pedidos",
     "continue_shopping": "Seguir comprando"
   },
   "Purchase": {
     "title": "Caja",
-    "youre_purchase": "Tu compra",
+    "youre_purchase": "Su compra",
     "button": "Comprar"
   },
   "Shop": {
     "shop": "tienda",
     "no_products": {
       "title": "Actualmente no hay productos disponibles.",
-      "desc": "¡Por favor, vuelve más tarde!"
+      "desc": "¡Por favor, vuelva más tarde!"
     },
     "search": {
-      "no_products": "¡Lo siento! Parece que no tenemos lo que estás buscando."
+      "no_products": "¡Lo siento! Parece que no tenemos lo que buscas."
     },
     "product": {
       "details": "Detalles del producto",
-      "add_to_cart": "Añadir al carrito",
       "quantity": "Cantidad",
       "out_of_stock": "Agotado",
-      "only_left": "Solo quedan",
+      "only_left": "Solo",
       "in_stock": "En stock",
+      "remain": "restante",
       "available": "disponible",
       "related_products": "Productos relacionados",
       "product_details": "Detalles del producto",
@@ -128,11 +128,12 @@
     },
     "cart": {
       "title": "Carrito",
-      "proceed_to_checkout": "Proceder al pago",
+      "proceed_to_checkout": "Proceder a la compra",
       "subtotal": "Subtotal",
       "shipping": "Envío",
       "total": "Total",
-      "summary": "Resumen"
+      "summary": "Resumen",
+      "add_to_cart": "Añadir al carrito"
     }
   },
   "Pagination": {
@@ -177,5 +178,10 @@
     "updated_cart": "Carrito actualizado",
     "clipboard": "Copiado al portapapeles",
     "error": "Ocurrió un error"
+  },
+  "Search": {
+    "sr-only": "Buscar productos",
+    "search_shop": "Buscar productos",
+    "no_results": "No se encontraron resultados"
   }
 }

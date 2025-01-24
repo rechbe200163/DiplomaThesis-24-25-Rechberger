@@ -24,7 +24,7 @@
         "new_password": "Nouveau mot de passe",
         "confirm_password": "Confirmer le mot de passe",
         "succuess": "Mot de passe changé avec succès!",
-        "error": "Une erreur est survenue",
+        "error": "Une erreur s'est produite",
         "button": "Changer le mot de passe"
       }
     },
@@ -72,7 +72,7 @@
       "first_name": "Prénom",
       "last_name": "Nom de famille",
       "email": "E-mail",
-      "confirmation_email": "Nous vous enverrons un e-mail de confirmation lorsque des modifications seront apportées",
+      "confirmation_email": "Nous vous enverrons un e-mail de confirmation lorsque modifié",
       "phone": "Téléphone",
       "company_number": "Numéro d'entreprise",
       "business_sector": "Secteur d'activité",
@@ -82,7 +82,7 @@
     },
     "Sign_In": {
       "title": "Se connecter",
-      "no_account": "Vous n'avez pas de compte?",
+      "no_account": "Vous n'avez pas encore de compte?",
       "create_account": "Créer un compte",
       "email": "E-mail",
       "password": "Mot de passe",
@@ -116,11 +116,11 @@
     },
     "product": {
       "details": "Détails du produit",
-      "add_to_cart": "Ajouter au panier",
       "quantity": "Quantité",
       "out_of_stock": "En rupture de stock",
-      "only_left": "Il ne reste que",
+      "only_left": "Seulement",
       "in_stock": "En stock",
+      "remain": "restant",
       "available": "disponible",
       "related_products": "Produits similaires",
       "product_details": "Détails du produit",
@@ -132,7 +132,8 @@
       "subtotal": "Sous-total",
       "shipping": "Expédition",
       "total": "Total",
-      "summary": "Résumé"
+      "summary": "Résumé",
+      "add_to_cart": "Ajouter au panier"
     }
   },
   "Pagination": {
@@ -176,6 +177,11 @@
     "removed_from_cart": "Produit retiré du panier",
     "updated_cart": "Panier mis à jour",
     "clipboard": "Copié dans le presse-papiers",
-    "error": "Une erreur est survenue"
+    "error": "Une erreur s'est produite"
+  },
+  "Search": {
+    "sr-only": "Recherche de produits",
+    "search_shop": "Recherche de produits",
+    "no_results": "Aucun résultat trouvé"
   }
 }

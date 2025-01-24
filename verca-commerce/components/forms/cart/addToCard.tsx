@@ -12,12 +12,14 @@ import {
 } from '@/components/ui/select';
 import { addToCart } from '@/lib/actions/product.actions';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 interface AddToCartFormProps {
   productId: string;
 }
 
 export default function AddToCartForm({ productId }: AddToCartFormProps) {
+  const t = useTranslations('Shop.cart');
   const [formState, action, isPending] = useActionState(
     addToCart.bind(null, productId),
     {
@@ -82,7 +84,7 @@ export default function AddToCartForm({ productId }: AddToCartFormProps) {
         ) : (
           <>
             <ShoppingCart className='mr-2 h-4 w-4' />
-            In den Einkaufswagen
+            {t('add_to_cart')}
           </>
         )}
       </Button>

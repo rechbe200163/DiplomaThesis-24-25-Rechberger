@@ -4,12 +4,14 @@ import { PiMagnifyingGlass } from 'react-icons/pi';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
 import { Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function SearchComponent({
   placeholder,
 }: {
   placeholder: string;
 }) {
+  const t = useTranslations('Search');
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -32,7 +34,7 @@ export default function SearchComponent({
   return (
     <div className='relative flex flex-1 flex-shrink-0 max-w-xs'>
       <label htmlFor='search' className='sr-only'>
-        Search
+        {t('sr-only')}
       </label>
       <Input
         className='peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500'

@@ -94,8 +94,8 @@
     }
   },
   "Check_Out_Success": {
-    "title": "Successful Checkout",
-    "message": "Your order has been placed successfully",
+    "title": "Checkout Success",
+    "message": "Your order has been successfully placed",
     "details": "Order Details",
     "order_history": "Order History",
     "continue_shopping": "Continue Shopping"
@@ -116,12 +116,12 @@
     },
     "product": {
       "details": "Product Details",
-      "add_to_cart": "Add to Cart",
       "quantity": "Quantity",
       "out_of_stock": "Out of Stock",
-      "only_left": "Only left",
+      "only_left": "Only",
       "in_stock": "In Stock",
-      "available": "Available",
+      "remain": "left",
+      "available": "available",
       "related_products": "Related Products",
       "product_details": "Product Details",
       "product_new": "New"
@@ -132,7 +132,8 @@
       "subtotal": "Subtotal",
       "shipping": "Shipping",
       "total": "Total",
-      "summary": "Summary"
+      "summary": "Summary",
+      "add_to_cart": "Add to Cart"
     }
   },
   "Pagination": {
@@ -177,5 +178,10 @@
     "updated_cart": "Cart updated",
     "clipboard": "Copied to clipboard",
     "error": "An error occurred"
+  },
+  "Search": {
+    "sr-only": "Search for products",
+    "search_shop": "Search for products",
+    "no_results": "No results found"
   }
 }

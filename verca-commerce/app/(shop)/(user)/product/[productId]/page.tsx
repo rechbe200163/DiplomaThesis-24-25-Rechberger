@@ -78,11 +78,9 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
                 {formatPrice(product.price)}
               </span>
               {product.stock > 0 ? (
-                <Badge
-                  variant={product.stock <= 5 ? 'destructive' : 'secondary'}
-                >
+                <Badge variant={product.stock <= 5 ? 'outline' : 'secondary'}>
                   {product.stock <= 5
-                    ? `${t('product.only_left')} ${product.stock} ${t('product.available')}`
+                    ? `${t('product.only_left')} ${product.stock} ${t('product.remain')}`
                     : `${t('productavailable')}`}
                 </Badge>
               ) : (
@@ -100,7 +98,6 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
           {/* Add to Cart Section */}
           <div className='space-y-4'>
             <AddToCartForm productId={product.productId} />
-
             {/* Delivery Info */}
             <Card>
               <CardContent className='grid gap-4 p-6'>
@@ -134,7 +131,7 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
           </div>
 
           {/* Product Details Accordion */}
-          <Accordion type='single' collapsible className='w-full'>
+          {/* <Accordion type='single' collapsible className='w-full'>
             <AccordionItem value='specifications'>
               <AccordionTrigger>Specifications</AccordionTrigger>
               <AccordionContent>
@@ -164,7 +161,7 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
                 </div>
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
+          </Accordion> */}
         </div>
       </div>
 

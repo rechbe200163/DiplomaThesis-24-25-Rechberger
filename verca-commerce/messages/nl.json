@@ -9,7 +9,7 @@
       "first_name": "Voornaam",
       "last_name": "Achternaam",
       "email": "E-mail",
-      "confirmation_email": "We sturen u een bevestigingsmail als er wijzigingen zijn aangebracht",
+      "confirmation_email": "We sturen u een bevestigingsmail wanneer er wijzigingen zijn aangebracht",
       "phone": "Telefoonnummer",
       "company_number": "Bedrijfsnummer",
       "business_sector": "Zakelijke sector",
@@ -72,7 +72,7 @@
       "first_name": "Voornaam",
       "last_name": "Achternaam",
       "email": "E-mail",
-      "confirmation_email": "We sturen u een bevestigingsmail als er wijzigingen zijn aangebracht",
+      "confirmation_email": "We sturen u een bevestigingsmail wanneer gewijzigd",
       "phone": "Telefoon",
       "company_number": "Bedrijfsnummer",
       "business_sector": "Zakelijke sector",
@@ -94,7 +94,7 @@
     }
   },
   "Check_Out_Success": {
-    "title": "Succesvolle afhandeling",
+    "title": "Succesvolle afrekening",
     "message": "Uw bestelling is succesvol geplaatst",
     "details": "Bestelgegevens",
     "order_history": "Bestelgeschiedenis",
@@ -116,11 +116,11 @@
     },
     "product": {
       "details": "Productdetails",
-      "add_to_cart": "In winkelwagen",
       "quantity": "Aantal",
       "out_of_stock": "Niet op voorraad",
-      "only_left": "Nog maar",
+      "only_left": "Slechts",
       "in_stock": "Op voorraad",
+      "remain": "over",
       "available": "beschikbaar",
       "related_products": "Gerelateerde producten",
       "product_details": "Productdetails",
@@ -132,7 +132,8 @@
       "subtotal": "Subtotaal",
       "shipping": "Verzending",
       "total": "Totaal",
-      "summary": "Overzicht"
+      "summary": "Samenvatting",
+      "add_to_cart": "In winkelwagen"
     }
   },
   "Pagination": {
@@ -172,10 +173,15 @@
     }
   },
   "toast": {
-    "added_to_cart": "Product is toegevoegd aan de winkelwagen",
-    "removed_from_cart": "Product is verwijderd uit de winkelwagen",
+    "added_to_cart": "Product is toegevoegd aan winkelwagen",
+    "removed_from_cart": "Product is verwijderd uit winkelwagen",
     "updated_cart": "Winkelwagen is bijgewerkt",
     "clipboard": "Gekopieerd naar klembord",
     "error": "Er is een fout opgetreden"
+  },
+  "Search": {
+    "sr-only": "Zoeken naar producten",
+    "search_shop": "Zoeken naar producten",
+    "no_results": "Geen resultaten gevonden"
   }
 }
