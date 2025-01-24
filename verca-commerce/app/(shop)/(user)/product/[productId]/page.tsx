@@ -16,6 +16,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import AddToCartForm from '@/components/forms/cart/addToCard';
 import ImageComponent from '@/components/images/ImageComponent';
 import { getProductById } from '@/lib/data/data.products';
+import { getTranslations } from 'next-intl/server';
 
 interface ProductDetailsPageProps {
   params: Promise<{
@@ -24,6 +25,7 @@ interface ProductDetailsPageProps {
 }
 
 async function ProductDetailsPage(props: ProductDetailsPageProps) {
+  const t = await getTranslations('Shop');
   const params = await props.params;
   const product = await getProductById(params.productId);
 
@@ -32,7 +34,7 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
       {/* Breadcrumb */}
       <nav className='flex items-center space-x-2 text-sm text-muted-foreground mb-8'>
         <Link href='/' className='hover:text-primary transition-colors'>
-          Shop
+          {t('shop')}
         </Link>
         <ChevronRight className='h-4 w-4' />
         <Link
@@ -80,11 +82,11 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
                   variant={product.stock <= 5 ? 'destructive' : 'secondary'}
                 >
                   {product.stock <= 5
-                    ? `Nur ${product.stock} übrig`
-                    : 'Verfügbar'}
+                    ? `${t('product.only_left')} ${product.stock} ${t('product.available')}`
+                    : `${t('productavailable')}`}
                 </Badge>
               ) : (
-                <Badge variant='destructive'>Ausverkauft</Badge>
+                <Badge variant='destructive'>{t('product.out_of_stock')}</Badge>
               )}
             </div>
           </div>

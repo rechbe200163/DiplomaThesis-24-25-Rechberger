@@ -1,0 +1,181 @@
+{
+  "Dashboard": {
+    "greeting": "Willkommen zurück",
+    "Account": {
+      "title": "Persönliche Informationen",
+      "desc": "Aktualisieren Sie Ihre Kontoinformationen",
+      "update_details": "Kontodetails aktualisieren",
+      "update_profile_picture": "Profilbild aktualisieren",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "email": "E-Mail",
+      "confirmation_email": "Wir senden Ihnen eine Bestätigungs-E-Mail, wenn Änderungen vorgenommen wurden",
+      "phone": "Telefonnummer",
+      "company_number": "Firmennummer",
+      "business_sector": "Geschäftsbereich",
+      "button": "Aktualisieren",
+      "change_password": {
+        "title": "Passwort ändern",
+        "ensure_security": "Stellen Sie sicher, dass Ihr Konto ein starkes Passwort verwendet."
+      },
+      "password": {
+        "title": "Passwort ändern",
+        "current_password": "Aktuelles Passwort",
+        "new_password": "Neues Passwort",
+        "confirm_password": "Passwort bestätigen",
+        "succuess": "Passwort erfolgreich geändert!",
+        "error": "Ein Fehler ist aufgetreten",
+        "button": "Passwort ändern"
+      }
+    },
+    "Address": {
+      "title": "Adress Informationen",
+      "desc": "Aktualisieren Sie Ihre Versandadresse",
+      "address": {
+        "street_number": "Hausnummer",
+        "street_name": "Straße",
+        "city": "Stadt",
+        "state": "Bundesland",
+        "zip_code": "Postleitzahl",
+        "country": "Land"
+      },
+      "button": "Adresse aktualisieren",
+      "button_loading": "Aktualisieren...",
+      "success": "Adresse erfolgreich aktualisiert!"
+    },
+    "no_orders": {
+      "title": "Keine Bestellungen",
+      "desc": "Sie haben noch keine Bestellungen aufgegeben"
+    }
+  },
+  "Orders": {
+    "title": "Bestellungen",
+    "desc": "Überprüfen Sie Ihre Bestellhistorie",
+    "order": {
+      "id": "Bestellnummer",
+      "ordered_on": "Bestellt am",
+      "articles": "Artikel",
+      "download_invoice": "Rechnung herunterladen",
+      "total_value": "Gesamtwert",
+      "payment_state": "Zahlungsstatus",
+      "invoice_pdf": "Rechnungs-PDF",
+      "state": "Status",
+      "total": "Gesamt",
+      "view": "Ansehen"
+    }
+  },
+  "Auth": {
+    "Sign_Up": {
+      "title": "Account erstellen",
+      "already_have_account": "Sie haben bereits ein Konto?",
+      "sign_in": "Anmelden",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "email": "E-Mail",
+      "confirmation_email": "Wir senden Ihnen eine Bestätigungs-E-Mail, wenn geändert",
+      "phone": "Telefon",
+      "company_number": "Firmennummer",
+      "business_sector": "Geschäftsbereich",
+      "password": "Neues Passwort",
+      "confirm_password": "Passwort bestätigen",
+      "button": "Account erstellen"
+    },
+    "Sign_In": {
+      "title": "Anmelden",
+      "no_account": "Sie haben noch kein Konto?",
+      "create_account": "Account erstellen",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "forgot_password": "Passwort vergessen?",
+      "button": "Anmelden"
+    },
+    "Error": {
+      "error": "Beim Versuch zu authentifizieren ist ein Problem aufgetreten. Bitte kontaktieren Sie uns, wenn dieses Problem weiterhin besteht. Einzigartiger Fehlercode:"
+    }
+  },
+  "Check_Out_Success": {
+    "title": "Erfolgreicher Checkout",
+    "message": "Ihre Bestellung wurde erfolgreich aufgegeben",
+    "details": "Bestelldetails",
+    "order_history": "Bestellverlauf",
+    "continue_shopping": "Weiter einkaufen"
+  },
+  "Purchase": {
+    "title": "Kasse",
+    "youre_purchase": "Ihr Einkauf",
+    "button": "Kaufen"
+  },
+  "Shop": {
+    "shop": "shop",
+    "no_products": {
+      "title": "Derzeit sind keine Produkte verfügbar.",
+      "desc": "Bitte später wieder vorbeischauen!"
+    },
+    "search": {
+      "no_products": "Entschuldigung! Es scheint, dass wir nicht haben, wonach Sie suchen."
+    },
+    "product": {
+      "details": "Produktdetails",
+      "add_to_cart": "In den Warenkorb",
+      "quantity": "Menge",
+      "out_of_stock": "Nicht auf Lager",
+      "only_left": "Nur noch",
+      "in_stock": "Auf Lager",
+      "available": "verfügbar",
+      "related_products": "Ähnliche Produkte",
+      "product_details": "Produktdetails",
+      "product_new": "Neu"
+    },
+    "cart": {
+      "title": "Warenkorb",
+      "proceed_to_checkout": "Zur Kasse",
+      "subtotal": "Zwischensumme",
+      "shipping": "Versand",
+      "total": "Gesamt",
+      "summary": "Zusammenfassung"
+    }
+  },
+  "Pagination": {
+    "previous": "Vorherige",
+    "next": "Nächste"
+  },
+  "NavLinks": {
+    "all_products": "Alle Produkte",
+    "sidebar": {
+      "account": "Konto",
+      "orders": "Bestellungen",
+      "address": "Adresse",
+      "sections": {
+        "account": "Account",
+        "shop": "Shop"
+      }
+    }
+  },
+  "Navbar": {
+    "menu_open": "Menü Öffnen",
+    "navigation_menu": "Navigations Menü",
+    "search_placeholder": "Suche nach Produkten",
+    "overview": "Übersicht",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "login": "Login"
+  },
+  "Footer": {
+    "company_description": "Zuverlässige Technik seit 1992",
+    "contact": "Kontakt",
+    "location": "Standort",
+    "social": "Soziale Medien",
+    "social_links": {
+      "twitter": "Twitter",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    }
+  },
+  "toast": {
+    "added_to_cart": "Produkt wurde zum Warenkorb hinzugefügt",
+    "removed_from_cart": "Produkt wurde aus dem Warenkorb entfernt",
+    "updated_cart": "Warenkorb wurde aktualisiert",
+    "clipboard": "In die Zwischenablage kopiert",
+    "error": "Ein Fehler ist aufgetreten"
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "Dashboard": {
+    "greeting": "Bienvenido de nuevo",
+    "Account": {
+      "title": "Información personal",
+      "desc": "Actualiza tu información de cuenta",
+      "update_details": "Actualizar detalles de la cuenta",
+      "update_profile_picture": "Actualizar foto de perfil",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo electrónico",
+      "confirmation_email": "Te enviaremos un correo electrónico de confirmación cuando se realicen cambios",
+      "phone": "Número de teléfono",
+      "company_number": "Número de empresa",
+      "business_sector": "Sector empresarial",
+      "button": "Actualizar",
+      "change_password": {
+        "title": "Cambiar contraseña",
+        "ensure_security": "Asegúrate de que tu cuenta use una contraseña segura."
+      },
+      "password": {
+        "title": "Cambiar contraseña",
+        "current_password": "Contraseña actual",
+        "new_password": "Nueva contraseña",
+        "confirm_password": "Confirmar contraseña",
+        "succuess": "¡Contraseña cambiada con éxito!",
+        "error": "Ocurrió un error",
+        "button": "Cambiar contraseña"
+      }
+    },
+    "Address": {
+      "title": "Información de dirección",
+      "desc": "Actualiza tu dirección de envío",
+      "address": {
+        "street_number": "Número de casa",
+        "street_name": "Calle",
+        "city": "Ciudad",
+        "state": "Estado",
+        "zip_code": "Código postal",
+        "country": "País"
+      },
+      "button": "Actualizar dirección",
+      "button_loading": "Actualizando...",
+      "success": "¡Dirección actualizada con éxito!"
+    },
+    "no_orders": {
+      "title": "No hay pedidos",
+      "desc": "Aún no has realizado ningún pedido"
+    }
+  },
+  "Orders": {
+    "title": "Pedidos",
+    "desc": "Revisa tu historial de pedidos",
+    "order": {
+      "id": "Número de pedido",
+      "ordered_on": "Pedido el",
+      "articles": "Artículos",
+      "download_invoice": "Descargar factura",
+      "total_value": "Valor total",
+      "payment_state": "Estado del pago",
+      "invoice_pdf": "Factura PDF",
+      "state": "Estado",
+      "total": "Total",
+      "view": "Ver"
+    }
+  },
+  "Auth": {
+    "Sign_Up": {
+      "title": "Crear cuenta",
+      "already_have_account": "¿Ya tienes una cuenta?",
+      "sign_in": "Iniciar sesión",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo electrónico",
+      "confirmation_email": "Te enviaremos un correo electrónico de confirmación cuando se realicen cambios",
+      "phone": "Teléfono",
+      "company_number": "Número de empresa",
+      "business_sector": "Sector empresarial",
+      "password": "Nueva contraseña",
+      "confirm_password": "Confirmar contraseña",
+      "button": "Crear cuenta"
+    },
+    "Sign_In": {
+      "title": "Iniciar sesión",
+      "no_account": "¿No tienes una cuenta?",
+      "create_account": "Crear cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "button": "Iniciar sesión"
+    },
+    "Error": {
+      "error": "Hubo un problema al intentar autenticar. Por favor contáctanos si este problema persiste. Código de error único:"
+    }
+  },
+  "Check_Out_Success": {
+    "title": "Compra exitosa",
+    "message": "Tu pedido se ha realizado con éxito",
+    "details": "Detalles del pedido",
+    "order_history": "Historial de pedidos",
+    "continue_shopping": "Seguir comprando"
+  },
+  "Purchase": {
+    "title": "Caja",
+    "youre_purchase": "Tu compra",
+    "button": "Comprar"
+  },
+  "Shop": {
+    "shop": "tienda",
+    "no_products": {
+      "title": "Actualmente no hay productos disponibles.",
+      "desc": "¡Por favor, vuelve más tarde!"
+    },
+    "search": {
+      "no_products": "¡Lo siento! Parece que no tenemos lo que estás buscando."
+    },
+    "product": {
+      "details": "Detalles del producto",
+      "add_to_cart": "Añadir al carrito",
+      "quantity": "Cantidad",
+      "out_of_stock": "Agotado",
+      "only_left": "Solo quedan",
+      "in_stock": "En stock",
+      "available": "disponible",
+      "related_products": "Productos relacionados",
+      "product_details": "Detalles del producto",
+      "product_new": "Nuevo"
+    },
+    "cart": {
+      "title": "Carrito",
+      "proceed_to_checkout": "Proceder al pago",
+      "subtotal": "Subtotal",
+      "shipping": "Envío",
+      "total": "Total",
+      "summary": "Resumen"
+    }
+  },
+  "Pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "NavLinks": {
+    "all_products": "Todos los productos",
+    "sidebar": {
+      "account": "Cuenta",
+      "orders": "Pedidos",
+      "address": "Dirección",
+      "sections": {
+        "account": "Cuenta",
+        "shop": "Tienda"
+      }
+    }
+  },
+  "Navbar": {
+    "menu_open": "Abrir menú",
+    "navigation_menu": "Menú de navegación",
+    "search_placeholder": "Buscar productos",
+    "overview": "Resumen",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión"
+  },
+  "Footer": {
+    "company_description": "Tecnología confiable desde 1992",
+    "contact": "Contacto",
+    "location": "Ubicación",
+    "social": "Redes sociales",
+    "social_links": {
+      "twitter": "Twitter",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    }
+  },
+  "toast": {
+    "added_to_cart": "Producto añadido al carrito",
+    "removed_from_cart": "Producto eliminado del carrito",
+    "updated_cart": "Carrito actualizado",
+    "clipboard": "Copiado al portapapeles",
+    "error": "Ocurrió un error"
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "Dashboard": {
+    "greeting": "Welkom terug",
+    "Account": {
+      "title": "Persoonlijke informatie",
+      "desc": "Werk uw accountinformatie bij",
+      "update_details": "Accountgegevens bijwerken",
+      "update_profile_picture": "Profielfoto bijwerken",
+      "first_name": "Voornaam",
+      "last_name": "Achternaam",
+      "email": "E-mail",
+      "confirmation_email": "We sturen u een bevestigingsmail als er wijzigingen zijn aangebracht",
+      "phone": "Telefoonnummer",
+      "company_number": "Bedrijfsnummer",
+      "business_sector": "Zakelijke sector",
+      "button": "Bijwerken",
+      "change_password": {
+        "title": "Wachtwoord wijzigen",
+        "ensure_security": "Zorg ervoor dat uw account een sterk wachtwoord gebruikt."
+      },
+      "password": {
+        "title": "Wachtwoord wijzigen",
+        "current_password": "Huidig wachtwoord",
+        "new_password": "Nieuw wachtwoord",
+        "confirm_password": "Bevestig wachtwoord",
+        "succuess": "Wachtwoord succesvol gewijzigd!",
+        "error": "Er is een fout opgetreden",
+        "button": "Wachtwoord wijzigen"
+      }
+    },
+    "Address": {
+      "title": "Adresinformatie",
+      "desc": "Werk uw verzendadres bij",
+      "address": {
+        "street_number": "Huisnummer",
+        "street_name": "Straat",
+        "city": "Stad",
+        "state": "Provincie",
+        "zip_code": "Postcode",
+        "country": "Land"
+      },
+      "button": "Adres bijwerken",
+      "button_loading": "Bijwerken...",
+      "success": "Adres succesvol bijgewerkt!"
+    },
+    "no_orders": {
+      "title": "Geen bestellingen",
+      "desc": "U heeft nog geen bestellingen geplaatst"
+    }
+  },
+  "Orders": {
+    "title": "Bestellingen",
+    "desc": "Bekijk uw bestelgeschiedenis",
+    "order": {
+      "id": "Bestelnummer",
+      "ordered_on": "Besteld op",
+      "articles": "Artikelen",
+      "download_invoice": "Factuur downloaden",
+      "total_value": "Totale waarde",
+      "payment_state": "Betalingsstatus",
+      "invoice_pdf": "Factuur-PDF",
+      "state": "Status",
+      "total": "Totaal",
+      "view": "Bekijken"
+    }
+  },
+  "Auth": {
+    "Sign_Up": {
+      "title": "Account aanmaken",
+      "already_have_account": "Heeft u al een account?",
+      "sign_in": "Inloggen",
+      "first_name": "Voornaam",
+      "last_name": "Achternaam",
+      "email": "E-mail",
+      "confirmation_email": "We sturen u een bevestigingsmail als er wijzigingen zijn aangebracht",
+      "phone": "Telefoon",
+      "company_number": "Bedrijfsnummer",
+      "business_sector": "Zakelijke sector",
+      "password": "Nieuw wachtwoord",
+      "confirm_password": "Bevestig wachtwoord",
+      "button": "Account aanmaken"
+    },
+    "Sign_In": {
+      "title": "Inloggen",
+      "no_account": "Heeft u nog geen account?",
+      "create_account": "Account aanmaken",
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "forgot_password": "Wachtwoord vergeten?",
+      "button": "Inloggen"
+    },
+    "Error": {
+      "error": "Er is een probleem opgetreden bij het proberen te authenticeren. Neem contact met ons op als dit probleem aanhoudt. Unieke foutcode:"
+    }
+  },
+  "Check_Out_Success": {
+    "title": "Succesvolle afhandeling",
+    "message": "Uw bestelling is succesvol geplaatst",
+    "details": "Bestelgegevens",
+    "order_history": "Bestelgeschiedenis",
+    "continue_shopping": "Verder winkelen"
+  },
+  "Purchase": {
+    "title": "Afrekenen",
+    "youre_purchase": "Uw aankoop",
+    "button": "Kopen"
+  },
+  "Shop": {
+    "shop": "winkel",
+    "no_products": {
+      "title": "Er zijn momenteel geen producten beschikbaar.",
+      "desc": "Kom later terug!"
+    },
+    "search": {
+      "no_products": "Sorry! Het lijkt erop dat we niet hebben wat u zoekt."
+    },
+    "product": {
+      "details": "Productdetails",
+      "add_to_cart": "In winkelwagen",
+      "quantity": "Aantal",
+      "out_of_stock": "Niet op voorraad",
+      "only_left": "Nog maar",
+      "in_stock": "Op voorraad",
+      "available": "beschikbaar",
+      "related_products": "Gerelateerde producten",
+      "product_details": "Productdetails",
+      "product_new": "Nieuw"
+    },
+    "cart": {
+      "title": "Winkelwagen",
+      "proceed_to_checkout": "Naar de kassa",
+      "subtotal": "Subtotaal",
+      "shipping": "Verzending",
+      "total": "Totaal",
+      "summary": "Overzicht"
+    }
+  },
+  "Pagination": {
+    "previous": "Vorige",
+    "next": "Volgende"
+  },
+  "NavLinks": {
+    "all_products": "Alle producten",
+    "sidebar": {
+      "account": "Account",
+      "orders": "Bestellingen",
+      "address": "Adres",
+      "sections": {
+        "account": "Account",
+        "shop": "Winkel"
+      }
+    }
+  },
+  "Navbar": {
+    "menu_open": "Menu openen",
+    "navigation_menu": "Navigatiemenu",
+    "search_placeholder": "Zoeken naar producten",
+    "overview": "Overzicht",
+    "profile": "Profiel",
+    "logout": "Uitloggen",
+    "login": "Inloggen"
+  },
+  "Footer": {
+    "company_description": "Betrouwbare technologie sinds 1992",
+    "contact": "Contact",
+    "location": "Locatie",
+    "social": "Sociale media",
+    "social_links": {
+      "twitter": "Twitter",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    }
+  },
+  "toast": {
+    "added_to_cart": "Product is toegevoegd aan de winkelwagen",
+    "removed_from_cart": "Product is verwijderd uit de winkelwagen",
+    "updated_cart": "Winkelwagen is bijgewerkt",
+    "clipboard": "Gekopieerd naar klembord",
+    "error": "Er is een fout opgetreden"
+  }
+}

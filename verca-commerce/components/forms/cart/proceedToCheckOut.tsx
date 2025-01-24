@@ -6,6 +6,7 @@ import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { checkProductQuantityBeforeCheckout } from '@/lib/actions/product.actions';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function ProceedToCheckOut({
   customerReference,
@@ -14,6 +15,7 @@ export default function ProceedToCheckOut({
   customerReference: number;
   subtotal: number;
 }) {
+  const t = useTranslations('Shop.cart');
   const router = useRouter();
   const [formState, action, isPending] = useActionState(
     checkProductQuantityBeforeCheckout.bind(null, customerReference),
@@ -43,10 +45,10 @@ export default function ProceedToCheckOut({
         {isPending ? (
           <>
             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-            Weiter zur Kasse...
+            {t('proceed_to_checkout')}...
           </>
         ) : (
-          <>Weiter zur Kasse</>
+          <>{t('proceed_to_checkout')}</>
         )}
       </Button>
       {formState.errors && formState.errors.title.length > 0 && (

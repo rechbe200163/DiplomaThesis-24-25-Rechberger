@@ -1,0 +1,181 @@
+{
+  "Dashboard": {
+    "greeting": "Bienvenue de retour",
+    "Account": {
+      "title": "Informations personnelles",
+      "desc": "Mettez à jour vos informations de compte",
+      "update_details": "Mettre à jour les détails du compte",
+      "update_profile_picture": "Mettre à jour la photo de profil",
+      "first_name": "Prénom",
+      "last_name": "Nom de famille",
+      "email": "E-mail",
+      "confirmation_email": "Nous vous enverrons un e-mail de confirmation lorsque des modifications seront apportées",
+      "phone": "Numéro de téléphone",
+      "company_number": "Numéro d'entreprise",
+      "business_sector": "Secteur d'activité",
+      "button": "Mettre à jour",
+      "change_password": {
+        "title": "Changer le mot de passe",
+        "ensure_security": "Assurez-vous que votre compte utilise un mot de passe fort."
+      },
+      "password": {
+        "title": "Changer le mot de passe",
+        "current_password": "Mot de passe actuel",
+        "new_password": "Nouveau mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "succuess": "Mot de passe changé avec succès!",
+        "error": "Une erreur est survenue",
+        "button": "Changer le mot de passe"
+      }
+    },
+    "Address": {
+      "title": "Informations d'adresse",
+      "desc": "Mettez à jour votre adresse de livraison",
+      "address": {
+        "street_number": "Numéro de rue",
+        "street_name": "Nom de rue",
+        "city": "Ville",
+        "state": "État",
+        "zip_code": "Code postal",
+        "country": "Pays"
+      },
+      "button": "Mettre à jour l'adresse",
+      "button_loading": "Mise à jour...",
+      "success": "Adresse mise à jour avec succès!"
+    },
+    "no_orders": {
+      "title": "Aucune commande",
+      "desc": "Vous n'avez pas encore passé de commande"
+    }
+  },
+  "Orders": {
+    "title": "Commandes",
+    "desc": "Vérifiez votre historique de commandes",
+    "order": {
+      "id": "Numéro de commande",
+      "ordered_on": "Commandé le",
+      "articles": "Articles",
+      "download_invoice": "Télécharger la facture",
+      "total_value": "Valeur totale",
+      "payment_state": "État du paiement",
+      "invoice_pdf": "Facture PDF",
+      "state": "État",
+      "total": "Total",
+      "view": "Voir"
+    }
+  },
+  "Auth": {
+    "Sign_Up": {
+      "title": "Créer un compte",
+      "already_have_account": "Vous avez déjà un compte?",
+      "sign_in": "Se connecter",
+      "first_name": "Prénom",
+      "last_name": "Nom de famille",
+      "email": "E-mail",
+      "confirmation_email": "Nous vous enverrons un e-mail de confirmation lorsque des modifications seront apportées",
+      "phone": "Téléphone",
+      "company_number": "Numéro d'entreprise",
+      "business_sector": "Secteur d'activité",
+      "password": "Nouveau mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "button": "Créer un compte"
+    },
+    "Sign_In": {
+      "title": "Se connecter",
+      "no_account": "Vous n'avez pas de compte?",
+      "create_account": "Créer un compte",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "forgot_password": "Mot de passe oublié?",
+      "button": "Se connecter"
+    },
+    "Error": {
+      "error": "Un problème est survenu lors de la tentative d'authentification. Veuillez nous contacter si ce problème persiste. Code d'erreur unique:"
+    }
+  },
+  "Check_Out_Success": {
+    "title": "Paiement réussi",
+    "message": "Votre commande a été passée avec succès",
+    "details": "Détails de la commande",
+    "order_history": "Historique des commandes",
+    "continue_shopping": "Continuer vos achats"
+  },
+  "Purchase": {
+    "title": "Caisse",
+    "youre_purchase": "Votre achat",
+    "button": "Acheter"
+  },
+  "Shop": {
+    "shop": "boutique",
+    "no_products": {
+      "title": "Aucun produit disponible pour le moment.",
+      "desc": "Veuillez revenir plus tard!"
+    },
+    "search": {
+      "no_products": "Désolé! Il semble que nous n'ayons pas ce que vous cherchez."
+    },
+    "product": {
+      "details": "Détails du produit",
+      "add_to_cart": "Ajouter au panier",
+      "quantity": "Quantité",
+      "out_of_stock": "En rupture de stock",
+      "only_left": "Il ne reste que",
+      "in_stock": "En stock",
+      "available": "disponible",
+      "related_products": "Produits similaires",
+      "product_details": "Détails du produit",
+      "product_new": "Nouveau"
+    },
+    "cart": {
+      "title": "Panier",
+      "proceed_to_checkout": "Passer à la caisse",
+      "subtotal": "Sous-total",
+      "shipping": "Expédition",
+      "total": "Total",
+      "summary": "Résumé"
+    }
+  },
+  "Pagination": {
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "NavLinks": {
+    "all_products": "Tous les produits",
+    "sidebar": {
+      "account": "Compte",
+      "orders": "Commandes",
+      "address": "Adresse",
+      "sections": {
+        "account": "Compte",
+        "shop": "Boutique"
+      }
+    }
+  },
+  "Navbar": {
+    "menu_open": "Ouvrir le menu",
+    "navigation_menu": "Menu de navigation",
+    "search_placeholder": "Rechercher des produits",
+    "overview": "Aperçu",
+    "profile": "Profil",
+    "logout": "Se déconnecter",
+    "login": "Connexion"
+  },
+  "Footer": {
+    "company_description": "Technologie fiable depuis 1992",
+    "contact": "Contact",
+    "location": "Emplacement",
+    "social": "Réseaux sociaux",
+    "social_links": {
+      "twitter": "Twitter",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    }
+  },
+  "toast": {
+    "added_to_cart": "Produit ajouté au panier",
+    "removed_from_cart": "Produit retiré du panier",
+    "updated_cart": "Panier mis à jour",
+    "clipboard": "Copié dans le presse-papiers",
+    "error": "Une erreur est survenue"
+  }
+}

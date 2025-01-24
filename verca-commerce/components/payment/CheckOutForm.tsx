@@ -22,6 +22,7 @@ import { FormState } from '@/lib/form.types';
 import { reduceStockofPurchasedProducts } from '@/lib/actions/product.actions';
 import { ExtendedProduct } from '@/lib/interfaces';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type CheckoutFromProps = {
   products: ExtendedProduct[];
@@ -65,6 +66,7 @@ function Form({
   products: ExtendedProduct[];
   cartId: string;
 }) {
+  const t = useTranslations('Purchase');
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
@@ -108,7 +110,7 @@ function Form({
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>Checkout</CardTitle>
+          <CardTitle>{t('purchase')}</CardTitle>
           {errorMessage && (
             <CardDescription className='text-destructive'>
               {errorMessage.toString()}
@@ -126,7 +128,9 @@ function Form({
               stripe == null || elements == null || amount === 0 || isLoading
             }
           >
-            {isLoading ? 'Purchasing...' : `Purchase - ${formatPrice(amount)}`}
+            {isLoading
+              ? `${t('button')}...`
+              : `${t('button')} - ${formatPrice(amount)}`}
           </Button>
         </CardFooter>
       </Card>

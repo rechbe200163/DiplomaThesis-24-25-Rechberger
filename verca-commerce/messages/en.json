@@ -1,0 +1,181 @@
+{
+  "Dashboard": {
+    "greeting": "Welcome back",
+    "Account": {
+      "title": "Personal Information",
+      "desc": "Update your account information",
+      "update_details": "Update account details",
+      "update_profile_picture": "Update profile picture",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "confirmation_email": "We will send you a confirmation email if changes are made",
+      "phone": "Phone Number",
+      "company_number": "Company Number",
+      "business_sector": "Business Sector",
+      "button": "Update",
+      "change_password": {
+        "title": "Change Password",
+        "ensure_security": "Ensure your account uses a strong password."
+      },
+      "password": {
+        "title": "Change Password",
+        "current_password": "Current Password",
+        "new_password": "New Password",
+        "confirm_password": "Confirm Password",
+        "succuess": "Password successfully changed!",
+        "error": "An error occurred",
+        "button": "Change Password"
+      }
+    },
+    "Address": {
+      "title": "Address Information",
+      "desc": "Update your shipping address",
+      "address": {
+        "street_number": "Street Number",
+        "street_name": "Street Name",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "country": "Country"
+      },
+      "button": "Update Address",
+      "button_loading": "Updating...",
+      "success": "Address successfully updated!"
+    },
+    "no_orders": {
+      "title": "No Orders",
+      "desc": "You have not placed any orders yet"
+    }
+  },
+  "Orders": {
+    "title": "Orders",
+    "desc": "Check your order history",
+    "order": {
+      "id": "Order Number",
+      "ordered_on": "Ordered On",
+      "articles": "Articles",
+      "download_invoice": "Download Invoice",
+      "total_value": "Total Value",
+      "payment_state": "Payment Status",
+      "invoice_pdf": "Invoice PDF",
+      "state": "Status",
+      "total": "Total",
+      "view": "View"
+    }
+  },
+  "Auth": {
+    "Sign_Up": {
+      "title": "Create Account",
+      "already_have_account": "Already have an account?",
+      "sign_in": "Sign In",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "confirmation_email": "We will send you a confirmation email if changed",
+      "phone": "Phone",
+      "company_number": "Company Number",
+      "business_sector": "Business Sector",
+      "password": "New Password",
+      "confirm_password": "Confirm Password",
+      "button": "Create Account"
+    },
+    "Sign_In": {
+      "title": "Sign In",
+      "no_account": "Don't have an account?",
+      "create_account": "Create Account",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot Password?",
+      "button": "Sign In"
+    },
+    "Error": {
+      "error": "There was a problem trying to authenticate. Please contact us if this problem persists. Unique error code:"
+    }
+  },
+  "Check_Out_Success": {
+    "title": "Successful Checkout",
+    "message": "Your order has been placed successfully",
+    "details": "Order Details",
+    "order_history": "Order History",
+    "continue_shopping": "Continue Shopping"
+  },
+  "Purchase": {
+    "title": "Checkout",
+    "youre_purchase": "Your Purchase",
+    "button": "Buy"
+  },
+  "Shop": {
+    "shop": "Shop",
+    "no_products": {
+      "title": "No products available at the moment.",
+      "desc": "Please check back later!"
+    },
+    "search": {
+      "no_products": "Sorry! It seems we don't have what you're looking for."
+    },
+    "product": {
+      "details": "Product Details",
+      "add_to_cart": "Add to Cart",
+      "quantity": "Quantity",
+      "out_of_stock": "Out of Stock",
+      "only_left": "Only left",
+      "in_stock": "In Stock",
+      "available": "Available",
+      "related_products": "Related Products",
+      "product_details": "Product Details",
+      "product_new": "New"
+    },
+    "cart": {
+      "title": "Cart",
+      "proceed_to_checkout": "Proceed to Checkout",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "total": "Total",
+      "summary": "Summary"
+    }
+  },
+  "Pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "NavLinks": {
+    "all_products": "All Products",
+    "sidebar": {
+      "account": "Account",
+      "orders": "Orders",
+      "address": "Address",
+      "sections": {
+        "account": "Account",
+        "shop": "Shop"
+      }
+    }
+  },
+  "Navbar": {
+    "menu_open": "Open Menu",
+    "navigation_menu": "Navigation Menu",
+    "search_placeholder": "Search for products",
+    "overview": "Overview",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "Footer": {
+    "company_description": "Reliable technology since 1992",
+    "contact": "Contact",
+    "location": "Location",
+    "social": "Social Media",
+    "social_links": {
+      "twitter": "Twitter",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    }
+  },
+  "toast": {
+    "added_to_cart": "Product added to cart",
+    "removed_from_cart": "Product removed from cart",
+    "updated_cart": "Cart updated",
+    "clipboard": "Copied to clipboard",
+    "error": "An error occurred"
+  }
+}

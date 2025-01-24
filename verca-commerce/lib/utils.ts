@@ -9,13 +9,14 @@ import { supabaseClient } from './supabaseClient';
 import { resend } from './resendClient';
 import NotificationEmail from '@/app/auth/emails/notification-email';
 import { compare, hash } from 'bcryptjs';
+import { getLocale } from 'next-intl/server';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatPrice(price: number) {
-  const formattedPrice = (price / 100).toLocaleString('de-AT', {
+  const formattedPrice = (price / 100).toLocaleString('de', {
     style: 'currency',
     currency: 'EUR',
   });

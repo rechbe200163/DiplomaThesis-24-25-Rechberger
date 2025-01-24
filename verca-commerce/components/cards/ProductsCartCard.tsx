@@ -8,8 +8,10 @@ import { ScrollArea } from '../ui/scroll-area';
 import { CartWithProducts } from '@/lib/types';
 import { ProductCartQuantity } from '../helpers/ProductCartQuantity';
 import ImageSkeleton from '../images/ImageSkeleton';
+import { useTranslations } from 'next-intl';
 
 function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
+  const t = useTranslations('Shop');
   return (
     <ScrollArea className='h-[calc(100vh-12rem)] overflow-y-auto flex-1'>
       <div className='space-y-4 pr-4'>
@@ -53,15 +55,16 @@ function ProductsCartCard({ cart }: { cart: CartWithProducts }) {
                     <div className='flex items-center gap-2'>
                       {item.product.stock === 0 ? (
                         <Badge variant='destructive' className='text-xs'>
-                          Out of Stock
+                          {t('product.out_of_stock')}
                         </Badge>
                       ) : item.product.stock <= 5 ? (
                         <Badge variant='destructive' className='text-xs'>
-                          Only {item.product.stock} left
+                          {t('product.only_left')} {item.product.stock}{' '}
+                          {t('product.available')}
                         </Badge>
                       ) : (
                         <Badge variant='secondary' className='text-xs'>
-                          In Stock
+                          {t('product.available')}
                         </Badge>
                       )}
                     </div>

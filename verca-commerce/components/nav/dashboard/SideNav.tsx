@@ -7,9 +7,8 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
 } from '@/components/ui/sidebar';
-import Image from 'next/image';
 import NavLinksProfile from './NavLinksProfile';
-import { ChevronDown, HelpCircle, UserCog } from 'lucide-react';
+import { ChevronDown, UserCog } from 'lucide-react';
 import { PiShoppingBagBold } from 'react-icons/pi';
 import {
   Collapsible,
@@ -18,11 +17,14 @@ import {
 } from '@/components/ui/collapsible';
 import DashboardFooter from './DashboardFooter';
 import CompanyIconComponent from './CompanyIconComponent';
+import { useTranslations } from 'next-intl';
 
 export function DashboardSidebar() {
+  const t = useTranslations('NavLinks.sidebar.sections');
+
   return (
-    <Sidebar variant='floating' className='w-auto'>
-      <SidebarHeader className='w-auto h-auto'>
+    <Sidebar variant='sidebar' className='w-48'>
+      <SidebarHeader className='flex items-center justify-center'>
         <CompanyIconComponent />
       </SidebarHeader>
       <SidebarContent>
@@ -31,7 +33,7 @@ export function DashboardSidebar() {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
                 <UserCog className='mr-1' />
-                Details
+                {t('account')}
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -47,7 +49,7 @@ export function DashboardSidebar() {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
                 <PiShoppingBagBold className='mr-1' />
-                Shopping
+                {t('shop')}
                 <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
               </CollapsibleTrigger>
             </SidebarGroupLabel>

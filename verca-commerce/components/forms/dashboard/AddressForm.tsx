@@ -9,8 +9,11 @@ import { Loader2, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { Address } from '@prisma/client';
 import { updateAddress } from '@/lib/actions/address.actions';
+import { useTranslations } from 'next-intl';
 
 export function AddressForm({ address }: { address: Address }) {
+  const t = useTranslations('Dashboard.Address');
+
   const [formState, action, isPending] = useActionState(updateAddress, {
     success: false,
     errors: {
@@ -23,7 +26,7 @@ export function AddressForm({ address }: { address: Address }) {
       <Input type='hidden' name='addressId' value={address.addressId} />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         <div className='space-y-2'>
-          <Label htmlFor='streetNumber'>Street Number</Label>
+          <Label htmlFor='streetNumber'>{t('address.street_number')}</Label>
           <Input
             id='streetNumber'
             name='streetNumber'
@@ -32,7 +35,7 @@ export function AddressForm({ address }: { address: Address }) {
           />
         </div>
         <div className='space-y-2'>
-          <Label htmlFor='streetName'>Street Name</Label>
+          <Label htmlFor='streetName'>{t('address.street_name')}</Label>
           <Input
             id='streetName'
             name='streetName'
@@ -44,7 +47,7 @@ export function AddressForm({ address }: { address: Address }) {
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         <div className='space-y-2'>
-          <Label htmlFor='city'>City</Label>
+          <Label htmlFor='city'>{t('address.city')}</Label>
           <Input
             id='city'
             name='city'
@@ -53,7 +56,7 @@ export function AddressForm({ address }: { address: Address }) {
           />
         </div>
         <div className='space-y-2'>
-          <Label htmlFor='state'>State</Label>
+          <Label htmlFor='state'>{t('address.state')}</Label>
           <Input
             id='state'
             name='state'
@@ -65,7 +68,7 @@ export function AddressForm({ address }: { address: Address }) {
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         <div className='space-y-2'>
-          <Label htmlFor='postCode'>postCode</Label>
+          <Label htmlFor='postCode'>{t('address.zip_code')}</Label>
           <Input
             id='postCode'
             name='postCode'
@@ -74,7 +77,7 @@ export function AddressForm({ address }: { address: Address }) {
           />
         </div>
         <div className='space-y-2'>
-          <Label htmlFor='country'>Country</Label>
+          <Label htmlFor='country'>{t('address.country')}</Label>
           <Input
             id='country'
             name='country'
@@ -92,11 +95,12 @@ export function AddressForm({ address }: { address: Address }) {
         >
           {isPending ? (
             <>
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Updating Address
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />{' '}
+              {t('button_loading')}
             </>
           ) : (
             <>
-              <CheckCircle className='mr-2 h-4 w-4' /> Update Address
+              <CheckCircle className='mr-2 h-4 w-4' /> {t('button')}
             </>
           )}
         </Button>
@@ -104,7 +108,7 @@ export function AddressForm({ address }: { address: Address }) {
 
       {formState.success && (
         <p className='text-sm text-green-600 flex items-center'>
-          <CheckCircle className='mr-2 h-4 w-4' /> Address updated successfully!
+          <CheckCircle className='mr-2 h-4 w-4' /> {t('success')}
         </p>
       )}
       {formState.errors?.title[0] && (

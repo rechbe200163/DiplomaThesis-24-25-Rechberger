@@ -4,16 +4,17 @@ import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Copy, Check } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useTranslations } from 'next-intl';
 
 const CopyToClipboard = ({ value }: { value: string }) => {
+  const t = useTranslations('toast');
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(value).then(() => {
       setCopied(true); // Set copied state to true
       toast({
-        title: 'Success!',
-        description: 'Order ID copied to clipboard.',
+        description: t('clipboard'),
       });
 
       // Reset the icon back to Copy after a short delay

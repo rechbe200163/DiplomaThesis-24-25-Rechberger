@@ -21,15 +21,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Download, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
 import CopyToClipboard from '@/components/helpers/CopyOrderId';
 import InvoicePdfLink from '@/components/helpers/InvoicePdfLink';
 import { OrderState } from '@prisma/client';
+import { useTranslations } from 'next-intl';
 
 function OrderCard({ order }: { order: OrderDetails }) {
+  const t = useTranslations('Orders.order');
   return (
     <Card
       key={order.orderId}
@@ -39,7 +41,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
         <div className='flex flex-wrap items-center justify-between gap-4'>
           <div className='flex flex-wrap items-center gap-4'>
             <div>
-              <p className='text-sm font-medium'>Bestell Nummer</p>
+              <p className='text-sm font-medium'>{t('id')}</p>
               <div className='flex items-center gap-2'>
                 <p className='text-lg font-bold min-w-6 text-clip'>
                   {order.orderId}
@@ -49,21 +51,21 @@ function OrderCard({ order }: { order: OrderDetails }) {
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>
-              <p className='text-sm font-medium'>Bestellt am</p>
+              <p className='text-sm font-medium'>{t('ordered_on')}</p>
               <p className='text-base'>
                 {formatDate(new Date(order.orderDate))}
               </p>
             </div>
             <Separator orientation='vertical' className='h-10' />
             <div>
-              <p className='text-sm font-medium'>Artikel</p>
+              <p className='text-sm font-medium'>{t('articles')}</p>
               <p className='text-base'>{order.products.length}</p>
             </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='outline'>
-                Herunterladen <ChevronDown className='ml-2 h-4 w-4' />
+                {t('download_invoice')} <ChevronDown className='ml-2 h-4 w-4' />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -109,13 +111,13 @@ function OrderCard({ order }: { order: OrderDetails }) {
       </CardContent>
       <CardFooter className='flex flex-wrap items-center justify-between gap-4 px-6 py-4'>
         <div>
-          <p className='text-sm font-medium'>Bestellung Gesamt</p>
+          <p className='text-sm font-medium'>{t('total_value')}</p>
           <p className='text-lg font-bold'>
             {formatPrice(Number(order.invoice?.invoiceAmount.toFixed(2)) || 0)}
           </p>
         </div>
         <div>
-          <p className='text-sm font-medium'>Zahlstatus</p>
+          <p className='text-sm font-medium'>{t('payment_state')}</p>
           <Badge
             variant={order.invoice?.paymentDate ? 'default' : 'destructive'}
           >
@@ -124,7 +126,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
         </div>
         <Accordion type='single' collapsible className='w-full'>
           <AccordionItem value='details'>
-            <AccordionTrigger>Bestelle Status</AccordionTrigger>
+            <AccordionTrigger>{t('state')}</AccordionTrigger>
             <AccordionContent>
               <PaymentStatusProgressBar orderState={order.orderState} />
             </AccordionContent>

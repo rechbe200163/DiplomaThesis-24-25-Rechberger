@@ -2,6 +2,7 @@ import ProductCard from '@/components/cards/ProductCard';
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { CategoryFilter } from '@/components/search/filters/CategoryFilter';
 import { getFilteredProducts } from '@/lib/data/data.products';
+import { getTranslations } from 'next-intl/server';
 
 export default async function SearchPage(props: {
   searchParams?: Promise<{
@@ -11,6 +12,7 @@ export default async function SearchPage(props: {
     filter?: string;
   }>;
 }) {
+  const t = await getTranslations('Shop.search');
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const page = Number(searchParams?.page) || 1;
@@ -35,7 +37,7 @@ export default async function SearchPage(props: {
       ) : (
         <div className='text-center my-10'>
           <p className='text-gray-600 text-lg font-medium'>
-            Sorry! it seems we don&apos;t have what you&apos;re looking for.
+            {t('no_products')}
           </p>
         </div>
       )}

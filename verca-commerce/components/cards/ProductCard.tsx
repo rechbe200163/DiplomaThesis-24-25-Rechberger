@@ -5,8 +5,11 @@ import ImageComponent from '../images/ImageComponent';
 import { Badge } from '../ui/badge';
 import ImageSkeleton from '../images/ImageSkeleton';
 import { formatPrice } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
+  const t = useTranslations('Shop.product');
   const isAddedLast7Days =
     new Date(product.createdAt) >=
     new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
@@ -27,7 +30,7 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
         </Suspense>
         {isAddedLast7Days && (
           <Badge className='absolute top-2 right-2 z-10' variant='secondary'>
-            NEU
+            {t('product_new').toUpperCase()}
           </Badge>
         )}
       </div>
@@ -52,9 +55,11 @@ const ProductCard = ({ product }: { product: ProductWithCategoryNames }) => {
             {formatPrice(product.price)}
           </span>
           {product.stock > 0 && product.stock <= 5 ? (
-            <Badge variant={'outline'}>Nur {product.stock} übrig</Badge>
+            <Badge variant={'outline'}>
+              {t('only_left')} {product.stock} {t('in_stock')}
+            </Badge>
           ) : product.stock === 0 ? (
-            <Badge variant={'outline'}>Ausverkauft</Badge>
+            <Badge variant={'outline'}>{t('out_of_stock')}</Badge>
           ) : null}
         </div>
       </div>

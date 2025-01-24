@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { updateAccount } from '@/lib/actions/user.actions';
 import { Customer, BusinessSector } from '@prisma/client';
-import { useActionState } from 'react';
+import { use, useActionState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Select,
@@ -16,6 +16,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function AccountForm({
   customer,
@@ -24,6 +25,7 @@ export function AccountForm({
   customer: Customer;
   imageUrl: string;
 }) {
+  const t = useTranslations('Dashboard.Account');
   const [formState, action, isPending] = useActionState(updateAccount, {
     success: false,
     errors: {
@@ -47,14 +49,14 @@ export function AccountForm({
           </AvatarFallback>
         </Avatar>
         <div>
-          <Label htmlFor='avatar'>Profile Picture</Label>
+          <Label htmlFor='avatar'>{t('update_profile_picture')}</Label>
           <Input id='avatar' name='avatarPath' type='file' accept='image/*' />
         </div>
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <div className='space-y-2'>
-          <Label htmlFor='firstName'>First Name</Label>
+          <Label htmlFor='firstName'>{t('first_name')}</Label>
           <Input
             id='firstName'
             name='firstName'
@@ -63,7 +65,7 @@ export function AccountForm({
           />
         </div>
         <div className='space-y-2'>
-          <Label htmlFor='lastName'>Last Name</Label>
+          <Label htmlFor='lastName'>{t('last_name')}</Label>
           <Input
             id='lastName'
             name='lastName'
@@ -74,7 +76,7 @@ export function AccountForm({
       </div>
 
       <div className='space-y-2'>
-        <Label htmlFor='email'>Email</Label>
+        <Label htmlFor='email'>{t('email')}</Label>
         <Input
           id='email'
           name='email'
@@ -83,12 +85,12 @@ export function AccountForm({
           defaultValue={customer.email}
         />
         <p className='text-sm text-muted-foreground'>
-          We&apos;ll send you a confirmation email if changed.
+          {t('confirmation_email')}
         </p>
       </div>
 
       <div className='space-y-2'>
-        <Label htmlFor='phoneNumber'>Phone Number</Label>
+        <Label htmlFor='phoneNumber'>{t('phone')}</Label>
         <Input
           id='phoneNumber'
           name='phoneNumber'
@@ -100,7 +102,7 @@ export function AccountForm({
       {showBusinessInfo && (
         <div className='flex items-center space-x-14'>
           <div className='space-y-2'>
-            <Label htmlFor='companyNumber'>Company Number</Label>
+            <Label htmlFor='companyNumber'>{t('company_number')}</Label>
             <Input
               id='companyNumber'
               name='companyNumber'
@@ -110,7 +112,7 @@ export function AccountForm({
           </div>
 
           <div className='space-y-2'>
-            <Label htmlFor='businessSector'>Business Sector</Label>
+            <Label htmlFor='businessSector'>{t('business_sector')}</Label>
             <Select
               name='businessSector'
               defaultValue={customer.businessSector || undefined}
@@ -133,10 +135,10 @@ export function AccountForm({
       <Button type='submit' disabled={isPending}>
         {isPending ? (
           <>
-            <Loader2 className='animate-spin' /> Updating Account
+            <Loader2 className='animate-spin' /> {t('button')}
           </>
         ) : (
-          'Update Account'
+          t('button')
         )}
       </Button>
     </form>

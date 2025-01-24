@@ -7,16 +7,15 @@ import { getCartByCustomerReference } from '@/lib/data/data.cart';
 import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
 import { formatPrice } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
 
 export default async function PurchasePage(props: {
   params: Promise<{ customerReference: number }>;
 }) {
+  const t = await getTranslations('Purchase');
   const params = await props.params;
-
   const { customerReference } = params;
-
   const cart = await getCartByCustomerReference(customerReference);
-
   const cartId = cart.cartId;
 
   const products = cart.products.map((product) => ({
@@ -43,7 +42,7 @@ export default async function PurchasePage(props: {
     <div className='min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8'>
       <div className='max-w-7xl mx-auto'>
         <h1 className='text-3xl font-extrabold text-gray-900 mb-8'>
-          Your Purchase
+          {t('youre_purchase')}
         </h1>
         <div className='bg-white shadow overflow-hidden sm:rounded-lg'>
           <div className='px-4 py-5 sm:p-6'>

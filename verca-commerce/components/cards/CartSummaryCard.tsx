@@ -3,12 +3,14 @@ import React from 'react';
 import { ButtonLink } from '../helpers/ButtonLink';
 import { getCartByCustomerReference } from '@/lib/data/data.cart';
 import ProceedToCheckOut from '../forms/cart/proceedToCheckOut';
+import { getTranslations } from 'next-intl/server';
 
 async function CartSummaryCard({
   customerReference,
 }: {
   customerReference: number;
 }) {
+  const t = await getTranslations('Shop.cart');
   const request = await getCartByCustomerReference(customerReference);
 
   const cr = Number(customerReference);
@@ -26,7 +28,9 @@ async function CartSummaryCard({
   return (
     <div className='w-full md:w-1/3'>
       <div className='bg-white shadow-xl rounded-2xl p-6 sticky top-20'>
-        <h2 className='text-2xl font-semibold text-gray-800 mb-4'>Summary</h2>
+        <h2 className='text-2xl font-semibold text-gray-800 mb-4'>
+          {t('summary')}
+        </h2>
         {request.products.map((product) => (
           <div
             key={product.product.name}
@@ -44,10 +48,10 @@ async function CartSummaryCard({
 
         {/* Display subtotal and total */}
         <div className='text-lg font-medium text-gray-700 mb-2'>
-          Subtotal: {formatPrice(subtotal)}
+          {t('subtotal')} {formatPrice(subtotal)}
         </div>
         <div className='text-xl font-bold text-gray-800 mt-4 border-t pt-4'>
-          Total: {formatPrice(subtotal)}
+          {t('total')} {formatPrice(subtotal)}
         </div>
 
         {/* Checkout Button */}

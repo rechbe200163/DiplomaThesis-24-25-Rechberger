@@ -1,9 +1,10 @@
 import { SiteConfigWithAddress } from '@/lib/types';
 import prisma from '@/prisma/client';
-import { SiteConfig } from '@prisma/client';
+import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 async function Footer() {
+  const t = await getTranslations('Footer');
   const siteConfig: SiteConfigWithAddress =
     await prisma.siteConfig.findFirstOrThrow({
       include: { address: true },
@@ -26,17 +27,17 @@ async function Footer() {
         <p>
           {siteConfig.companyName}
           <br />
-          Providing reliable tech since 1992
+          {t('company_description')}
         </p>
       </aside>
 
       <nav>
-        <h1 className='footer-title text-base-content'>Contact</h1>
+        <h1 className='footer-title text-base-content'>{t('contact')}</h1>
         <a>{siteConfig.email}</a>
         <a>{siteConfig.phoneNumber}</a>
       </nav>
       <nav>
-        <h1 className='footer-title text-white'>Location</h1>
+        <h1 className='footer-title text-white'>{t('location')}</h1>
         <a>{siteConfig.address.country}</a>
         <a>{siteConfig.address.state}</a>
         <a>{siteConfig.address.city}</a>
@@ -45,7 +46,7 @@ async function Footer() {
         <a>{siteConfig.address.streetNumber}</a>
       </nav>
       <nav>
-        <h1 className='footer-title text-white'>Social</h1>
+        <h1 className='footer-title text-white'>{t('social')}</h1>
         <div className='grid grid-flow-col gap-4'>
           <a className='link link-hover'>
             <svg

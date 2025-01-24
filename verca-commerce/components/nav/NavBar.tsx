@@ -22,8 +22,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { getTranslations } from 'next-intl/server';
 
 async function NavBar() {
+  const t = await getTranslations('Navbar');
   let imageURL: string | null = null;
   const session = await auth();
   if (session) {
@@ -49,12 +51,12 @@ async function NavBar() {
                   className='lg:hidden mr-2 text-gray-800 hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2'
                 >
                   <Menu className='h-5 w-5' />
-                  <span className='sr-only'>Menü Öffnen</span>
+                  <span className='sr-only'>{t('menu_open')}</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side='left' className='w-80 bg-white text-gray-800'>
                 <VisuallyHidden>
-                  <DialogTitle>Navigations Menu</DialogTitle>
+                  <DialogTitle>{t('navigation_menu')}</DialogTitle>
                 </VisuallyHidden>
                 <div className='mt-6 space-y-4'>
                   <NavLinks />
@@ -114,7 +116,7 @@ async function NavBar() {
                 >
                   <DropdownMenuItem asChild>
                     <Link href='/dashboard' className='flex items-center'>
-                      <span>Übersicht</span>
+                      <span>{t('overview')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -122,7 +124,7 @@ async function NavBar() {
                       href='/dashboard/account'
                       className='flex items-center'
                     >
-                      <span>Profil</span>
+                      <span>{t('profile')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -137,7 +139,7 @@ async function NavBar() {
                         type='submit'
                         className='flex items-center w-full justify-between'
                       >
-                        <span>Abmelden</span>
+                        <span>{t('logout')}</span>
                         <LogOut className='mr-2 h-4 w-4' />
                       </button>
                     </form>
@@ -150,7 +152,7 @@ async function NavBar() {
                 variant='ghost'
                 className='text-gray-800 hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2'
               >
-                <Link href='/auth/signin'>Login</Link>
+                <Link href='/auth/signin'>{t('login')}</Link>
               </Button>
             )}
           </div>

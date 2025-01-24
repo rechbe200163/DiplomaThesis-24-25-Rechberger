@@ -4,6 +4,7 @@ import { auth } from '@/auth';
 import PaginationComponent from '@/components/pagination/PaginationComponent';
 import OrderCart from '@/components/cards/dashboard/OrderCart';
 import { getOrdersByCustomerPagination } from '@/lib/data/data.orders';
+import { getTranslations } from 'next-intl/server';
 
 async function UserOrdersPage(props: {
   searchParams?: Promise<{
@@ -11,6 +12,7 @@ async function UserOrdersPage(props: {
     limit?: string;
   }>;
 }) {
+  const t = await getTranslations('');
   const session = await auth();
   if (!session) return null;
   const customerReference = session?.user?.customerReference;
@@ -30,7 +32,10 @@ async function UserOrdersPage(props: {
       {orders.length > 0 ? (
         orders.map((order) => <OrderCart key={order.orderId} order={order} />)
       ) : (
-        <div className='text-center py-8'>No orders yet</div>
+        <>
+          <div className='text-center py-8'>{t('title')}</div>
+          <div className='text-center py-8'> {t('desc')}</div>
+        </>
       )}
 
       <PaginationComponent totalPages={totalPages} />

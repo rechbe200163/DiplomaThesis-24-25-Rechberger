@@ -4,6 +4,8 @@ import PaginationComponent from '@/components/pagination/PaginationComponent';
 import { CategoryFilter } from '@/components/search/filters/CategoryFilter';
 import { Pagination } from '@/components/ui/pagination';
 import { getAllProducts } from '@/lib/data/data.products';
+import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import React from 'react';
 
@@ -13,6 +15,7 @@ async function ShopPage(props: {
     limit?: number;
   }>;
 }) {
+  const t = await getTranslations('Shop');
   const searchParams = await props.searchParams;
   const page = searchParams?.page || 1;
   const limit = searchParams?.limit || 20;
@@ -28,8 +31,8 @@ async function ShopPage(props: {
           ))
         ) : (
           <div className=''>
-            <p className='text-xl'>No products available at the moment.</p>
-            <p className='mt-2'>Please check back later!</p>
+            <p className='text-xl'>{t('no_products.title')}</p>
+            <p className='mt-2'>{t('no_products.desc')}</p>
           </div>
         )}
       </div>
