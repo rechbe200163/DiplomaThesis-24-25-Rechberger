@@ -6,6 +6,9 @@ import { Toaster as SonnerToast } from 'sonner';
 import { inter } from './ui/fonts';
 import { getLocale, getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import { getUserLocale } from '@/services/locale';
+import { headers } from 'next/headers';
+import { defaultLocale } from '@/i18n/config';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,13 +20,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
-
+  const locale = (await headers()).get('x-user-locale') || defaultLocale;
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <html lang={locale}>
+    <html lang={locale as string}>
       <body className={`${inter.className} subpixel-antialiased`}>
         <NextIntlClientProvider messages={messages}>
           {children}
