@@ -72,6 +72,7 @@ function Form({
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | FormState>();
+  const [selfCollect, setSelfCollect] = useState(false); // State for self-collection
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -93,7 +94,12 @@ function Form({
 
       // Wenn keine Fehler auftreten, reduziere den Bestand
       if (!error) {
-        const resp = await reduceStockofPurchasedProducts(products, cartId);
+        // Pass the selfCollect state to the action function
+        const resp = await reduceStockofPurchasedProducts(
+          products,
+          cartId,
+          selfCollect
+        );
         router.push(`/checkout-success/${cartId}`);
       } else {
         setErrorMessage(error.message || 'Unbekannter Fehler');
@@ -110,7 +116,7 @@ function Form({
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>{t('purchase')}</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
           {errorMessage && (
             <CardDescription className='text-destructive'>
               {errorMessage.toString()}
@@ -119,6 +125,17 @@ function Form({
         </CardHeader>
         <CardContent>
           <PaymentElement />
+          <div className='mt-4'>
+            <label>
+              <input
+                type='checkbox'
+                checked={selfCollect}
+                onChange={() => setSelfCollect(!selfCollect)}
+                className='mr-2'
+              />
+              {t('self_pickup')}
+            </label>
+          </div>
         </CardContent>
         <CardFooter>
           <Button

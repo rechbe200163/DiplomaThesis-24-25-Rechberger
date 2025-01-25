@@ -7,7 +7,8 @@ import { createInvoiceWithPDF } from './invoice.services';
 
 export async function createOrder(
   products: ExtendedProduct[],
-  cartId: string
+  cartId: string,
+  selfCollect: boolean = false
 ): Promise<FormState> {
   const session = await auth();
 
@@ -27,6 +28,7 @@ export async function createOrder(
   const order = await prisma.order.create({
     data: {
       customerReference,
+      selfCollect,
       products: {
         create: orderItems,
       },

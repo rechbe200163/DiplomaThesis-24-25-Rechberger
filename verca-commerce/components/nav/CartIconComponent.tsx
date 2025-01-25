@@ -40,7 +40,7 @@ async function CartIconComponent() {
       <span className='sr-only'>{t('title')}</span>
       {totalItems > 0 && (
         <span
-          className='absolute -top-3 -right-3 flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-primary rounded-full'
+          className='absolute -top-1 -right-1 flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-primary rounded-full'
           style={{ minWidth: '24px', minHeight: '24px' }}
         >
           {totalItems}

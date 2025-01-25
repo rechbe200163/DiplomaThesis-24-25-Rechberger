@@ -58,10 +58,16 @@
       "download_invoice": "Download Invoice",
       "total_value": "Total Value",
       "payment_state": "Payment Status",
+      "payment": { "success": "Paid", "pending": "Unpaid" },
       "invoice_pdf": "Invoice PDF",
       "state": "Status",
       "total": "Total",
-      "view": "View"
+      "view": "View",
+      "order_placed": "Order Placed",
+      "in_progress": "In Progress",
+      "dispatched": "Dispatched",
+      "delivered": "Delivered",
+      "order_collected": "Self Pickup"
     }
   },
   "Auth": {
@@ -103,7 +109,8 @@
   "Purchase": {
     "title": "Checkout",
     "youre_purchase": "Your Purchase",
-    "button": "Buy"
+    "button": "Buy",
+    "self_pickup": "Self Pickup"
   },
   "Shop": {
     "shop": "Shop",

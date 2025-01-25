@@ -58,10 +58,16 @@
       "download_invoice": "Rechnung herunterladen",
       "total_value": "Gesamtwert",
       "payment_state": "Zahlungsstatus",
+      "payment": { "success": "Bezahlt", "pending": "Nicht bezahlt" },
       "invoice_pdf": "Rechnungs-PDF",
       "state": "Status",
       "total": "Gesamt",
-      "view": "Ansehen"
+      "view": "Ansehen",
+      "order_placed": "Bestellung aufgegeben",
+      "in_progress": "In Bearbeitung",
+      "dispatched": "Versandt",
+      "delivered": "Geliefert",
+      "order_collected": "Selbstabholung"
     }
   },
   "Auth": {
@@ -103,7 +109,8 @@
   "Purchase": {
     "title": "Kasse",
     "youre_purchase": "Ihr Einkauf",
-    "button": "Kaufen"
+    "button": "Kaufen",
+    "self_pickup": "Selbstabholung"
   },
   "Shop": {
     "shop": "shop",

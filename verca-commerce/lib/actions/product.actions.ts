@@ -307,7 +307,8 @@ export async function removeFromCart(
 
 export async function reduceStockofPurchasedProducts(
   products: ExtendedProduct[],
-  cartId: string
+  cartId: string,
+  selfCollect: boolean = false
 ): Promise<FormState> {
   for (const product of products) {
     const productId = product.productId;
@@ -364,7 +365,7 @@ export async function reduceStockofPurchasedProducts(
     });
   }
 
-  createOrder(products, cartId);
+  createOrder(products, cartId, selfCollect);
   clearCart(cartId);
 
   return {

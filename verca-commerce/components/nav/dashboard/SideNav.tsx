@@ -23,7 +23,7 @@ export function DashboardSidebar() {
   const t = useTranslations('NavLinks.sidebar.sections');
 
   return (
-    <Sidebar variant='sidebar' className='w-48'>
+    <Sidebar variant='sidebar' className='w-auto'>
       <SidebarHeader className='flex items-center justify-center'>
         <CompanyIconComponent />
       </SidebarHeader>

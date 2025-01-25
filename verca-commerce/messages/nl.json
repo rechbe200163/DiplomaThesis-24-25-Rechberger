@@ -58,10 +58,16 @@
       "download_invoice": "Factuur downloaden",
       "total_value": "Totale waarde",
       "payment_state": "Betalingsstatus",
+      "payment": { "success": "Betaald", "pending": "Niet betaald" },
       "invoice_pdf": "Factuur-PDF",
       "state": "Status",
       "total": "Totaal",
-      "view": "Bekijken"
+      "view": "Bekijken",
+      "order_placed": "Bestelling geplaatst",
+      "in_progress": "In behandeling",
+      "dispatched": "Verzonden",
+      "delivered": "Geleverd",
+      "order_collected": "Zelf afhalen"
     }
   },
   "Auth": {

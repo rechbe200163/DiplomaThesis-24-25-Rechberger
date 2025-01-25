@@ -58,10 +58,16 @@
       "download_invoice": "Télécharger la facture",
       "total_value": "Valeur totale",
       "payment_state": "État du paiement",
+      "payment": { "success": "Payé", "pending": "Non payé" },
       "invoice_pdf": "Facture PDF",
       "state": "État",
       "total": "Total",
-      "view": "Voir"
+      "view": "Voir",
+      "order_placed": "Commande passée",
+      "in_progress": "En cours",
+      "dispatched": "Expédié",
+      "delivered": "Livré",
+      "order_collected": "Retrait en magasin"
     }
   },
   "Auth": {

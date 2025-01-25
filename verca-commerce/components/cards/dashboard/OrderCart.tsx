@@ -29,42 +29,49 @@ import CopyToClipboard from '@/components/helpers/CopyOrderId';
 import InvoicePdfLink from '@/components/helpers/InvoicePdfLink';
 import { OrderState } from '@prisma/client';
 import { useTranslations } from 'next-intl';
+import { StateProgressBar } from '@/components/helpers/StateProgressBar';
 
 function OrderCard({ order }: { order: OrderDetails }) {
   const t = useTranslations('Orders.order');
   return (
     <Card
       key={order.orderId}
-      className='overflow-hidden transition-all hover:shadow-lg '
+      className='overflow-hidden transition-all hover:shadow-lg'
     >
       <CardHeader className=''>
-        <div className='flex flex-wrap items-center justify-between gap-4'>
-          <div className='flex flex-wrap items-center gap-4'>
+        <div className='flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-4'>
+          <div className='flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-4'>
             <div>
               <p className='text-sm font-medium'>{t('id')}</p>
               <div className='flex items-center gap-2'>
-                <p className='text-lg font-bold min-w-6 text-clip'>
+                <p className='text-base sm:text-lg font-bold min-w-6 text-clip'>
                   {order.orderId}
                 </p>
                 <CopyToClipboard value={order.orderId} />
               </div>
             </div>
-            <Separator orientation='vertical' className='h-10' />
-            <div>
+            <Separator
+              orientation='vertical'
+              className='hidden sm:block h-10'
+            />
+            <div className='mt-2 sm:mt-0'>
               <p className='text-sm font-medium'>{t('ordered_on')}</p>
-              <p className='text-base'>
+              <p className='text-sm sm:text-base'>
                 {formatDate(new Date(order.orderDate))}
               </p>
             </div>
-            <Separator orientation='vertical' className='h-10' />
-            <div>
+            <Separator
+              orientation='vertical'
+              className='hidden sm:block h-10'
+            />
+            <div className='mt-2 sm:mt-0'>
               <p className='text-sm font-medium'>{t('articles')}</p>
-              <p className='text-base'>{order.products.length}</p>
+              <p className='text-sm sm:text-base'>{order.products.length}</p>
             </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant='outline'>
+              <Button variant='outline' className='mt-4 sm:mt-0'>
                 {t('download_invoice')} <ChevronDown className='ml-2 h-4 w-4' />
               </Button>
             </DropdownMenuTrigger>
@@ -76,12 +83,12 @@ function OrderCard({ order }: { order: OrderDetails }) {
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className='p-6 '>
+      <CardContent className='p-4 sm:p-6'>
         <div className='space-y-4 items-center'>
           {order.products.map((product) => (
             <div
               key={product.product.productId}
-              className='flex items-center space-x-4'
+              className='flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4'
             >
               <div className='relative h-24 w-24 overflow-hidden rounded-md flex items-center justify-center'>
                 <Suspense fallback={<ImageSkeleton />}>
@@ -100,7 +107,7 @@ function OrderCard({ order }: { order: OrderDetails }) {
                   {product.productAmount} x {formatPrice(product.product.price)}
                 </p>
               </div>
-              <div className='text-right'>
+              <div className='text-left sm:text-right w-full sm:w-auto'>
                 <p className='font-semibold'>
                   {formatPrice(product.productAmount * product.product.price)}
                 </p>
@@ -109,61 +116,36 @@ function OrderCard({ order }: { order: OrderDetails }) {
           ))}
         </div>
       </CardContent>
-      <CardFooter className='flex flex-wrap items-center justify-between gap-4 px-6 py-4'>
+      <CardFooter className='flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-4 px-4 sm:px-6 py-4'>
         <div>
           <p className='text-sm font-medium'>{t('total_value')}</p>
-          <p className='text-lg font-bold'>
+          <p className='text-base sm:text-lg font-bold'>
             {formatPrice(Number(order.invoice?.invoiceAmount.toFixed(2)) || 0)}
           </p>
         </div>
-        <div>
+        <div className='mt-2 sm:mt-0'>
           <p className='text-sm font-medium'>{t('payment_state')}</p>
           <Badge
             variant={order.invoice?.paymentDate ? 'default' : 'destructive'}
           >
-            {order.invoice?.paymentDate ? 'Bezahlt' : 'Ausstehend'}
+            {order.invoice?.paymentDate
+              ? t('payment.success')
+              : t('payment.pending')}
           </Badge>
-        </div>
-        <Accordion type='single' collapsible className='w-full'>
+        </div>{' '}
+        <Accordion type='single' collapsible className='w-full mt-4 sm:mt-0'>
           <AccordionItem value='details'>
             <AccordionTrigger>{t('state')}</AccordionTrigger>
             <AccordionContent>
-              <PaymentStatusProgressBar orderState={order.orderState} />
+              <StateProgressBar
+                currentState={order.orderState}
+                selfCollect={order.selfCollect}
+              />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </CardFooter>
     </Card>
-  );
-}
-
-function PaymentStatusProgressBar({ orderState }: { orderState: OrderState }) {
-  const states = [
-    'ORDER_PLACED',
-    'IN_PROGRESS',
-    'DISPATCHED',
-    'DELIVERED',
-    'ORDER_COLLECTED',
-  ];
-
-  return (
-    <div className='flex justify-between'>
-      {states.map((state, index) => {
-        const isComplete = states.indexOf(orderState) >= index;
-        return (
-          <div key={state} className='flex flex-col items-center'>
-            <div
-              className={`rounded-full h-3 w-3 ${
-                isComplete ? 'bg-primary' : 'bg-muted'
-              }`}
-            />
-            <p className='mt-2 text-xs font-medium'>
-              {formatStateLabel(state)}
-            </p>
-          </div>
-        );
-      })}
-    </div>
   );
 }
 

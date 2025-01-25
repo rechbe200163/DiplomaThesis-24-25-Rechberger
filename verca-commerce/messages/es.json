@@ -57,11 +57,17 @@
       "articles": "Artículos",
       "download_invoice": "Descargar factura",
       "total_value": "Valor total",
-      "payment_state": "Estado del pago",
-      "invoice_pdf": "Factura PDF",
+      "payment_state": "Estado de pago",
+      "payment": { "success": "Pagado", "pending": "No pagado" },
+      "invoice_pdf": "PDF de la factura",
       "state": "Estado",
       "total": "Total",
-      "view": "Ver"
+      "view": "Ver",
+      "order_placed": "Pedido realizado",
+      "in_progress": "En progreso",
+      "dispatched": "Enviado",
+      "delivered": "Entregado",
+      "order_collected": "Recogida en tienda"
     }
   },
   "Auth": {
@@ -103,7 +109,8 @@
   "Purchase": {
     "title": "Caja",
     "youre_purchase": "Su compra",
-    "button": "Comprar"
+    "button": "Comprar",
+    "self_pickup": "Recogida en tienda"
   },
   "Shop": {
     "shop": "tienda",
