@@ -48,20 +48,6 @@ export async function fetchUserAvatarPath(
   }
 }
 
-export async function getCustomerStats(): Promise<{
-  currentMonthSignUps: number;
-  percentageChange: number;
-}> {
-  try {
-    const response = await fetch(`${baseApiUrl}/customers?q=customerStats`, {
-      next: { tags: ['customerStats'] },
-    });
-    return response.json();
-  } catch (error) {
-    throw new Error('Failed to fetch customer stats');
-  }
-}
-
 export async function fetchUser(customerReference: number): Promise<Customer> {
   try {
     const res = await fetch(`${baseApiUrl}/customers/${customerReference}`, {

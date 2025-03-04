@@ -1,7 +1,7 @@
 import { auth } from '@/auth';
 import { getSignedURL } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { User2Icon } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export default async function UserAvatarComponent({
   avatarPath,
