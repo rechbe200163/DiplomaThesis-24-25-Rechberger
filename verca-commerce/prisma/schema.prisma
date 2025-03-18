@@ -15,7 +15,6 @@ datasource db {
 }
 
 enum Role {
-  CUSTOMER
   ADMIN
   SUPPLIER
   EMPLOYEE
@@ -60,7 +59,6 @@ model Customer {
   avatarPath        String?   @db.VarChar(255)
   addressId         String    @db.Uuid
 
-  role           Role              @default(CUSTOMER)
   businessSector BusinessSector?
   address        Address           @relation(fields: [addressId], references: [addressId])
   cart           Cart?
@@ -85,7 +83,6 @@ model CustomerHistory {
   avatarPath        String?   @db.VarChar(255)
   addressId         String    @db.Uuid
 
-  role           Role              @default(CUSTOMER)
   businessSector BusinessSector?
   customer       Customer        @relation(fields: [customerReference], references: [customerReference])
 
@@ -120,7 +117,7 @@ model Cart {
 
 model Product {
   productId   String    @id @default(uuid()) @db.Uuid
-  name        String    @unique @db.VarChar(255)
+  name        String    @db.VarChar(255)
   price       Int //price in cents 
   description String    @db.VarChar(255)
   stock       Int //amount in stock 
@@ -210,7 +207,7 @@ model SiteConfig {
   //? should probalby also have a relation to a socialMedia model with links to social media
 
   logoPath         String    @db.VarChar(255)
-  email            String    @db.VarChar(255)
+  email            String    @unique @db.VarChar(255)
   phoneNumber      String    @db.VarChar(15)
   iban             String    @db.VarChar(40)
   companyNumber    String    @db.VarChar(255)
@@ -219,6 +216,8 @@ model SiteConfig {
   isPremium        Boolean   @default(false)
   deleted          Boolean   @default(false)
   stripeCustomerId String?   @db.VarChar(255)
+  stripeAccountId  String?   @db.VarChar(255)
+  stripeConfigured Boolean   @default(false)
   address          Address   @relation(fields: [addressId], references: [addressId])
 
   @@map("siteConfigs")
@@ -254,7 +253,7 @@ model OrderOnProducts {
   orderDate     DateTime @default(now())
   productAmount Int     @default(1)
 
-  @@id([orderId, productId]) 
+  @@id([orderId, productId])
   @@map("ordersProducts")
 }
 
@@ -266,4 +265,10 @@ model RoutesOnOrders {
 
   @@id([routeId, orderId])
   @@map("routesOrders")
+}
+
+model Config {
+  configId String @id @default(uuid()) @db.Uuid
+  configured Boolean @default(false)
+  @@map("config")
 }

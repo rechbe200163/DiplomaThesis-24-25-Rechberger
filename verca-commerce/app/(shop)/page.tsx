@@ -1,11 +1,8 @@
-import { auth } from '@/auth';
-import ProductCard from '@/components/cards/ProductCard';
-import PaginationComponent from '@/components/pagination/PaginationComponent';
-import { CategoryFilter } from '@/components/search/filters/CategoryFilter';
-import { Pagination } from '@/components/ui/pagination';
-import { getAllProducts } from '@/lib/data/data.products';
-import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import ProductCard from '@/components/cards/ProductCard';
+import { getAllProducts } from '@/lib/data/data.products';
+import { CategoryFilter } from '@/components/search/filters/CategoryFilter';
+import PaginationComponent from '@/components/pagination/PaginationComponent';
 
 import React from 'react';
 
@@ -22,7 +19,7 @@ async function ShopPage(props: {
   const { products, totalPages } = await getAllProducts(page, limit);
   return (
     <div className='m-2 px-6'>
-      {/* Increased horizontal padding */} <CategoryFilter />
+      <CategoryFilter />
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 py-4'>
         {/* Adjusted grid layout */}
         {products.length > 0 ? (
