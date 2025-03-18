@@ -12,9 +12,7 @@ import { fetchUserAvatarPath } from '@/lib/data/data.customer';
 import { LogOut, Menu, Search, ShoppingCart, User } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { DialogTitle } from '../ui/dialog';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +21,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { getTranslations } from 'next-intl/server';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 async function NavBar() {
   const t = await getTranslations('Navbar');
