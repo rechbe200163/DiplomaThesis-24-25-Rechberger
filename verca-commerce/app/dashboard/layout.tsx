@@ -3,15 +3,15 @@ import { Toaster } from 'sonner';
 import { DashboardSidebar } from '@/components/nav/dashboard/SideNav';
 import { DashboardHeader } from '@/components/header/DashboardHeader';
 import Link from 'next/link';
-import checkUserAuthorization from '@/lib/utils';
+import { auth } from '@/auth';
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const role = await checkUserAuthorization();
-  if (!role) {
+  const session = await auth();
+  if (!session) {
     return (
       <div className='flex h-screen items-center justify-center'>
         <Link href={'/auth/signin'} className='btn btn-primary'>

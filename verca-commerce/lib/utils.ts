@@ -65,16 +65,6 @@ export function formatStatsChange(percentageChange: number): string {
   }
 }
 
-export default async function checkUserAuthorization(): Promise<Role | null> {
-  const session = await auth();
-
-  if (!session) {
-    return null;
-  }
-
-  return session.user.role;
-}
-
 export function generateCustomerRefercenceNumber(): number {
   const nanoid = customAlphabet('1234567890', 9);
   return Number(nanoid());
@@ -83,16 +73,6 @@ export function generateCustomerRefercenceNumber(): number {
 export async function hashUserPassword(password: string) {
   const hashedPassword = await hash(password, 12);
   return hashedPassword;
-}
-
-export async function checkUserRole() {
-  const session = await auth();
-
-  if (!session) {
-    return null;
-  }
-
-  return session.user.role;
 }
 
 export async function getSignedURL(imagePath: string): Promise<string | null> {
@@ -297,7 +277,6 @@ export const newCustomerFormSchema = z.object({
       BusinessSector.TRANSPORTATION,
     ])
     .optional(),
-  role: z.enum([Role.ADMIN, Role.CUSTOMER, Role.SUPPLIER, Role.EMPLOYEE]),
   companyNumber: z.string().optional().nullable().default(null),
   address: z.string().min(1, {
     message: 'Address is required.',
