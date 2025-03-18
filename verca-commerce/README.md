@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Setup Guide
 
-## Getting Started
+This guide will help you set up and run the project locally using `pnpm`.
 
-First, run the development server:
+## Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Ensure you have [Node.js](https://nodejs.org/) installed.
+- Install `pnpm` globally if not already installed:
+  ```bash
+  npm install -g pnpm
+  ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the Repository**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   git clone https://github.com/rechbe200163/DiplomaThesis-24-25-Rechberger.git
+   cd DiplomaThesis-24-25-Rechberger
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. **change Directory**:
 
-## Learn More
+   ```bash
+   cd verca-commerce
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Steps to Run the Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Start Database Docker**
+    ```bash
+    docker compose up -d
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Steps to Run the Forntend
 
-## Deploy on Vercel
+1. **Install Dependencies**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   pnpm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. **Start the Development Server**:
+   ```bash
+   pnpm run dev
+   ```
