@@ -9,9 +9,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const PaginationComponent = ({ totalPages }: { totalPages: number }) => {
+  const t = useTranslations('Pagination');
   const pathname = usePathname();
   const searchParams = useSearchParams();
   function generateUrl(page: number) {

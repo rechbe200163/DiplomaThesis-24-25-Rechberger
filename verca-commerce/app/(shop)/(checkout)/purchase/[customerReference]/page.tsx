@@ -8,6 +8,7 @@ import ImageComponent from '@/components/images/ImageComponent';
 import ImageSkeleton from '@/components/images/ImageSkeleton';
 import { formatPrice } from '@/lib/utils';
 import { getTranslations } from 'next-intl/server';
+import prisma from '@/prisma/client';
 
 export default async function PurchasePage(props: {
   params: Promise<{ customerReference: number }>;
@@ -17,6 +18,7 @@ export default async function PurchasePage(props: {
   const { customerReference } = params;
   const cart = await getCartByCustomerReference(customerReference);
   const cartId = cart.cartId;
+  const siteConfig = await prisma.siteConfig.findFirst();
 
   const products = cart.products.map((product) => ({
     productId: product.product.productId,
@@ -26,12 +28,20 @@ export default async function PurchasePage(props: {
     quantity: product.quantity,
   }));
 
+  const totalAmount = cart.products.reduce(
+    (acc, product) => acc + product.product.price * product.quantity,
+    0
+  );
+
+  const feeAmount = Math.round(totalAmount * 0.1); // 10% Gebühr
+
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: cart.products.reduce(
-      (acc, product) => acc + product.product.price * product.quantity,
-      0
-    ),
+    amount: totalAmount,
     currency: 'eur',
+    transfer_data: {
+      destination: siteConfig?.stripeAccountId!,
+    },
+    application_fee_amount: feeAmount, // 10% Gebühr
   });
 
   if (paymentIntent.client_secret == null) {

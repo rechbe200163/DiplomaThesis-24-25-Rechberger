@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     const query = req.nextUrl.searchParams.get('q') || '';
-    const page = Number(req.nextUrl.searchParams.get('page'));
+    const page = Number(req.nextUrl.searchParams.get('page') || 1);
+    const limit = Number(req.nextUrl.searchParams.get('limit')) || 20;
 
     const USERS_PER_PAGE = 5;
 

@@ -159,17 +159,37 @@ export async function updateAccount(
     );
   }
 
-  const customer = await prisma.customer.update({
+  const oldCustomer = await prisma.customer.findUnique({
+    where: {
+      customerReference: session.user.customerReference,
+    },
+  });
+
+  if (!oldCustomer) {
+    return {
+      success: false,
+      errors: {
+        title: ['Customer not found'],
+      },
+    };
+  }
+
+  await prisma.customerHistory.create({
+    data: oldCustomer,
+  });
+
+  const newCustomer = await prisma.customer.update({
     where: {
       customerReference: session.user.customerReference,
     },
     data: {
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      email: formData.get('email') as string,
-      phoneNumber: formData.get('phoneNumber') as string,
-      businessSector: formData.get('businessSector') as BusinessSector,
-      companyNumber: formData.get('companyNumber') as string,
+      firstName: validData.data.firstName || oldCustomer.firstName,
+      lastName: validData.data.lastName || oldCustomer.lastName,
+      email: validData.data.email || oldCustomer.email,
+      phoneNumber: validData.data.phoneNumber || oldCustomer.phoneNumber,
+      businessSector:
+        validData.data.businessSector || oldCustomer.businessSector,
+      companyNumber: validData.data.companyNumber || oldCustomer.companyNumber,
     },
   });
 
@@ -328,7 +348,7 @@ export async function addCustomer(
 
     const checkForExistingEmail = await prisma.customer.findUnique({
       where: {
-        email: validData.data.email,
+        email: validData.data.email?.toString(),
       },
     });
 

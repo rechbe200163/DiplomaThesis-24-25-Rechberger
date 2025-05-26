@@ -10,7 +10,6 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: Customer['customerId'];
-      role: Customer['role'];
       firstName: Customer['firstName'];
       lastName: Customer['lastName'];
       customerReference: Customer['customerReference'];
@@ -22,7 +21,6 @@ declare module 'next-auth/jwt' {
   /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
   interface JWT {
     id: Customer['customerId'];
-    role: Customer['role'];
     firstName: Customer['firstName'];
     lastName: Customer['lastName'];
     customerReference: Customer['customerReference'];
@@ -83,7 +81,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            role: user.role,
           };
         }
 
@@ -92,7 +89,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          role: user.role,
+
           customerReference: user.customerReference,
         };
       },
@@ -107,9 +104,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.sub;
       }
 
-      if (token.role && session.user) {
-        session.user.role = token.role;
-      }
       if (token.firstName && session.user) {
         session.user.firstName = token.firstName;
       }
@@ -135,7 +129,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (!u) return token;
 
-      token.role = u.role;
       token.sub = u.customerId;
       token.firstName = u.firstName;
       token.lastName = u.lastName;
