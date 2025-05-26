@@ -88,6 +88,17 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
               )}
             </div>
           </div>
+
+          <Separator />
+
+          <div className='prose prose-gray max-w-none'>
+            <p className='text-base/relaxed'>{product.description}</p>
+          </div>
+
+          {/* Add to Cart Section */}
+          <div className='space-y-4'>
+            <AddToCartForm productId={product.productId} />
+          </div>
         </div>
       </div>
     </div>
