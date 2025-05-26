@@ -27,7 +27,6 @@ async function Footer() {
         <p>
           {siteConfig.companyName}
           <br />
-          {t('company_description')}
         </p>
       </aside>
 

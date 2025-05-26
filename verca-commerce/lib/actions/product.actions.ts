@@ -110,6 +110,7 @@ export async function addToCart(
       success: true,
     };
   } catch (error) {
+    console.error('Error adding product to cart:', error);
     return {
       success: false,
       errors: {

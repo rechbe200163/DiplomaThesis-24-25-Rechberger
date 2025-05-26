@@ -27,6 +27,8 @@ async function UserOrdersPage(props: {
     limit
   );
 
+  console.log('orders', orders);
+
   return (
     <div className='h-full max-h-full overflow-y-auto px-4 py-2'>
       {orders.length > 0 ? (

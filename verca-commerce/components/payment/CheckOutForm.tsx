@@ -86,13 +86,13 @@ function Form({
     setIsLoading(true);
 
     try {
-      // Bestätigt die Zahlung
+      // Confirm the payment
       const { error } = await stripe.confirmPayment({
         elements,
         redirect: 'if_required',
       });
 
-      // Wenn keine Fehler auftreten, reduziere den Bestand
+      // If there is no error, reduce the stock of the purchased products
       if (!error) {
         // Pass the selfCollect state to the action function
         const resp = await reduceStockofPurchasedProducts(

@@ -81,7 +81,7 @@ async function ProductDetailsPage(props: ProductDetailsPageProps) {
                 <Badge variant={product.stock <= 5 ? 'outline' : 'secondary'}>
                   {product.stock <= 5
                     ? `${t('product.only_left')} ${product.stock} ${t('product.remain')}`
-                    : `${t('productavailable')}`}
+                    : `${t('product.available')}`}
                 </Badge>
               ) : (
                 <Badge variant='destructive'>{t('product.out_of_stock')}</Badge>

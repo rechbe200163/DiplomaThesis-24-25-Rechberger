@@ -27,7 +27,7 @@ async function CartIconComponent() {
     session.user.customerReference
   );
 
-  const totalItems = cart._count.products;
+  const totalItems = cart?._count?.products ?? 0;
   const totalPrice = sum;
 
   return (
