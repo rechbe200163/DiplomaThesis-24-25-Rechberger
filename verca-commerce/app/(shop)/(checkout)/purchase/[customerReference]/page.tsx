@@ -38,10 +38,14 @@ export default async function PurchasePage(props: {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: totalAmount,
     currency: 'eur',
-    transfer_data: {
-      destination: siteConfig?.stripeAccountId!,
-    },
-    application_fee_amount: feeAmount, // 10% Gebühr
+    ...(siteConfig?.stripeAccountId
+      ? {
+          transfer_data: {
+            destination: siteConfig.stripeAccountId,
+          },
+          application_fee_amount: feeAmount,
+        }
+      : {}),
   });
 
   if (paymentIntent.client_secret == null) {
