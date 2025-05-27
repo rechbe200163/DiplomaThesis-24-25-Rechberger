@@ -100,6 +100,7 @@ function Form({
           cartId,
           selfCollect
         );
+        console.warn('Reduzierte Bestände:', resp);
         router.push(`/checkout-success/${cartId}`);
       } else {
         setErrorMessage(error.message || 'Unbekannter Fehler');
