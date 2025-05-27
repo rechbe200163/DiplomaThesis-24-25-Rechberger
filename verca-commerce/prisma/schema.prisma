@@ -159,6 +159,7 @@ model Order {
   products OrderOnProducts[]
   invoice  Invoice?
   route    RoutesOnOrders[]
+  // history  RouteOrderHistory[]
 
   @@map("orders")
 }
@@ -183,6 +184,7 @@ model Route {
   name    String           @db.VarChar(255)
   deleted Boolean          @default(false)
   order   RoutesOnOrders[]
+  // history RouteOrderHistory[]
 
   @@map("routes")
 }
@@ -267,3 +269,15 @@ model RoutesOnOrders {
   @@id([routeId, orderId])
   @@map("routesOrders")
 }
+
+// model RouteOrderHistory {
+//   historyId String @id @default(uuid()) @db.Uuid
+//   routeId             String @db.Uuid
+//   orderId             String @db.Uuid
+//   deleted             Boolean @default(false)
+
+//   route Route @relation(fields: [routeId], references: [routeId])
+//   order Order @relation(fields: [orderId], references: [orderId])
+
+//   @@map("route_order_history")
+// }

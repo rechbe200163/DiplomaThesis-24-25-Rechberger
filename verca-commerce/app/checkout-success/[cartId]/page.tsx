@@ -11,10 +11,10 @@ const CheckSuccesPage = () => {
           <div className='text-center'>
             <CheckCircle className='mx-auto h-12 w-12 text-green-600' />
             <h1 className='mt-3 text-3xl font-extrabold text-gray-900'>
-              Checkout Success
+              Bestellung erfolgreich
             </h1>
             <p className='mt-2 text-sm text-gray-500'>
-              Your order has been placed successfully.
+              Ihre Bestellung wurde erfolgreich aufgegeben.
             </p>
           </div>
 
@@ -29,7 +29,7 @@ const CheckSuccesPage = () => {
                 </div>
                 <div className='ml-3'>
                   <h3 className='text-sm font-medium text-green-800'>
-                    Order Details
+                    Bestelldetails
                   </h3>
                 </div>
               </div>
@@ -39,7 +39,7 @@ const CheckSuccesPage = () => {
           <div className='mt-6'>
             <Link href='/dashboard' passHref>
               <Button className='w-full flex justify-center items-center'>
-                View Order History
+                Bestellverlauf anzeigen
                 <ArrowRight className='ml-2 h-4 w-4' />
               </Button>
             </Link>
@@ -50,7 +50,7 @@ const CheckSuccesPage = () => {
               href='/'
               className='text-sm font-medium text-blue-600 hover:text-blue-500'
             >
-              Continue Shopping
+              Weiter einkaufen
             </Link>
           </div>
         </div>
