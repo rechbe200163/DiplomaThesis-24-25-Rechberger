@@ -29,4 +29,5 @@ jobs:
           context: ./webshop
           file: ./webshop/Dockerfile
           push: true
+          platforms: linux/arm64
           tags: rechbe200163/webshop-fe:latest
